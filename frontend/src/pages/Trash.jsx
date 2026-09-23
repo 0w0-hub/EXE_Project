@@ -1,0 +1,137 @@
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { designApi } from '../services/api'
+import RequestError from '../components/RequestError'
+
+const PAGE_SIZE = 10
+
+// TASK-107: Thùng rác — liệt kê job đã xoá mềm của chính user (GET /designs/trash), cho khôi phục
+// hoặc xoá vĩnh viễn. Cấu trúc trang tham khảo Projects.jsx (card/room-grid/phân trang) nhưng KHÔNG
+// có nút yêu thích/đổi tên/so sánh — job trong thùng rác không thao tác được các việc đó.
+export default function Trash() {
+  const [items, setItems] = useState([])
+  const [meta, setMeta] = useState(null)
+  const [page, setPage] = useState(0)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  // TASK-107: báo trạng thái riêng cho từng job đang restore/xoá vĩnh viễn — tránh double-click gọi
+  // API 2 lần trong lúc đang chờ phản hồi.
+  const [busyJobId, setBusyJobId] = useState(null)
+
+  function load() {
+    setLoading(true)
+    setError(null)
+    designApi
+      .trash(page, PAGE_SIZE)
+      .then((data) => {
+        setItems(data.items)
+        setMeta(data.meta)
+      })
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false))
+  }
+
+  useEffect(load, [page])
+
+  function handleRestore(jobId) {
+    setBusyJobId(jobId)
+    setError(null)
+    designApi
+      .restore(jobId)
+      .then(() => setItems((prev) => prev.filter((job) => job.jobId !== jobId)))
+      .catch((err) => setError(err.message))
+      .finally(() => setBusyJobId(null))
+  }
+
+  // TASK-107: hành động KHÔNG THỂ HOÀN TÁC — bắt buộc xác nhận rõ ràng trước khi gọi API (xem
+  // Acceptance Criteria/tasks/active/TASK-107-trash-soft-delete.md). window.confirm đủ rõ ràng cho
+  // quy mô MVP, cùng mức xác nhận với các hành động phá huỷ khác trong app.
+  function handlePermanentDelete(job) {
+    const label = job.customName || job.suggestedName || job.roomType || 'thiết kế này'
+    const confirmed = window.confirm(
+      `Xoá VĨNH VIỄN "${label}"? Hành động này KHÔNG THỂ hoàn tác — toàn bộ dữ liệu (ảnh, nội thất, màu sắc) sẽ mất hẳn.`
+    )
+    if (!confirmed) return
+
+    setBusyJobId(job.jobId)
+    setError(null)
+    designApi
+      .permanentDelete(job.jobId)
+      .then(() => setItems((prev) => prev.filter((j) => j.jobId !== job.jobId)))
+      .catch((err) => setError(err.message))
+      .finally(() => setBusyJobId(null))
+  }
+
+  return (
+    <div>
+      <h2>🗑️ Thùng rác</h2>
+      <p className="text-muted">
+        Thiết kế đã xoá mềm nằm ở đây. Khôi phục để đưa lại vào "Dự án của tôi", hoặc xoá vĩnh viễn để
+        xoá hẳn (không thể hoàn tác). Homely hiện chưa tự động dọn rác — thiết kế nằm ở đây cho tới khi
+        bạn tự khôi phục hoặc xoá vĩnh viễn.
+      </p>
+
+      {/* TASK-129: dùng RequestError (nút "🔄 Thử lại" thủ công) thay cho <p className="error-text">
+          trần — gọi lại đúng hàm load() hiện có, cùng pattern Projects.jsx/Dashboard.jsx. */}
+      {error && <RequestError message={error} onRetry={load} />}
+      {loading && <p>Đang tải...</p>}
+
+      {!loading && items.length === 0 && (
+        <div className="card">
+          <p>Thùng rác trống.</p>
+          {/* TASK-113: gợi ý điều hướng về danh sách chính thay vì chỉ hiện text rỗng. */}
+          <Link to="/projects">
+            <button type="button" className="secondary">
+              ← Về Dự án của tôi
+            </button>
+          </Link>
+        </div>
+      )}
+
+      <div className="room-grid">
+        {items.map((job) => {
+          const label = job.customName || job.suggestedName || job.roomType || 'Phòng'
+          const busy = busyJobId === job.jobId
+          return (
+            <div className="card" key={job.jobId}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <span className={`status-badge status-${job.status}`}>{job.status}</span>
+              </div>
+              <h3 style={{ margin: '12px 0 4px' }}>{label}</h3>
+              <p className="text-muted" style={{ margin: 0, fontSize: '0.85rem' }}>
+                Đã xoá lúc {job.deletedAt ? new Date(job.deletedAt).toLocaleString('vi-VN') : '—'}
+              </p>
+              <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
+                <button type="button" disabled={busy} onClick={() => handleRestore(job.jobId)}>
+                  ↺ Khôi phục
+                </button>
+                <button
+                  type="button"
+                  className="secondary"
+                  disabled={busy}
+                  onClick={() => handlePermanentDelete(job)}
+                >
+                  Xoá vĩnh viễn
+                </button>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+
+      {meta && meta.totalPages > 1 && (
+        <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginTop: 16 }}>
+          <button className="secondary" disabled={page <= 0} onClick={() => setPage((p) => p - 1)}>
+            ← Trước
+          </button>
+          <span style={{ alignSelf: 'center' }}>
+            Trang {meta.page + 1} / {meta.totalPages}
+          </span>
+          <button className="secondary" disabled={page >= meta.totalPages - 1} onClick={() => setPage((p) => p + 1)}>
+            Sau →
+          </button>
+        </div>
+      )}
+    </div>
+  )
+}

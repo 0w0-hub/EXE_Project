@@ -1,0 +1,95 @@
+Nguồn model 3D nội thất (fallback tĩnh, dùng khi không có mesh AI thật từ Replicate):
+
+- Bộ "Furniture Kit" của Kenney — https://kenney.nl/assets/furniture-kit
+- Giấy phép: CC0 / Public Domain (không yêu cầu ghi công, nhưng ghi lại ở đây để rõ nguồn gốc).
+
+File dùng trong dự án (mỗi category có nhiều biến thể, chọn theo Room3DViewer.jsx#pickStaticModel):
+- seating.glb   <- loungeSofa.glb
+- seating-2.glb <- loungeSofaCorner.glb
+- seating-3.glb <- loungeChair.glb
+- seating-4.glb <- loungeChairRelax.glb
+- seating-5.glb <- loungeDesignSofa.glb
+- seating-6.glb <- chairModernCushion.glb
+- seating-7.glb <- bench.glb (TASK-047)
+- seating-8.glb <- chairRounded.glb (TASK-047)
+- table.glb     <- tableCoffee.glb
+- table-2.glb   <- tableCoffeeGlass.glb
+- table-3.glb   <- tableRound.glb
+- table-4.glb   <- sideTable.glb
+- table-5.glb   <- tableGlass.glb
+- table-6.glb   <- tableCross.glb
+- table-7.glb   <- tableCloth.glb (TASK-047)
+- table-8.glb   <- tableCoffeeSquare.glb (TASK-047)
+- lighting.glb   <- lampRoundFloor.glb
+- lighting-2.glb <- lampSquareFloor.glb
+- lighting-3.glb <- lampRoundTable.glb
+- lighting-4.glb <- lampSquareTable.glb
+- lighting-5.glb <- lampSquareCeiling.glb (TASK-048)
+- lighting-6.glb <- lampWall.glb (TASK-048)
+- storage.glb   <- bookcaseOpen.glb
+- storage-2.glb <- bookcaseClosed.glb
+- storage-3.glb <- cabinetTelevision.glb
+- storage-4.glb <- bookcaseClosedWide.glb
+- storage-5.glb <- bookcaseOpenLow.glb
+- storage-6.glb <- cabinetTelevisionDoors.glb
+- storage-7.glb <- bathroomCabinet.glb (TASK-048)
+- storage-8.glb <- kitchenCabinet.glb (TASK-048)
+
+Đồ trang trí phụ tự động (không thuộc danh sách nội thất AI, chỉ thêm cho đỡ trống phòng — TASK-027)
+và loại đồ user có thể tự thêm ngoài 4 category AI cố định (TASK-031, dùng chung nguồn model):
+- decor-rug.glb      <- rugRound.glb
+- decor-rug-2.glb    <- rugRectangle.glb
+- decor-rug-3.glb    <- rugSquare.glb
+- decor-rug-4.glb    <- rugDoormat.glb (TASK-070)
+- decor-plant.glb    <- pottedPlant.glb
+- decor-plant-2.glb  <- plantSmall1.glb
+- decor-plant-3.glb  <- plantSmall2.glb
+- decor-plant-4.glb  <- plantSmall3.glb
+- decor-tv.glb       <- televisionModern.glb
+- decor-tv-2.glb     <- televisionVintage.glb
+- decor-coatrack.glb <- coatRackStanding.glb
+- decor-mirror.glb   <- bathroomMirror.glb (TASK-033)
+- decor-speaker.glb   <- speaker.glb (TASK-033)
+- decor-speaker-2.glb <- speakerSmall.glb (TASK-033)
+- decor-bed.glb    <- bedDouble.glb (TASK-037)
+- decor-bed-2.glb  <- bedSingle.glb (TASK-037)
+- decor-desk.glb   <- desk.glb (TASK-037)
+- decor-desk-2.glb <- deskCorner.glb (TASK-037)
+- decor-fridge.glb   <- kitchenFridge.glb (TASK-038)
+- decor-fridge-2.glb <- kitchenFridgeSmall.glb (TASK-038)
+- decor-stove.glb    <- kitchenStove.glb (TASK-038)
+- decor-stove-2.glb  <- kitchenStoveElectric.glb (TASK-038)
+- decor-toilet.glb   <- toilet.glb (TASK-039)
+- decor-toilet-2.glb <- toiletSquare.glb (TASK-039)
+- decor-bathtub.glb  <- bathtub.glb (TASK-039)
+- decor-nightstand.glb   <- cabinetBed.glb (TASK-045)
+- decor-nightstand-2.glb <- cabinetBedDrawer.glb (TASK-045)
+- decor-washer.glb       <- washer.glb (TASK-045)
+- decor-washer-2.glb     <- dryer.glb (TASK-045)
+- decor-bed-3.glb    <- bedBunk.glb (TASK-050, biến thể thứ 3 của "bed")
+- decor-shower.glb   <- shower.glb (TASK-050)
+- decor-shower-2.glb <- showerRound.glb (TASK-050)
+- decor-barcounter.glb <- kitchenBar.glb (TASK-051)
+- decor-barstool.glb   <- stoolBar.glb (TASK-051)
+- decor-barstool-2.glb <- stoolBarSquare.glb (TASK-051)
+- decor-teddybear.glb  <- bear.glb (TASK-054)
+- decor-ceilingfan.glb <- ceilingFan.glb (TASK-054)
+- decor-pillow.glb   <- pillow.glb (TASK-057)
+- decor-pillow-2.glb <- pillowBlue.glb (TASK-070)
+- decor-pillow-3.glb <- pillowLong.glb (TASK-070)
+- decor-books.glb  <- books.glb (TASK-057)
+- decor-hood.glb   <- hoodModern.glb (TASK-059)
+- decor-laptop.glb <- laptop.glb (TASK-059)
+- decor-sink.glb      <- bathroomSink.glb (TASK-062)
+- decor-microwave.glb <- kitchenMicrowave.glb (TASK-062)
+- decor-trashcan.glb  <- trashcan.glb (TASK-062)
+- decor-computer.glb      <- computerScreen.glb (TASK-064)
+- decor-coffeemachine.glb <- kitchenCoffeeMachine.glb (TASK-064)
+- decor-radio.glb   <- radio.glb (TASK-066)
+- decor-toaster.glb <- toaster.glb (TASK-066)
+- decor-blender.glb     <- kitchenBlender.glb (TASK-068)
+- decor-kitchensink.glb <- kitchenSink.glb (TASK-068)
+- decor-keyboard.glb <- computerKeyboard.glb (TASK-072)
+- decor-mouse.glb    <- computerMouse.glb (TASK-072)
+- decor-box.glb   <- cardboardBoxClosed.glb (TASK-074)
+- decor-box-2.glb <- cardboardBoxOpen.glb (TASK-074)

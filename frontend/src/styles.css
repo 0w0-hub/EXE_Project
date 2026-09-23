@@ -1,0 +1,1937 @@
+:root {
+  --color-primary: #D32F2F;
+  --color-primary-hover: #B71C1C;
+  --color-primary-tint: #FFEBEE;
+
+  --color-secondary: #4E9CE8;
+  --color-secondary-hover: #3B84CB;
+  --color-secondary-tint: #E5F2FC;
+
+  --color-accent: #70D6C5;
+  --color-accent-dark: #1F8975;
+  --color-accent-tint: #E1F8F3;
+
+  --color-support: #CAE5BC;
+  --color-bg-tint: #E1EDD4;
+
+  --color-bg: #FFFFFF;
+  --color-surface: #FFFFFF;
+  --color-text: #1F2430;
+  --color-text-muted: #667085;
+  --color-border: #E3E7DE;
+
+  --color-neutral-tint: #EEF0EC;
+  --color-neutral-text: #5B6358;
+
+  --color-danger: #C4433D;
+  --color-danger-tint: #FBE4E2;
+
+  --color-warning-tint: #FBF3D9;
+  --color-warning-border: #F0D58C;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  --shadow-card: 0 4px 12px rgba(30, 32, 62, 0.15), 0 2px 4px rgba(30, 32, 62, 0.1);
+
+  --font-heading: 'Plus Jakarta Sans', -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* TASK-088: Dark mode — kích hoạt qua [data-theme="dark"] trên <html> (ThemeToggle.jsx set/đọc
+   localStorage, KHÔNG dùng prefers-color-scheme). Giữ nguyên --color-primary/--color-secondary/
+   --color-accent/--color-danger (màu thương hiệu không đổi theo theme).
+   Ngoài 6 biến tối thiểu theo task (bg/surface/text/text-muted/border/neutral-tint), rà toàn bộ
+   styles.css cho thấy nhiều nơi ghép "nền *-tint/--color-support (màu pastel sáng cố định) + chữ mặc
+   định --color-text/--color-neutral-text" (.chip, .compare-diff-card, .card--warning,
+   .notification-bell__list li.is-unread, .table tbody tr:hover, .step-indicator__item,
+   .status-PENDING, .role-badge--USER, .viewer-3d-placeholder, .section-tint...) — nếu chỉ đổi
+   --color-text sang màu sáng mà giữ nguyên các nền tint sáng đó thì sẽ bị "chữ sáng trên nền sáng",
+   đúng lỗi mà Acceptance Criteria yêu cầu tránh. Vì vậy phải đổi thêm các biến này cho đồng bộ. */
+:root[data-theme="dark"] {
+  --color-bg: #14161D;
+  --color-surface: #1C1F28;
+  --color-surface-muted: #232631;
+  --color-text: #EDEFF5;
+  --color-text-muted: #9AA3B5;
+  --color-border: #2E323D;
+
+  --color-neutral-tint: #2A2E38;
+  --color-neutral-text: #C7CCD6;
+
+  --color-primary-tint: #2E3363;
+  --color-secondary-tint: #23415A;
+  --color-accent-tint: #1B3D35;
+  --color-support: #2E4A38;
+  --color-bg-tint: #1E2A22;
+
+  --color-danger-tint: #4A2426;
+  --color-warning-tint: #453B1D;
+  --color-warning-border: #8A7434;
+
+  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* TASK-132: Font size control — kích hoạt qua [data-font-size="sm"|"lg"] trên <html>
+   (FontSizeControl.jsx set/đọc localStorage). Chỉ đổi font-size gốc trên :root — toàn bộ
+   styles.css dùng rem/em nên hiệu ứng lan toả tự nhiên, không cần sửa từng component/trang.
+   "md" (mặc định) = 100% hiện tại, không cần rule riêng. */
+:root[data-font-size="sm"] {
+  font-size: 87.5%;
+}
+
+:root[data-font-size="lg"] {
+  font-size: 112.5%;
+}
+
+.font-size-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.font-size-control button {
+  padding: 0.25rem 0.55rem;
+  line-height: 1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background: var(--color-primary);
+  border-bottom: none;
+}
+
+.navbar-brand {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.navbar-nav a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.navbar-nav a.active {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.navbar-user {
+  color: #ffffff;
+  font-size: 0.9rem;
+}
+
+.navbar .secondary {
+  background: #ffffff;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.navbar .secondary:hover:not(:disabled) {
+  background: var(--color-warning-tint);
+  color: var(--color-text);
+}
+
+.avatar-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.page-loading {
+  padding: 48px;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 24px;
+  margin-bottom: 16px;
+}
+
+.card--warning {
+  background: var(--color-warning-tint);
+  border: 1px solid var(--color-warning-border);
+  box-shadow: none;
+}
+
+/* TASK-101: DesignHealthCheck.jsx — .card--danger cho các mục có vấn đề thật (thiếu ảnh/chưa nội
+   thất/vượt ngân sách), .card--success cho dòng xác nhận tích cực khi mọi mục đều pass. Cùng pattern
+   với .card--warning ở trên, dùng các token màu danger/accent đã có sẵn trong :root. */
+.card--danger {
+  background: var(--color-danger-tint);
+  border: 1px solid var(--color-danger);
+  box-shadow: none;
+}
+
+.card--success {
+  background: var(--color-accent-tint);
+  border: 1px solid var(--color-accent);
+  box-shadow: none;
+}
+
+.section-tint {
+  background: var(--color-bg-tint);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  font-family: var(--font-body);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 3px var(--color-secondary-tint);
+}
+
+/* TASK-165: toggle hiện/ẩn mật khẩu trên trang Đổi mật khẩu — icon nằm trong ô input, tái dùng
+   token màu hiện có (--color-text-muted/--color-text), không thêm màu mới. */
+.password-input-wrap {
+  position: relative;
+}
+
+.password-input-wrap input {
+  padding-right: 40px;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--color-text-muted);
+}
+
+.password-toggle-btn:hover:not(:disabled) {
+  background: var(--color-neutral-tint);
+  color: var(--color-text);
+}
+
+button {
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+button:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+button.secondary {
+  background: transparent;
+  color: var(--color-secondary);
+  border: 1px solid var(--color-secondary);
+}
+
+button.secondary:hover:not(:disabled) {
+  background: var(--color-secondary-tint);
+  color: var(--color-secondary-hover);
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+.error-text {
+  color: var(--color-danger);
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+/* TASK-083: thông báo thành công (đổi mật khẩu, ...) — chưa có --color-success trong theme. */
+.success-text {
+  color: #2E7D32;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+/* TASK-088: #2E7D32 ở trên là literal (chưa có token --color-success, nợ kỹ thuật từ TASK-083), không
+   tự đổi theo theme. Giữ nguyên ở light mode; ở dark mode, đo tương phản với --color-bg mới (~3.5:1)
+   không đạt AA (4.5:1) cho chữ thường — đổi sang xanh sáng hơn (~6.5:1) để vẫn đọc được, không tạo
+   token mới (ngoài scope task này). */
+:root[data-theme="dark"] .success-text {
+  color: #4CAF50;
+}
+
+.room-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+/* TASK-119: kiểu hiển thị "Danh sách" thay thế cho .room-grid (toggle qua viewMode ở Projects.jsx) —
+   mỗi dự án 1 hàng ngang gọn thay vì card, dùng chung .card/border token cho nhất quán theme. */
+.room-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.room-list-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--color-surface, var(--color-bg));
+  border: 1px solid var(--color-border, var(--color-support));
+  border-radius: var(--radius-md, 8px);
+  flex-wrap: wrap;
+  /* TASK-144: neo popup xem trước nhanh (.project-preview-popup, position: absolute) đúng vào hàng
+     này thay vì trôi theo toàn trang. */
+  position: relative;
+}
+
+.room-list-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1 1 260px;
+  min-width: 0;
+}
+
+.room-list-name {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.room-list-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* TASK-119: nhóm 2 nút toggle Lưới/Danh sách — sát nhau, không có khoảng cách lớn như các nhóm nút khác. */
+.view-mode-toggle {
+  display: flex;
+  gap: 4px;
+}
+
+.chip {
+  display: inline-block;
+  background: var(--color-support);
+  color: var(--color-text);
+  border-radius: var(--radius-pill);
+  padding: 2px 10px;
+  font-size: 0.75rem;
+  margin-right: 6px;
+}
+
+.stat-tile {
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  background: var(--tile-bg, var(--color-support));
+}
+
+/* TASK-088: Dashboard.jsx/AdminDashboard.jsx set --tile-bg qua inline style (hex cố định per tile) —
+   inline style luôn thắng CSS thường nên không thể override biến --tile-bg từ stylesheet. Ép thẳng
+   background (không qua biến --tile-bg) để tile không giữ màu pastel sáng cố định ở dark mode, tránh
+   .stat-tile-label/.stat-tile-value (dùng --color-text/--color-text-muted, đã đổi sáng) bị chữ sáng
+   trên nền sáng. Không sửa Dashboard.jsx/AdminDashboard.jsx theo đúng scope task. */
+:root[data-theme="dark"] .stat-tile {
+  background: var(--color-support);
+}
+
+.stat-tile-label {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+.stat-tile-value {
+  margin: 4px 0 0;
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-PENDING {
+  background: var(--color-neutral-tint);
+  color: var(--color-neutral-text);
+}
+
+.status-PROCESSING {
+  background: var(--color-secondary-tint);
+  color: var(--color-secondary-hover);
+}
+
+.status-COMPLETED {
+  background: var(--color-accent-tint);
+  color: var(--color-accent-dark);
+}
+
+.status-FAILED {
+  background: var(--color-danger-tint);
+  color: var(--color-danger);
+}
+
+/* TASK-163: huy hiệu "Vừa mở" (Projects.jsx) — cùng kích thước/hình dạng pill như .status-badge nhưng
+   dùng --color-primary (chưa dùng cho status-* nào ở trên: PENDING=neutral, PROCESSING=secondary,
+   COMPLETED=accent, FAILED=danger) để phân biệt rõ đây là 1 NGỮ CẢNH khác (vừa truy cập), không phải
+   trạng thái xử lý. Đặt CÙNG hàng flow bình thường với .status-badge trong JSX (không absolute) nên
+   không cần z-index/vị trí riêng ở đây. */
+.badge-recent {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--color-primary-tint);
+  color: var(--color-primary);
+  white-space: nowrap;
+}
+
+.color-swatch {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.viewer-3d-placeholder {
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 32px;
+  text-align: center;
+  color: var(--color-text-muted);
+  background: var(--color-bg-tint);
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--color-border);
+  font-family: var(--font-heading);
+}
+
+.table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.table tbody tr:hover {
+  background: var(--color-primary-tint);
+}
+
+.room-card-photo {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  margin-bottom: 12px;
+  display: block;
+  background: var(--color-neutral-tint);
+}
+
+.room-card-photo-placeholder {
+  width: 100%;
+  height: 140px;
+  border-radius: var(--radius-md);
+  margin-bottom: 12px;
+  background: var(--color-neutral-tint);
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+}
+
+.step-indicator {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.step-indicator__item {
+  flex: 1;
+  text-align: center;
+  padding: 8px 4px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: var(--color-neutral-tint);
+  color: var(--color-neutral-text);
+}
+
+.step-indicator__item.is-active {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.step-indicator__item.is-done {
+  background: var(--color-accent-tint);
+  color: var(--color-accent-dark);
+}
+
+.auth-split {
+  display: flex;
+  min-height: calc(100vh - 130px);
+  align-items: stretch;
+  gap: 0;
+}
+
+.auth-split__form {
+  flex: 1 1 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+
+.auth-split__hero {
+  flex: 1 1 50%;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  display: flex;
+  align-items: flex-end;
+  padding: 40px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin: 24px 24px 24px 0;
+}
+
+.auth-split__hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(30, 32, 62, 0) 30%, rgba(30, 32, 62, 0.8) 100%);
+}
+
+.auth-split__hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.auth-split__hero-content h3 {
+  font-size: 1.4rem;
+  margin: 0 0 8px;
+}
+
+.auth-split__hero-content p {
+  margin: 0;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .auth-split__hero {
+    display: none;
+  }
+}
+
+/* TASK-073: navbar chưa có xử lý responsive nào (chỉ hero ảnh đăng nhập ở trên có) — hàng nút cố định
+   không xuống dòng khiến TOÀN BỘ trang bị cuộn ngang trên màn hình hẹp (kể cả trang "Kết quả thiết kế"
+   2D/3D là trọng tâm chính của ứng dụng). Cho phép xuống dòng + ẩn tên đầy đủ (còn avatar viết tắt đủ
+   dùng, tooltip vẫn có tên đầy đủ) thay vì đè cứng 1 hàng ngang.
+*/
+@media (max-width: 640px) {
+  .navbar {
+    flex-wrap: wrap;
+    row-gap: 8px;
+    padding: 10px 16px;
+  }
+
+  .navbar-nav {
+    flex-wrap: wrap;
+    row-gap: 8px;
+    font-size: 0.85rem;
+  }
+
+  .navbar-user {
+    display: none;
+  }
+
+  /* TASK-077: trang so sánh 2 cột phải xuống 1 cột trên mobile, theo đúng quy ước responsive TASK-073. */
+  .compare-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sso-row {
+  display: flex;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.sso-btn {
+  flex: 1;
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+
+.auth-divider {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  margin: 16px 0;
+}
+
+.type-card-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.type-card {
+  flex: 1 1 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 8px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--color-text);
+  text-align: center;
+}
+
+.type-card-icon {
+  font-size: 1.6rem;
+}
+
+.type-card.is-active {
+  border-color: var(--color-primary);
+  background: var(--color-primary-tint);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.style-chip-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.style-chip {
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--color-text);
+}
+
+.style-chip.is-active {
+  background: var(--color-secondary);
+  border-color: var(--color-secondary);
+  color: #fff;
+}
+
+/* TASK-092: dải chip "mẫu tự lưu" ở RoomNew.jsx — cùng ngôn ngữ hình khối .style-chip (pill, viền
+   var(--color-border)) nhưng có thêm nút xoá "×" ghép cạnh tên, nên tách class riêng thay vì tái dùng
+   thẳng .style-chip (chip đó không có slot cho nút con bên trong). */
+.room-preset-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.room-preset-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  padding: 4px 6px 4px 14px;
+  font-size: 0.85rem;
+  color: var(--color-text);
+}
+
+.room-preset-chip-name {
+  cursor: pointer;
+}
+
+.room-preset-chip-delete {
+  background: transparent;
+  color: var(--color-text-muted);
+  border: none;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  line-height: 1;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.room-preset-chip-delete:hover {
+  background: var(--color-danger-tint);
+  color: var(--color-danger);
+}
+
+/* TASK-164: nút "×" xoá RIÊNG 1 trường trong RoomNew.jsx (khác "🧹 Xoá thiết lập" TASK-149 xoá TOÀN
+   form) — đặt input/textarea và nút cạnh nhau trong 1 hàng flex thay vì overlay tuyệt đối, để không đè
+   lên spinner mặc định của input[type=number] (trường ngân sách). Cùng ngôn ngữ hình khối nút tròn nhỏ
+   với .room-preset-chip-delete ở trên, tái dùng nguyên token text-muted/danger có sẵn, không thêm màu mới. */
+.field-with-clear {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.field-with-clear input,
+.field-with-clear textarea {
+  flex: 1;
+  min-width: 0;
+}
+
+.field-clear-btn {
+  flex-shrink: 0;
+  background: transparent;
+  color: var(--color-text-muted);
+  border: none;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  line-height: 1;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.field-clear-btn:hover {
+  background: var(--color-danger-tint);
+  color: var(--color-danger);
+}
+
+/* TASK-167: huy hiệu nhỏ "Đã chỉnh" cạnh nhãn field trong RoomNew.jsx khi form[field] khác
+   defaultFormRef.current[field] (TASK-149) — cùng ngôn ngữ pill nhỏ với .badge-recent (TASK-163),
+   dùng lại --color-primary-tint/--color-primary có sẵn, không thêm màu mới. Kích thước nhỏ hơn
+   .badge-recent vì đây là badge cạnh label (không phải trong danh sách thẻ), không cần chiếm nhiều chỗ. */
+.field-changed-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 8px;
+  border-radius: var(--radius-pill);
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: var(--color-primary-tint);
+  color: var(--color-primary);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+/* TASK-169: hành động nhỏ "↺ Về mặc định" cạnh .field-changed-badge trong RoomNew.jsx — chỉ hiện khi
+   field đã đổi (isFieldChanged) VÀ defaultFormRef.current[field] khác rỗng (có giá trị mẫu thật để khôi
+   phục, khác "×" TASK-164 luôn xoá về rỗng). Dạng nút text nhỏ, không viền, cùng font-size/màu với
+   .field-changed-badge để đi cạnh nhau gọn gàng, không thêm màu mới ngoài token --color-primary có sẵn. */
+.field-reset-default-btn {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-primary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  vertical-align: middle;
+  text-decoration: underline;
+}
+
+.field-reset-default-btn:hover {
+  color: var(--color-primary-hover);
+}
+
+.room3d-color-picker-label {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+/* TASK-055: nhãn nhóm nút "+ thêm nội thất" — gom theo phòng để danh sách hơn 20 mục đỡ rối mắt. */
+.room3d-furniture-group-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/* TASK-065: ô tìm kiếm lọc nút "+ thêm loại đồ" — danh sách đã lên tới hơn 30 loại. */
+/* TASK-088: bổ sung background/color (trước đó không khai báo, input sẽ giữ nguyên trắng/đen mặc định
+   của trình duyệt bất kể theme — lệch tông rõ rệt khi bật dark mode). */
+.room3d-furniture-search {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+/* TASK-080: ô tìm kiếm nhanh trong "Dự án của tôi" — đặt cạnh dải nút filter trạng thái. */
+.projects-search-input,
+.projects-sort-select {
+  width: 240px;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-family: var(--font-body);
+  background: var(--color-surface);
+  color: var(--color-text);
+  outline: none;
+}
+
+.projects-search-input:focus,
+.projects-sort-select:focus {
+  outline: none;
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 3px var(--color-secondary-tint);
+}
+
+/* TASK-166: viền focus cho card/hàng project khi điều hướng bàn phím (TASK-148/154, Projects.jsx) —
+   dùng lại ĐÚNG pattern màu đã có ở .projects-search-input:focus ngay trên (--color-secondary/
+   --color-secondary-tint), không bịa màu mới. Chọn `.project-preview-trigger` (class riêng đã gắn sẵn
+   ở TASK-144, CHỈ dùng trong Projects.jsx — không phải `.card` dùng chung khắp app cho nhiều
+   trang/component khác) để tránh đổi giao diện focus ngoài ý muốn ở các trang khác cũng dùng `.card`.
+   Cùng 1 class này gắn trên cả card lưới (.card.project-preview-trigger) lẫn hàng danh sách
+   (.room-list-row.project-preview-trigger) nên 1 rule áp dụng cho cả 2 chế độ hiển thị. Dùng
+   :focus-visible (không phải :focus trần) để chỉ hiện khi điều hướng bàn phím thật, không hiện khi
+   bấm chuột. */
+.project-preview-trigger:focus-visible {
+  outline: none;
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 3px var(--color-secondary-tint);
+}
+
+/* TASK-061: bảng tra cứu phím tắt/thao tác chuột, gộp lại từ nhiều task trước đó */
+/* TASK-118: dropdown "Góc nhìn ▾" / "⋯ Thêm ▾" trên thanh công cụ 3D — cùng pattern
+   .account-menu/.account-menu__dropdown ở NavBar.jsx (TASK-082/083), đổi tiền tố room3d-* để nhất quán
+   với các class khác của Room3DViewer.jsx. */
+.room3d-dropdown {
+  position: relative;
+  display: inline-flex;
+}
+
+.room3d-dropdown__menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 6px;
+  gap: 2px;
+}
+
+.room3d-dropdown__menu button {
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.room3d-dropdown__menu button:hover {
+  background: var(--color-neutral-tint);
+}
+
+.room3d-shortcuts-help {
+  margin: 0 0 8px;
+  padding: 10px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-surface-muted, #f5f5f7);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.room3d-color-swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--color-surface);
+  outline: 1px solid var(--color-border);
+  cursor: pointer;
+  padding: 0;
+}
+
+.room3d-color-swatch.is-active {
+  border-color: var(--color-primary);
+  outline-color: var(--color-primary);
+}
+
+.room3d-color-swatch-reset {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-decoration: underline;
+}
+
+.dropzone-row {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.dropzone {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  text-align: center;
+  background: var(--color-neutral-tint);
+  cursor: pointer;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.dropzone.is-dragover {
+  border-color: var(--color-secondary);
+  background: var(--color-secondary-tint);
+  color: var(--color-secondary-hover);
+}
+
+.dropzone-tip {
+  flex: 1;
+  min-width: 140px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  position: relative;
+}
+
+.dropzone-tip img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.dropzone-tip span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(31, 36, 48, 0.72);
+  color: #fff;
+  font-size: 0.72rem;
+  padding: 6px 8px;
+  line-height: 1.3;
+}
+
+.compare-slider {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 8px;
+  line-height: 0;
+}
+
+.compare-slider img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.compare-slider__after {
+  position: absolute;
+  inset: 0;
+}
+
+.compare-slider__label {
+  position: absolute;
+  top: 8px;
+  padding: 2px 10px;
+  background: rgba(31, 36, 48, 0.7);
+  color: #fff;
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem;
+}
+
+.compare-slider__label--before {
+  right: 8px;
+}
+
+.compare-slider__label--after {
+  left: 8px;
+}
+
+.compare-slider__range {
+  width: 100%;
+  margin: 0 0 16px;
+}
+
+/* TASK-077: trang /compare — 2 cột cạnh nhau desktop, override 1 cột mobile ở khối @media 640px phía trên. */
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.compare-col-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 0;
+}
+
+.compare-col-img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  margin-bottom: 12px;
+  display: block;
+  background: var(--color-neutral-tint);
+}
+
+/* TASK-077 fix: .compare-col-img's `display: block` (trên) đè lên `display: flex` của
+   .room-card-photo-placeholder khi 2 class cùng gắn 1 div (không có ảnh AI) — icon 🖼️ bị dạt lên góc
+   trái thay vì căn giữa. Selector kết hợp có độ đặc hiệu cao hơn nên luôn thắng, không cần đổi thứ tự. */
+.room-card-photo-placeholder.compare-col-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.compare-diff-card {
+  background: var(--color-primary-tint);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.compare-select-checkbox {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: var(--radius-pill);
+  padding: 4px 10px 4px 8px;
+  cursor: pointer;
+}
+
+/* TASK-088: nền trắng ở trên là hardcode (không phải token), đè lên ảnh nên không đổi theo --color-*
+   tự động — --color-text-muted lại đổi sang màu sáng ở dark mode, nếu giữ nền trắng cố định thì chữ
+   sáng sẽ khó đọc trên nền trắng. Đổi nền sang tối trong suốt để khớp với chữ sáng. */
+:root[data-theme="dark"] .compare-select-checkbox {
+  background: rgba(18, 20, 26, 0.82);
+}
+
+.compare-select-checkbox input:disabled {
+  cursor: not-allowed;
+}
+
+.compare-fab {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  z-index: 30;
+  box-shadow: var(--shadow-card);
+}
+
+/* TASK-160: thanh "Hoàn tác" sau khi xoá mềm 1 project (Projects.jsx) — tái dùng .card (nền/bo góc/
+   shadow theo đúng token hiện có, tự đổi theo dark mode), chỉ thêm vị trí cố định góc dưới + layout
+   ngang gọn. z-index thấp hơn .onboarding-tour-overlay/.image-lightbox (1000) nhưng cao hơn nội dung
+   trang thường, cùng mức .compare-fab (30) — 2 thanh này hiếm khi cùng hiện nên không cần phân định thêm. */
+.undo-toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  margin-bottom: 0;
+}
+
+/* TASK-163: nút nổi "↑ Về đầu" (Projects.jsx) — CỐ Ý đặt góc dưới-TRÁI (khác .compare-fab ở giữa và
+   .undo-toast ở phải) để 3 phần tử nổi này không bao giờ đè lên nhau kể cả khi hiếm khi cùng hiện. Dùng
+   lại class "secondary" (đã có sẵn kiểu nút phụ) + style vị trí/hình tròn riêng ở đây. */
+.scroll-to-top-btn {
+  position: fixed;
+  left: 24px;
+  bottom: 24px;
+  z-index: 30;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-card);
+}
+
+.budget-bar {
+  height: 12px;
+  border-radius: var(--radius-pill);
+  background: var(--color-neutral-tint);
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.budget-bar__fill {
+  height: 100%;
+  background: var(--color-accent);
+}
+
+.budget-bar__fill.is-over {
+  background: var(--color-danger);
+}
+
+.requirement-item {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 4px 0;
+}
+
+.requirement-item__icon {
+  color: var(--color-accent-dark);
+  flex-shrink: 0;
+  font-weight: 700;
+}
+
+.template-card-photo {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.role-badge--ADMIN {
+  background: var(--color-primary-tint);
+  color: var(--color-primary);
+}
+
+.role-badge--USER {
+  background: var(--color-neutral-tint);
+  color: var(--color-neutral-text);
+}
+
+.budget-breakdown__bar {
+  display: flex;
+  height: 14px;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  background: var(--color-neutral-tint);
+  margin: 8px 0 12px;
+}
+
+.budget-breakdown__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  margin: 0 0 8px;
+}
+
+.budget-breakdown__legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+}
+
+.budget-breakdown__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Room3DViewer: dùng class thay vì inline style cho width/height để `:fullscreen` trong CSS
+   ghi đè được (inline style luôn thắng CSS thường, kể cả pseudo-class :fullscreen). */
+.room3d-mount {
+  width: 100%;
+  height: 420px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.room2d-plan {
+  width: 100%;
+  max-height: 480px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-tint);
+  display: block;
+}
+
+.room3d-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 22, 18, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  cursor: zoom-out;
+  padding: 24px;
+}
+
+.room3d-lightbox img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 8px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.room2d-plan-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin-top: 8px;
+}
+
+.room2d-plan-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.room2d-plan-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.room3d-mount:fullscreen {
+  height: 100vh;
+  border-radius: 0;
+  border: none;
+}
+
+.room3d-furniture-panel {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  background: var(--color-neutral-tint);
+}
+
+.room3d-furniture-list {
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.room3d-furniture-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  font-size: 0.85rem;
+}
+
+.room3d-furniture-list li.is-custom {
+  background: var(--color-accent-tint);
+}
+
+/* TASK-040: viền nhấn để khớp với viền chọn màu primary trong scene 3D — không đụng `background` để
+   vẫn phân biệt được với is-custom khi 1 món vừa là tự thêm vừa đang được chọn. */
+.room3d-furniture-list li.is-selected {
+  box-shadow: 0 0 0 2px var(--color-primary) inset;
+}
+
+.room3d-furniture-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-danger);
+  font-size: 0.85rem;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+/* TASK-041: nút nhân đôi — cùng kiểu icon-button với nút xoá, đổi màu primary để phân biệt hành động. */
+.room3d-furniture-duplicate {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-primary);
+  font-size: 0.9rem;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+/* TASK-046: ô nhập chi phí ước tính cho món tự thêm — nhỏ gọn để vừa trong 1 dòng danh sách. */
+.room3d-furniture-cost-input {
+  width: 84px;
+  font-size: 0.78rem;
+  padding: 2px 4px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  /* TASK-088: thiếu color trước đó — chữ giữ mặc định đen của trình duyệt, không đọc được khi
+     --color-bg đổi sang nền tối. */
+  color: var(--color-text);
+}
+
+/* TASK-036: sơ đồ mặt bằng 2D luôn được dựng sẵn (Room3DViewer) để in được dù đang xem tab nào trên
+   màn hình — ẩn hoàn toàn lúc xem bình thường, chỉ hiện trong @media print bên dưới. */
+.room3d-print-plan {
+  display: none;
+}
+
+/* Xuất/in kết quả (TASK-024) — chỉ giữ lại nội dung tĩnh có ý nghĩa khi in trên giấy, ẩn nav/nút bấm/
+   khung 3D tương tác (canvas WebGL thường in ra trống/đen, không đáng tin cậy qua các trình duyệt). */
+/* TASK-081: overlay tour hướng dẫn nhanh ở Dashboard — theo cùng pattern overlay tối màu đã có ở
+   .room3d-lightbox (Room3DViewer, TASK-033), tách class riêng để không phụ thuộc lẫn nhau. */
+.onboarding-tour-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 22, 18, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 24px;
+}
+
+.onboarding-tour-modal {
+  max-width: 440px;
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.onboarding-tour-dots {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.onboarding-tour-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-neutral-tint);
+}
+
+.onboarding-tour-dot.is-active {
+  background: var(--color-primary);
+}
+
+.onboarding-tour-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.onboarding-tour-relaunch {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--color-secondary);
+  font-size: 0.85rem;
+  text-decoration: underline;
+}
+
+.onboarding-tour-relaunch:hover,
+.onboarding-tour-relaunch:hover:not(:disabled) {
+  background: none !important;
+  color: var(--color-secondary);
+}
+
+@media print {
+
+  .no-print,
+  .navbar {
+    display: none !important;
+  }
+
+  .room3d-print-plan {
+    display: block;
+  }
+
+  body {
+    background: #fff;
+  }
+
+  .card {
+    box-shadow: none;
+    border: none;
+    padding: 0;
+  }
+}
+
+/* TASK-082: icon chuông + dropdown thông báo trong NavBar — khối CSS riêng, additive. */
+.notification-bell {
+  position: relative;
+  display: inline-flex;
+}
+
+.notification-bell__trigger {
+  position: relative;
+  background: transparent;
+  border: none;
+  color: var(--color-text);
+  font-size: 1.2rem;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.notification-bell__trigger:hover {
+  background: var(--color-neutral-tint);
+}
+
+.notification-bell__badge {
+  position: absolute;
+  top: -2px;
+  right: 0;
+  background: var(--color-danger);
+  color: #fff;
+  border-radius: var(--radius-pill);
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 3px 5px;
+  min-width: 16px;
+  text-align: center;
+}
+
+.notification-bell__dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 320px;
+  max-height: 400px;
+  overflow-y: auto;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  z-index: 50;
+}
+
+.notification-bell__empty {
+  padding: 16px;
+  margin: 0;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.notification-bell__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.notification-bell__list li {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-border);
+  cursor: pointer;
+}
+
+.notification-bell__list li:last-child {
+  border-bottom: none;
+}
+
+.notification-bell__list li:hover {
+  background: var(--color-neutral-tint);
+}
+
+.notification-bell__list li.is-unread {
+  background: var(--color-primary-tint);
+}
+
+.notification-bell__message {
+  margin: 0 0 4px;
+  font-size: 0.85rem;
+  color: var(--color-text);
+}
+
+.notification-bell__time {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+}
+
+/* TASK-151: nút "Đánh dấu tất cả đã đọc" — chỉ render khi unreadCount > 0 (xem NavBar.jsx), nằm
+   trên cùng dropdown, trước danh sách/empty-state. Dùng lại class "secondary" có sẵn cho màu sắc,
+   chỉ chỉnh kích thước/khoảng cách cho vừa khung dropdown 320px. */
+.notification-bell__mark-all {
+  display: block;
+  width: calc(100% - 16px);
+  margin: 8px 8px 0;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+}
+
+/* TASK-083/084/087 (coordinator): dropdown tài khoản, cùng pattern .notification-bell*. */
+.account-menu {
+  position: relative;
+  display: inline-flex;
+}
+
+.account-menu__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  padding: 2px 4px 2px 2px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+
+.account-menu__trigger:hover {
+  background: var(--color-neutral-tint);
+}
+
+.account-menu__dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  z-index: 50;
+  padding: 6px;
+  gap: 2px;
+}
+
+.account-menu__dropdown a,
+.account-menu__dropdown button {
+  text-align: left;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.account-menu__dropdown a:hover {
+  background: var(--color-neutral-tint);
+}
+
+.account-menu__dropdown button.secondary {
+  border: none;
+  margin-top: 4px;
+  border-top: 1px solid var(--color-border);
+  border-radius: 0;
+  padding-top: 10px;
+}
+
+/* TASK-147: menu ngữ cảnh "⋮" gộp các action (Đổi tên/Ghim/Yêu thích/Xoá mềm) của mỗi project card/row
+   ở Projects.jsx — cùng pattern .account-menu/.account-menu__dropdown (NavBar.jsx) và .room3d-dropdown
+   (Room3DViewer.jsx), đổi tiền tố project-actions-menu-* để nhất quán với các class khác của trang này. */
+.project-actions-menu {
+  position: relative;
+  display: inline-flex;
+}
+
+.project-actions-menu__trigger {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 4px 8px;
+}
+
+.project-actions-menu__trigger:hover {
+  background: var(--color-neutral-tint);
+}
+
+.project-actions-menu__dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 6px;
+  gap: 2px;
+}
+
+.project-actions-menu__dropdown button {
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.project-actions-menu__dropdown button:hover {
+  background: var(--color-neutral-tint);
+}
+
+/* TASK-147: hàng "🕘 Mở nhanh" đầu trang Projects — chip dạng nút "secondary" có sẵn, chỉ thêm layout
+   cuộn ngang cho hàng chứa (đề phòng nhiều mục trên màn hình hẹp), cùng cách room3d-furniture-group-label
+   dùng ở Room3DViewer.jsx cho "🕘 Vừa dùng gần đây". */
+.recent-projects-row {
+  margin: 16px 0 0;
+}
+
+.recent-projects-row__label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--color-text-muted, #666);
+  margin-bottom: 6px;
+}
+
+.recent-projects-row__list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Link (<a>) chứ không phải <button> nên không tự thừa kế được rule `button.secondary` (dòng ~271) —
+   khai báo lại đúng cùng màu sắc/viền để đồng bộ hình dạng "secondary" trong toàn app. */
+.recent-projects-row__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: var(--color-secondary);
+  border: 1px solid var(--color-secondary);
+  border-radius: var(--radius-pill);
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.recent-projects-row__item:hover {
+  background: var(--color-secondary-tint);
+  color: var(--color-secondary-hover);
+}
+
+/* TASK-146: mobile-friendly cho trang Kết quả thiết kế (DesignResult.jsx, wrapper .design-result-page).
+   .design-actions là rule BASE (áp dụng mọi viewport) — giữ ĐÚNG y hệt hành vi cũ vốn là inline
+   style={{ display: 'flex', gap: 8 }} trên hàng nút Chia sẻ/Tải PDF/Tóm tắt/Nhân bản/Đặt lịch nhắc.
+   Phải chuyển từ inline sang class vì inline style luôn thắng CSS thường bất kể specificity (xem ghi
+   chú tương tự ở .room3d-mount, dòng ~1115), nên @media bên dưới không override được nếu giữ inline. */
+.design-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Nhánh mobile MỚI riêng cho trang này — không đụng layout desktop (không có @media nào ở trên bao
+   phủ .design-result-page/.design-actions). Ảnh Trước/Sau (.compare-slider) đã sẵn width:100% so với
+   .card chứa nó, nên giảm padding .card trên mobile là đủ để ảnh "chiếm đủ chiều rộng" thay vì bị viền
+   trắng 24px hai bên nuốt mất diện tích màn hình hẹp. Hàng nút hành động xếp cột full-width, tối thiểu
+   44px chiều cao — đúng chuẩn tap-target tối thiểu (WCAG 2.5.5 / Apple HIG). */
+@media (max-width: 640px) {
+  .design-result-page .card {
+    padding: 16px;
+  }
+
+  .design-actions {
+    flex-direction: column;
+  }
+
+  .design-actions button {
+    width: 100%;
+    min-height: 44px;
+  }
+}
+
+/* TASK-149: mobile sticky cho nút hành động chính (RoomNew.jsx, wrapper .room-new-page) — không đụng
+   layout desktop (không có @media nào ở trên bao phủ .room-new-page/.room-new-submit-row, cùng pattern
+   scoping TASK-146 ở trên). Hàng nút "Gửi yêu cầu AI thiết kế"/"Xoá thiết lập" dùng position: sticky
+   (KHÔNG dùng fixed, để không che nội dung khi form ngắn/không cuộn hết viewport) dính ở đáy màn hình
+   khi cuộn qua nội dung form dài. Nền đục var(--color-surface) (tự đổi theo dark mode) + box-shadow nhẹ
+   phía trên để tách khỏi nội dung form đang cuộn phía sau; padding dọc để không dính sát mép dưới. */
+@media (max-width: 640px) {
+  .room-new-page .room-new-submit-row {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    background: var(--color-surface);
+    padding: 12px 0;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.12);
+  }
+}
+
+/* TASK-144: popup xem trước nhanh (Projects.jsx) — nổi ngay dưới card/row đang hover/bấm giữ, KHÔNG
+   chiếm layout (position: absolute, neo vào .card/.room-list-row có position: relative). z-index cao
+   hơn các nút no-print (pin/favorite/trash, z-index: 1) trong cùng card để không bị che khuất. */
+.project-preview-popup {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 8px;
+  right: 8px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--color-surface, var(--color-bg));
+  border: 1px solid var(--color-border, var(--color-support));
+  border-radius: var(--radius-md, 8px);
+  box-shadow: var(--shadow-card, 0 4px 16px rgba(0, 0, 0, 0.15));
+  pointer-events: none;
+}
+
+.project-preview-popup__icon {
+  font-size: 1.8rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.project-preview-popup__body {
+  min-width: 0;
+}
+
+.project-preview-popup__name {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.project-preview-popup__updated {
+  margin: 2px 0 0;
+  font-size: 0.78rem;
+  color: var(--color-text-muted, var(--color-support));
+}
+
+/* TASK-151: "Mobile Tap Feedback" — toàn bộ file trên chỉ có `:hover`, không có `:active` nào, nên
+   thiết bị cảm ứng (không có hover thật) chạm vào không có phản hồi trực quan nào. Khối ADDITIVE ở
+   cuối file (không sửa/định dạng lại các rule `:hover` hiện có phía trên — một agent khác có thể
+   đang đụng styles.css song song cho task khác, giữ diff tối thiểu). Mỗi rule dưới đây mirror đúng
+   selector của rule `:hover` tương ứng đã có (đổi `:hover` -> `:active`), hiệu ứng NHẸ (tối/sáng nền
+   một chút hoặc scale nhỏ), THUẦN CSS — không thêm JS/animation logic, không gây giật/nhảy layout
+   (transform không kích hoạt reflow). */
+.card:active {
+  filter: brightness(0.97);
+}
+
+button:active:not(:disabled) {
+  background: var(--color-primary-hover);
+  transform: scale(0.97);
+}
+
+button.secondary:active:not(:disabled) {
+  background: var(--color-secondary-tint);
+  color: var(--color-secondary-hover);
+  transform: scale(0.97);
+}
+
+.table tbody tr:active {
+  background: var(--color-primary-tint);
+}
+
+.room-preset-chip-delete:active {
+  background: var(--color-danger-tint);
+  color: var(--color-danger);
+}
+
+.room3d-dropdown__menu button:active {
+  background: var(--color-neutral-tint);
+}
+
+.notification-bell__trigger:active {
+  background: var(--color-neutral-tint);
+}
+
+.notification-bell__list li:active {
+  background: var(--color-neutral-tint);
+}
+
+.account-menu__trigger:active {
+  background: var(--color-neutral-tint);
+}
+
+.account-menu__dropdown a:active {
+  background: var(--color-neutral-tint);
+}
+
+.project-actions-menu__trigger:active {
+  background: var(--color-neutral-tint);
+}
+
+.project-actions-menu__dropdown button:active {
+  background: var(--color-neutral-tint);
+}
+
+.recent-projects-row__item:active {
+  background: var(--color-secondary-tint);
+  color: var(--color-secondary-hover);
+}
