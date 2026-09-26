@@ -307,7 +307,8 @@ export default function Dashboard() {
               flexDirection: 'column',
               gap: 10,
               alignSelf: 'stretch',
-              minWidth: 160,
+              flex: 'none',
+              width: 180,
             }}
           >
             <Link
@@ -440,21 +441,9 @@ export default function Dashboard() {
           ===================================================== */}
       <div
         className="dashboard-panel"
-        style={{
-          ...contentStyle,
-          padding: 10,
-        }}
+        style={contentStyle}
       >
-        <div
-          className="dashboard-panel"
-          style={{
-            ...contentStyle,
-            marginTop: 16,
-            padding: 10,
-          }}
-        >
-          <RecentDesigns />
-        </div>
+        <RecentDesigns />
 
         {usage && subscription && (
           <div

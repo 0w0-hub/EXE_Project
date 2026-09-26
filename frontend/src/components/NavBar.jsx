@@ -5,6 +5,7 @@ import { notificationApi } from '../services/api'
 import useEscapeKey from '../hooks/useEscapeKey'
 import ThemeToggle from './ThemeToggle'
 import FontSizeControl from './FontSizeControl'
+import logoImg from '../assets/Logo.jpg'
 
 // TASK-082: poll interval cho unread-count — đơn giản đúng quy mô MVP, KHÔNG dùng WebSocket/SSE
 // (xem tasks/active/TASK-082-notification-center.md).
@@ -24,7 +25,19 @@ export default function NavBar() {
 
   return (
     <header className="navbar">
-      <NavLink to="/" className="navbar-brand" end>🏠 Homely</NavLink>
+      <NavLink to="/" className="navbar-brand" end>
+        <img
+          src={logoImg}
+          alt="Homely"
+          style={{
+            height: '42px',
+            width: 'auto',
+            borderRadius: '5px',
+            objectFit: 'contain',
+            display: 'block',
+          }}
+        />
+      </NavLink>
       <nav className="navbar-nav">
         {/* TASK-088 (coordinator): hiện cho cả 2 trạng thái đăng nhập — theme là sở thích trình duyệt,
             không phải dữ liệu tài khoản. */}
