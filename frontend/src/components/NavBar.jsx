@@ -5,7 +5,7 @@ import { notificationApi } from '../services/api'
 import useEscapeKey from '../hooks/useEscapeKey'
 import ThemeToggle from './ThemeToggle'
 import FontSizeControl from './FontSizeControl'
-import logoImg from '../assets/Logo.jpg'
+import logoImg from '../assets/logo.png'  
 
 // TASK-082: poll interval cho unread-count — đơn giản đúng quy mô MVP, KHÔNG dùng WebSocket/SSE
 // (xem tasks/active/TASK-082-notification-center.md).
