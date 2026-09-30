@@ -8,11 +8,11 @@ const STATUS_LABELS = {
 }
 
 const ROOM_ICONS = [
-  { keyword: 'khach', icon: '🛋️' },
-  { keyword: 'ngu', icon: '🛏️' },
-  { keyword: 'bep', icon: '🍳' },
-  { keyword: 'lam viec', icon: '💻' },
-  { keyword: 'tam', icon: '🛁' },
+  { keyword: 'khach' },
+  { keyword: 'ngu'},
+  { keyword: 'bep'},
+  { keyword: 'lam viec' },
+  { keyword: 'tam'},
 ]
 
 function normalize(str) {

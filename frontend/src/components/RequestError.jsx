@@ -10,7 +10,7 @@ export default function RequestError({ message, onRetry }) {
       </p>
       {onRetry && (
         <button type="button" className="secondary" style={{ marginTop: 12 }} onClick={onRetry}>
-          🔄 Thử lại
+          Thử lại
         </button>
       )}
     </div>

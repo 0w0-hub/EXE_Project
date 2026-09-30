@@ -206,7 +206,11 @@ function NotificationBell({ navigate }) {
         aria-haspopup="true"
         aria-expanded={open}
       >
-        🔔
+        <img
+          src="/dist/assets/bell.png"
+          alt="Thông báo"
+          className="notification-bell__icon"
+        />
         {unreadCount > 0 && (
           <span className="notification-bell__badge">{unreadCount > 9 ? '9+' : unreadCount}</span>
         )}

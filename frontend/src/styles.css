@@ -79,7 +79,7 @@
    styles.css dùng rem/em nên hiệu ứng lan toả tự nhiên, không cần sửa từng component/trang.
    "md" (mặc định) = 100% hiện tại, không cần rule riêng. */
 :root[data-font-size="sm"] {
-  font-size: 87.5%;
+  font-size: 90%;
 }
 
 :root[data-font-size="lg"] {
@@ -316,7 +316,9 @@ button:disabled {
 button.secondary {
   background: transparent;
   color: var(--color-secondary);
-  border: 1px solid var(--color-secondary);
+  border: 2px solid var(--color-secondary);
+  font-size: 100%;
+  font-family: 'Poppins', sans-serif;
 }
 
 button.secondary:hover:not(:disabled) {
@@ -2077,4 +2079,11 @@ button.secondary:active:not(:disabled) {
   .recent-designs__grid {
     grid-template-columns: 1fr;
   }
+}
+
+.notification-bell__icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
 }

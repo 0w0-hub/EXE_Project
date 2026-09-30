@@ -60,7 +60,7 @@ export default function RoomPresetBar({ form, onApply }) {
       <label>Mẫu tự lưu của bạn</label>
       <div>
         <button type="button" className="secondary" onClick={handleSave}>
-          💾 Lưu làm mẫu
+          Lưu làm mẫu
         </button>
       </div>
 

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { assetApi, roomApi, subscriptionApi, usageApi } from '../services/api'
 import vidGif from '../assets/vid.gif'
-import anhDecor from '../assets/anhdecor.jpg'
 import OnboardingTour from '../components/OnboardingTour'
 import DesignInsightsCard from '../components/DesignInsightsCard'
 import RecentDesigns from '../components/RecentDesigns'
@@ -33,7 +32,6 @@ export default function Dashboard() {
   useDocumentTitle('Trang chủ')
 
   // Container dùng chung cho toàn bộ nội dung Dashboard.
-  // Mục tiêu: tất cả các section có cùng mép trái/phải.
   const contentStyle = {
     width: '100%',
     maxWidth: 1500,
@@ -197,213 +195,285 @@ export default function Dashboard() {
       {showTour && <OnboardingTour onClose={closeTour} />}
 
       {/* =====================================================
-          HERO / INTRO
+          HERO / GIỚI THIỆU
           ===================================================== */}
       <div
         className="section-tint"
         style={{
           width: 'calc(100vw - 10px)',
-          minHeight: 'calc(35vw - 10px)',
           marginLeft: 'calc(50% - 50vw + 5px)',
           marginRight: 'calc(50% - 50vw + 5px)',
           marginTop: -20,
           boxSizing: 'border-box',
-          padding: 20,
+          padding: '48px 20px 56px',
         }}
       >
         <div
           style={{
             ...contentStyle,
             display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'stretch',
-            gap: 24,
-            flexWrap: 'wrap',
+            flexDirection: 'column',
+            alignItems: 'center',
+            textAlign: 'center',
           }}
         >
           {/* =========================
-              CỘT TRÁI
+              GIF TRUNG TÂM
               ========================= */}
           <div
             style={{
-              flex: '1 1 400px',
-              minWidth: 0,
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
-            {/* Hai ảnh */}
+            <img
+              src={vidGif}
+              alt="Homely AI Interior Design"
+              style={{
+                display: 'block',
+                width: 'min(760px, 100%)',
+                height: 'auto',
+                maxHeight: 430,
+                borderRadius: 'var(--radius-lg, 16px)',
+                objectFit: 'cover',
+                boxShadow: 'var(--shadow-md, 0 10px 30px rgba(0,0,0,0.12))',
+              }}
+            />
+          </div>
+
+          {/* =========================
+              GIỚI THIỆU NGẮN
+              ========================= */}
+          <div
+            style={{
+              width: '100%',
+              maxWidth: 850,
+              marginTop: 36,
+            }}
+          >
+            <h1
+              style={{
+                margin: 0,
+                fontSize: 'clamp(2rem, 4vw, 3rem)',
+                lineHeight: 1.15,
+              }}
+            >
+              Thiết kế không gian sống
+              <br />
+              <span style={{ color: 'var(--color-primary)' }}>
+                theo cách của bạn
+              </span>
+            </h1>
+
+            <p
+              className="text-muted"
+              style={{
+                maxWidth: 720,
+                margin: '18px auto 0',
+                fontSize: '1.05rem',
+                lineHeight: 1.7,
+              }}
+            >
+              Homely giúp bạn biến ý tưởng về căn phòng trong mơ thành
+              thiết kế nội thất trực quan bằng AI. Chỉ cần tạo phòng,
+              lựa chọn phong cách và ngân sách, Homely sẽ đề xuất phương
+              án phù hợp với không gian của bạn.
+            </p>
+
             <div
               style={{
                 display: 'flex',
+                justifyContent: 'center',
                 gap: 12,
-                marginBottom: 16,
+                flexWrap: 'wrap',
+                marginTop: 24,
               }}
             >
-              <img
-                src={vidGif}
-                alt="Intro"
+              <Link
+                to="/rooms/new"
                 style={{
-                  flex: 1,
-                  width: 0,
-                  minWidth: 0,
-                  borderRadius: 'var(--radius-md)',
-                  objectFit: 'cover',
-                  height: 200,
+                  textDecoration: 'none',
                 }}
-              />
+              >
+                <button type="button">
+                  Tạo phòng mới
+                </button>
+              </Link>
 
-              <img
-                src={anhDecor}
-                alt="Decor"
+              <Link
+                to="/templates"
                 style={{
-                  flex: 1,
-                  width: 0,
-                  minWidth: 0,
-                  borderRadius: 'var(--radius-md)',
-                  objectFit: 'cover',
-                  height: 200,
+                  textDecoration: 'none',
                 }}
-              />
+              >
+                <button
+                  type="button"
+                  className="secondary"
+                >
+                  Khám phá mẫu thiết kế
+                </button>
+              </Link>
             </div>
+          </div>
 
-            {/* Tiêu đề */}
+          {/* =========================
+              3D DECOR
+              ========================= */}
+          <div
+            style={{
+              width: '100%',
+              maxWidth: 1100,
+              marginTop: 64,
+              paddingTop: 48,
+              borderTop: '1px solid var(--color-border, #e5e7eb)',
+            }}
+          >
+            <p
+              style={{
+                margin: 0,
+                fontSize: '0.85rem',
+                fontWeight: 700,
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                color: 'var(--color-primary)',
+              }}
+            >
+              3D Decor
+            </p>
+
             <h2
               style={{
-                margin: '50px 0 4px',
-                fontSize: '1.8rem',
+                margin: '8px 0 12px',
+                fontSize: 'clamp(1.6rem, 3vw, 2.2rem)',
               }}
             >
-              {rooms.length === 0
-                ? 'Sẵn sàng tạo thiết kế đầu tiên?'
-                : 'Chào mừng trở lại 👋'}
+              Trực quan hóa căn phòng với không gian 3D
             </h2>
 
             <p
               className="text-muted"
               style={{
-                margin: 0,
+                maxWidth: 760,
+                margin: '0 auto',
+                lineHeight: 1.7,
               }}
             >
-              Quản lý các phòng đã tạo, hoặc bắt đầu một thiết kế mới cùng AI.
+              Không chỉ xem hình ảnh thiết kế, bạn còn có thể khám phá
+              không gian nội thất dưới góc nhìn 3D. Quan sát cách bố trí
+              nội thất, hình dung không gian và dễ dàng đánh giá phương án
+              trước khi đưa ra quyết định.
             </p>
 
-            <button
-              type="button"
-              className="onboarding-tour-relaunch"
-              style={{
-                marginTop: 8,
-              }}
-              onClick={() => setShowTour(true)}
-            >
-              Xem lại hướng dẫn
-            </button>
-          </div>
-
-          {/* =========================
-              THAO TÁC NHANH
-              ========================= */}
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 10,
-              alignSelf: 'stretch',
-              flex: 'none',
-              width: 180,
-            }}
-          >
-            <Link
-              to="/rooms/new"
-              style={{
-                flex: 1,
-                display: 'flex',
-                textDecoration: 'none',
-              }}
-            >
-              <button
-                style={{
-                  flex: 1,
-                  width: '100%',
-                }}
-              >
-                + Tạo phòng mới
-              </button>
-            </Link>
-
-            <Link
-              to="/projects"
-              style={{
-                flex: 1,
-                display: 'flex',
-                textDecoration: 'none',
-              }}
-            >
-              <button
-                type="button"
-                className="secondary"
-                style={{
-                  flex: 1,
-                  width: '100%',
-                }}
-              >
-                Mở Projects
-              </button>
-            </Link>
-
-            <Link
-              to="/trash"
-              style={{
-                flex: 1,
-                display: 'flex',
-                textDecoration: 'none',
-              }}
-            >
-              <button
-                type="button"
-                className="secondary"
-                style={{
-                  flex: 1,
-                  width: '100%',
-                }}
-              >
-                Thùng rác
-              </button>
-            </Link>
-
-            {/* Làm mới */}
             <div
               style={{
-                flex: 1,
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 2,
+                display: 'grid',
+                gridTemplateColumns:
+                  'repeat(auto-fit, minmax(220px, 1fr))',
+                gap: 16,
+                marginTop: 28,
+                textAlign: 'left',
               }}
             >
-              <button
-                type="button"
-                className="secondary"
-                onClick={handleRefresh}
-                disabled={refreshing}
-                title="Làm mới (Shift+R)"
+              <div
+                className="card"
                 style={{
-                  flex: 1,
-                  width: '100%',
+                  margin: 0,
+                  height: '100%',
+                  boxSizing: 'border-box',
                 }}
               >
-                {refreshing
-                  ? '🔄 Đang làm mới…'
-                  : '🔄 Làm mới'}
-              </button>
-
-              {lastRefreshedAt && (
-                <span
-                  className="text-muted"
+                <div
                   style={{
-                    fontSize: '0.75rem',
+                    fontSize: '2rem',
+                    marginBottom: 12,
                   }}
                 >
-                  Cập nhật lúc {formatTimeHms(lastRefreshedAt)}
-                </span>
-              )}
+                  
+                </div>
+
+                <h3 style={{ margin: '0 0 8px' }}>
+                  Không gian 3D
+                </h3>
+
+                <p
+                  className="text-muted"
+                  style={{
+                    margin: 0,
+                    lineHeight: 1.6,
+                  }}
+                >
+                  Xem căn phòng dưới dạng không gian 3D thay vì
+                  chỉ nhìn một hình ảnh phẳng.
+                </p>
+              </div>
+
+              <div
+                className="card"
+                style={{
+                  margin: 0,
+                  height: '100%',
+                  boxSizing: 'border-box',
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: '2rem',
+                    marginBottom: 12,
+                  }}
+                >
+                  
+                </div>
+
+                <h3 style={{ margin: '0 0 8px' }}>
+                  Bố trí nội thất
+                </h3>
+
+                <p
+                  className="text-muted"
+                  style={{
+                    margin: 0,
+                    lineHeight: 1.6,
+                  }}
+                >
+                  Hình dung vị trí và cách sắp xếp các món nội thất
+                  trong chính không gian của bạn.
+                </p>
+              </div>
+
+              <div
+                className="card"
+                style={{
+                  margin: 0,
+                  height: '100%',
+                  boxSizing: 'border-box',
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: '2rem',
+                    marginBottom: 12,
+                  }}
+                >
+                  
+                </div>
+
+                <h3 style={{ margin: '0 0 8px' }}>
+                  Khám phá thiết kế
+                </h3>
+
+                <p
+                  className="text-muted"
+                  style={{
+                    margin: 0,
+                    lineHeight: 1.6,
+                  }}
+                >
+                  Xoay, quan sát và khám phá thiết kế để có góc nhìn
+                  trực quan hơn về căn phòng.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -415,7 +485,7 @@ export default function Dashboard() {
           <div
             style={{
               ...contentStyle,
-              marginTop: 16,
+              marginTop: 40,
             }}
           >
             <div
@@ -423,6 +493,8 @@ export default function Dashboard() {
               style={{
                 margin: 0,
                 maxWidth: 360,
+                marginLeft: 'auto',
+                marginRight: 'auto',
               }}
             >
               <input
@@ -437,7 +509,6 @@ export default function Dashboard() {
 
       {/* =====================================================
           NỘI DUNG BÊN DƯỚI
-          TẤT CẢ DÙNG CHUNG maxWidth 1400
           ===================================================== */}
       <div
         className="dashboard-panel"
@@ -445,6 +516,9 @@ export default function Dashboard() {
       >
         <RecentDesigns />
 
+        {/* =========================
+            THỐNG KÊ GÓI / USAGE / PHÒNG
+            ========================= */}
         {usage && subscription && (
           <div
             className="room-grid"

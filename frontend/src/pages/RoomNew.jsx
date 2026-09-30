@@ -9,11 +9,11 @@ import useDocumentTitle from '../hooks/useDocumentTitle'
 import roomTipPhoto from '../assets/roomnew-tip-photo.jpg'
 
 const ROOM_TYPE_OPTIONS = [
-  { icon: '🛋️', label: 'Phòng khách' },
-  { icon: '🛏️', label: 'Phòng ngủ' },
-  { icon: '🍳', label: 'Phòng bếp' },
-  { icon: '💻', label: 'Phòng làm việc' },
-  { icon: '🛁', label: 'Phòng tắm' },
+  { label: 'Phòng khách' },
+  { label: 'Phòng ngủ' },
+  { label: 'Phòng bếp' },
+  { label: 'Phòng làm việc' },
+  { label: 'Phòng tắm' },
 ]
 
 const STYLE_OPTIONS = ['Scandinavian', 'Japandi', 'Modern', 'Industrial', 'Minimalist', 'Bohemian']
@@ -704,7 +704,7 @@ export default function RoomNew() {
             {submitting ? stepLabels[step] || 'Đang xử lý...' : 'Gửi yêu cầu AI thiết kế'}
           </button>
           <button type="button" className="secondary" onClick={handleClearAll} disabled={submitting}>
-            🧹 Xoá thiết lập
+            Xoá thiết lập
           </button>
           <DraftIndicator status={draftStatus} />
         </div>
