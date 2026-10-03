@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { useAuth } from './contexts/AuthContext'
 import NavBar from './components/NavBar'
+import AIChatbox from './components/AIChatbox'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
@@ -37,6 +38,12 @@ function AdminRoute({ children }) {
   if (!user) return <Navigate to="/login" replace />
   if (user.role !== 'ADMIN') return <Navigate to="/" replace />
   return children
+}
+
+function AIChatboxGuard() {
+  const { user } = useAuth()
+  if (!user) return null
+  return <AIChatbox />
 }
 
 export default function App() {
@@ -231,6 +238,8 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
+      {/* AI Chatbox — fixed overlay, chỉ hiện khi đã đăng nhập */}
+      <AIChatboxGuard />
     </>
   )
 }
