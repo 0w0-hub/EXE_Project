@@ -233,7 +233,7 @@ export default function Dashboard() {
               alt="Homely AI Interior Design"
               style={{
                 display: 'block',
-                width: 'min(760px, 100%)',
+                width: '100%',
                 height: 'auto',
                 maxHeight: 430,
                 borderRadius: 'var(--radius-lg, 16px)',
