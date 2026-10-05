@@ -40,7 +40,7 @@ export default function RoomDecorStudio({
   }, [initialRoom, initialFurniture, loadScene]);
 
   return (
-    <div className={`w-full h-full relative ${className}`}>
+    <div className={`decor-studio-root w-full h-full relative overflow-hidden ${className}`}>
       <App onSaveSuccess={onSaveSuccess} onLoadDesign={onLoadDesign} />
     </div>
   );

@@ -292,13 +292,13 @@ export default function Dashboard() {
               }}
             >
               <Link
-                to="/rooms/new"
+                to="/designs"
                 style={{
                   textDecoration: 'none',
                 }}
               >
                 <button type="button">
-                  Tạo phòng mới
+                  🎨 Tạo thiết kế 3D
                 </button>
               </Link>
 
@@ -627,9 +627,9 @@ export default function Dashboard() {
                 thiết kế.
               </p>
 
-              <Link to="/rooms/new">
+              <Link to="/designs">
                 <button>
-                  Tạo phòng đầu tiên
+                  🎨 Tạo thiết kế 3D đầu tiên
                 </button>
               </Link>
             </div>

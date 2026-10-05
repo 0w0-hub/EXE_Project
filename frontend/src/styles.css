@@ -196,6 +196,21 @@ h4 {
   box-sizing: border-box;
 }
 
+.studio-main-container {
+  width: 100%;
+  max-width: 100%;
+  height: calc(100vh - 66px);
+  min-height: 600px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  background-color: #020617;
+  position: relative;
+}
+
 .page-loading {
   padding: 48px;
   text-align: center;

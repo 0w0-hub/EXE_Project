@@ -1017,8 +1017,8 @@ export default function Projects() {
       {noDesignsAtAll && (
         <div className="card">
           <p>Chưa có thiết kế nào. Bắt đầu bằng cách tạo phòng đầu tiên và để AI đề xuất phương án thiết kế.</p>
-          <Link to="/rooms/new">
-            <button type="button">+ Tạo phòng mới</button>
+          <Link to="/designs">
+            <button type="button">+ Tạo thiết kế 3D mới</button>
           </Link>
         </div>
       )}

@@ -23,6 +23,15 @@ export default function DecorStudioPage() {
     currentDesignName ? `${currentDesignName} — 3D Decor Studio` : '3D Decor Studio — Homely'
   );
 
+  // Khóa cuộn trang khi ở trang Studio để đạt trải nghiệm Full Screen tối đa
+  useEffect(() => {
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
+  }, []);
+
   // Tải thiết kế từ database khi có ID trên URL
   useEffect(() => {
     if (!id) {
@@ -110,18 +119,12 @@ export default function DecorStudioPage() {
   }
 
   return (
-    <div
-      className="decor-studio-page relative w-full overflow-hidden rounded-2xl shadow-2xl border border-slate-800"
-      style={{
-        height: 'calc(100vh - 84px)',
-        minHeight: '650px',
-      }}
-    >
+    <div className="decor-studio-page relative w-full h-full overflow-hidden bg-slate-950 flex flex-col">
       <Suspense
         fallback={
-          <div className="flex flex-col items-center justify-center h-full gap-3 text-slate-400 bg-slate-950">
-            <div className="w-8 h-8 border-3 border-blue-500/30 border-t-blue-500 rounded-full animate-spin" />
-            <p className="text-xs font-medium">Đang tải không gian 3D Decor Studio...</p>
+          <div className="flex flex-col items-center justify-center flex-1 w-full h-full gap-3 text-slate-400 bg-slate-950">
+            <div className="w-10 h-10 border-3 border-blue-500/20 border-t-blue-500 rounded-full animate-spin" />
+            <p className="text-xs font-medium tracking-wide text-slate-300">Đang khởi tạo không gian 3D Decor Studio...</p>
           </div>
         }
       >
@@ -130,7 +133,7 @@ export default function DecorStudioPage() {
           userRole={user?.role?.toLowerCase() || 'user'}
           onSaveSuccess={handleSaveSuccess}
           onLoadDesign={handleLoadDesign}
-          className="w-full h-full"
+          className="w-full h-full flex-1"
         />
       </Suspense>
     </div>
