@@ -47,6 +47,7 @@ export default function NavBar() {
         <FontSizeControl />
         {user ? (
           <>
+            <NavLink to="/designs">🎨 Thiết kế 3D</NavLink>
             <NavLink to="/templates">Mẫu thiết kế</NavLink>
             <NavLink to="/projects">Dự án của tôi</NavLink>
             {user.role === 'ADMIN' && <NavLink to="/admin">Quản trị</NavLink>}

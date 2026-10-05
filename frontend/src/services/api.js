@@ -98,6 +98,14 @@ export const designApi = {
   trash: (page = 0, size = 10) => api.get('/designs/trash', { params: { page, size } }),
 }
 
+export const studioDesignApi = {
+  save: (payload) => api.post('/designs/studio/save', payload),
+  get: (id) => api.get(`/designs/studio/${id}`),
+  listMine: () => api.get('/designs/studio/mine'),
+  delete: (id) => api.delete(`/designs/studio/${id}`),
+}
+export const designStudioApi = studioDesignApi
+
 export const templateApi = {
   list: (category) => api.get('/templates', { params: category ? { category } : {} }),
   categories: () => api.get('/templates/categories'),
