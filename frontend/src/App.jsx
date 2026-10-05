@@ -43,7 +43,9 @@ function AdminRoute({ children }) {
 
 function AIChatboxGuard() {
   const { user } = useAuth()
-  if (!user) return null
+  const location = useLocation()
+  const isStudioRoute = location.pathname.startsWith('/designs') && !location.pathname.endsWith('/summary')
+  if (!user || isStudioRoute) return null
   return <AIChatbox />
 }
 
@@ -54,7 +56,7 @@ export default function App() {
   return (
     <>
       <NavBar />
-      <main className={isStudioRoute ? 'container-fluid' : 'container'}>
+      <main className={isStudioRoute ? 'studio-main-container' : 'container'}>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

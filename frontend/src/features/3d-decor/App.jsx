@@ -91,18 +91,18 @@ export default function App({ onSaveSuccess, onLoadDesign }) {
   ]);
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden bg-slate-950 select-none">
+    <div className="relative w-full h-full overflow-hidden bg-slate-950 select-none">
       {/* 1. Thanh công cụ trên cùng */}
       <TopBar />
 
       {/* 2. Không gian hiển thị: 3D Canvas hoặc 2D CAD độc lập (cùng 1 dữ liệu căn phòng useSceneStore) */}
-      <main className="w-full h-full">
+      <div className="w-full h-full">
         {activeTab === '2d-plan' ? (
           <FloorPlan2DView />
         ) : (
           <SceneCanvas />
         )}
-      </main>
+      </div>
 
       {/* 3. Khay chọn đồ nội thất bên trái */}
       <CatalogDrawer />
