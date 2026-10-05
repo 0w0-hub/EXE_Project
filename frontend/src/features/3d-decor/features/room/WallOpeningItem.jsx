@@ -5,6 +5,50 @@ import { useSceneStore } from '../../stores/useSceneStore';
 import { useEditorStore } from '../../stores/useEditorStore';
 import { checkCollisionOBB2D } from '../collision/collisionResolver';
 
+class OpeningErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  componentDidCatch(error) {
+    console.warn('Lỗi khi tải GLTF Opening Model, chuyển sang hình học cơ bản:', error?.message);
+  }
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback || null;
+    }
+    return this.props.children;
+  }
+}
+
+function ProceduralOpeningFallback({ opW, opH, frameThick, frameDepth, frameColor, isWindow }) {
+  return (
+    <group position={[0, opH / 2, 0]}>
+      <mesh position={[0, opH / 2 - frameThick / 2, 0]}>
+        <boxGeometry args={[opW, frameThick, frameDepth]} />
+        <meshStandardMaterial color={frameColor} roughness={0.5} />
+      </mesh>
+      <mesh position={[-opW / 2 + frameThick / 2, 0, 0]}>
+        <boxGeometry args={[frameThick, opH, frameDepth]} />
+        <meshStandardMaterial color={frameColor} roughness={0.5} />
+      </mesh>
+      <mesh position={[opW / 2 - frameThick / 2, 0, 0]}>
+        <boxGeometry args={[frameThick, opH, frameDepth]} />
+        <meshStandardMaterial color={frameColor} roughness={0.5} />
+      </mesh>
+      {isWindow && (
+        <mesh position={[0, 0, 0]}>
+          <boxGeometry args={[opW - frameThick * 2, opH - frameThick * 2, 0.008]} />
+          <meshStandardMaterial color="#38bdf8" transparent opacity={0.35} roughness={0.05} />
+        </mesh>
+      )}
+    </group>
+  );
+}
+
 /**
  * Model 3D GLTF thực tế của Cửa đi hoặc Cửa sổ thư viện
  * Khắc phục triệt để lỗi Bounding Box bằng THREE.Box3().setFromObject(clone)
@@ -661,41 +705,42 @@ export function WallOpeningItem({ op, segData }) {
               isSelected={isSelected}
             />
           ) : (
-            <Suspense
+            <OpeningErrorBoundary
               fallback={
-                <group position={[0, opH / 2, 0]}>
-                  <mesh position={[0, opH / 2 - frameThick / 2, 0]}>
-                    <boxGeometry args={[opW, frameThick, frameDepth]} />
-                    <meshStandardMaterial color={frameColor} roughness={0.5} />
-                  </mesh>
-                  <mesh position={[-opW / 2 + frameThick / 2, 0, 0]}>
-                    <boxGeometry args={[frameThick, opH, frameDepth]} />
-                    <meshStandardMaterial color={frameColor} roughness={0.5} />
-                  </mesh>
-                  <mesh position={[opW / 2 - frameThick / 2, 0, 0]}>
-                    <boxGeometry args={[frameThick, opH, frameDepth]} />
-                    <meshStandardMaterial color={frameColor} roughness={0.5} />
-                  </mesh>
-                  {isWindow && (
-                    <mesh position={[0, 0, 0]}>
-                      <boxGeometry args={[opW - frameThick * 2, opH - frameThick * 2, 0.008]} />
-                      <meshStandardMaterial color="#38bdf8" transparent opacity={0.35} roughness={0.05} />
-                    </mesh>
-                  )}
-                </group>
+                <ProceduralOpeningFallback
+                  opW={opW}
+                  opH={opH}
+                  frameThick={frameThick}
+                  frameDepth={frameDepth}
+                  frameColor={frameColor}
+                  isWindow={isWindow}
+                />
               }
             >
-              <GLTFOpeningModel
-                modelPath={defaultModelPath}
-                opW={opW}
-                opH={opH}
-                depth={frameDepth}
-                swingSide={swingSide}
-                swingDir={swingDir}
-                openAngle={openAngle}
-                isWindow={isWindow}
-              />
-            </Suspense>
+              <Suspense
+                fallback={
+                  <ProceduralOpeningFallback
+                    opW={opW}
+                    opH={opH}
+                    frameThick={frameThick}
+                    frameDepth={frameDepth}
+                    frameColor={frameColor}
+                    isWindow={isWindow}
+                  />
+                }
+              >
+                <GLTFOpeningModel
+                  modelPath={defaultModelPath}
+                  opW={opW}
+                  opH={opH}
+                  depth={frameDepth}
+                  swingSide={swingSide}
+                  swingDir={swingDir}
+                  openAngle={openAngle}
+                  isWindow={isWindow}
+                />
+              </Suspense>
+            </OpeningErrorBoundary>
           )}
 
           {/* Vùng quét mở cửa cảnh báo va chạm màu đỏ ở 3D */}
