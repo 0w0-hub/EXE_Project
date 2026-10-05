@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { useAuth } from './contexts/AuthContext'
 import NavBar from './components/NavBar'
 import AIChatbox from './components/AIChatbox'
@@ -6,6 +6,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import RoomNew from './pages/RoomNew'
+import DecorStudioPage from './pages/DecorStudioPage'
 import DesignResult from './pages/DesignResult'
 import DesignSummary from './pages/DesignSummary'
 import CompareDesigns from './pages/CompareDesigns'
@@ -47,10 +48,13 @@ function AIChatboxGuard() {
 }
 
 export default function App() {
+  const location = useLocation()
+  const isStudioRoute = location.pathname.startsWith('/designs') && !location.pathname.endsWith('/summary')
+
   return (
     <>
       <NavBar />
-      <main className="container">
+      <main className={isStudioRoute ? 'container-fluid' : 'container'}>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -73,19 +77,28 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+          {/* 3D Decor Studio — trang thiết kế 3D/2D CAD tương tác với tính năng lưu/tải database */}
           <Route
-            path="/designs/:jobId"
+            path="/designs"
             element={
               <ProtectedRoute>
-                <DesignResult />
+                <DecorStudioPage />
               </ProtectedRoute>
             }
           />
           <Route
-            path="/designs/:jobId/:slug"
+            path="/designs/:id"
             element={
               <ProtectedRoute>
-                <DesignResult />
+                <DecorStudioPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/designs/:id/:slug"
+            element={
+              <ProtectedRoute>
+                <DecorStudioPage />
               </ProtectedRoute>
             }
           />

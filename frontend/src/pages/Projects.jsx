@@ -895,7 +895,25 @@ export default function Projects() {
 
   return (
     <div>
-      <h2>Dự án của tôi</h2>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12, marginBottom: 8 }}>
+        <h2 style={{ margin: 0 }}>Dự án của tôi</h2>
+        <Link
+          to="/designs"
+          className="btn btn-primary"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 6,
+            textDecoration: 'none',
+            padding: '8px 16px',
+            borderRadius: 10,
+            fontWeight: 600,
+            fontSize: '0.875rem'
+          }}
+        >
+          🎨 Tạo thiết kế 3D mới
+        </Link>
+      </div>
 
       {/* TASK-147: "🕘 Mở nhanh" — CHỈ hiện khi có ít nhất 1 project đã từng click mở (localStorage),
           không hiện khung trống vô nghĩa. Khác hẳn "Dự án gần đây" trên Dashboard (server-data "vừa SỬA"). */}

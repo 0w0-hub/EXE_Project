@@ -1,0 +1,12 @@
+@tailwind components;
+@tailwind utilities;
+
+.decor-studio-root {
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: #f8fafc;
+}
+
+.decor-studio-root * {
+  box-sizing: border-box;
+}
