@@ -23,16 +23,18 @@ public record DesignJobResponse(
         String customName,
         // TASK-123: ghi chú nhanh (Quick Notes) user tự nhập (null nếu chưa ghi chú) — field thêm ở
         // CUỐI cùng lý do như customName/isFavorite.
-        String note
+        String note,
+        // Dữ liệu 3D Decor Studio scene JSON
+        String sceneData
 ) {
     public static DesignJobResponse pending(DesignJob job) {
         return new DesignJobResponse(job.getId(), job.getRoomId(), job.getPreferenceId(), job.getStatus(),
-                job.getErrorMessage(), job.getCreatedAt(), job.getUpdatedAt(), null, job.isFavorite(), job.getCustomName(), job.getNote());
+                job.getErrorMessage(), job.getCreatedAt(), job.getUpdatedAt(), null, job.isFavorite(), job.getCustomName(), job.getNote(), job.getSceneData());
     }
 
     public static DesignJobResponse withResult(DesignJob job, DesignResultResponse result) {
         return new DesignJobResponse(job.getId(), job.getRoomId(), job.getPreferenceId(), job.getStatus(),
-                job.getErrorMessage(), job.getCreatedAt(), job.getUpdatedAt(), result, job.isFavorite(), job.getCustomName(), job.getNote());
+                job.getErrorMessage(), job.getCreatedAt(), job.getUpdatedAt(), result, job.isFavorite(), job.getCustomName(), job.getNote(), job.getSceneData());
     }
 
     public record DesignResultResponse(

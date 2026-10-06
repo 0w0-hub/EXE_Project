@@ -64,6 +64,11 @@ public class DesignJob {
     @Column(name = "note", length = 500)
     private String note;
 
+    // 3D Decor Studio Scene JSON Data (room, wallGraph, items)
+    @Lob
+    @Column(name = "scene_data", columnDefinition = "TEXT")
+    private String sceneData;
+
     // TASK-107: NULL = job còn hoạt động bình thường; có giá trị = thời điểm xoá mềm (job nằm trong
     // thùng rác — xem GET /api/v1/designs/trash). Mọi query hiển thị cho user thường (KHÔNG áp dụng
     // Admin Data Explorer/AdminDesignController TASK-104) phải tự loại trừ deletedAt IS NOT NULL —

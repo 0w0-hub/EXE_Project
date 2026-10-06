@@ -13,7 +13,7 @@ WORKDIR /app
 RUN addgroup -g 1001 -S homely && adduser -S homely -u 1001
 
 COPY --from=builder /app/target/homely-backend.jar ./app.jar
-RUN mkdir -p /app/uploads && chown -R homely:homely /app
+RUN mkdir -p /app/uploads /app/data && chown -R homely:homely /app
 
 USER homely
 
