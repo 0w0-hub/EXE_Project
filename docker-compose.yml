@@ -1,55 +1,13 @@
 # ============================================================
-# Homely — Full-Stack Docker Compose
+# Homely — Full-Stack Docker Compose (SQLite)
 # Usage:
 #   docker compose up -d --build     # Build + start toàn bộ
 #   docker compose logs -f backend   # Xem log backend
-#   docker compose down -v           # Dừng + xoá volume
+#   docker compose down              # Dừng container (dữ liệu vẫn giữ tại ./data)
 # ============================================================
 
 services:
-  # ── Database ─────────────────────────────────────────────
-
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: homely_sqlserver
-    restart: unless-stopped
-    environment:
-      ACCEPT_EULA: "Y"
-      MSSQL_SA_PASSWORD: ${DB_PASSWORD:-YourStrong!Passw0rd}
-      MSSQL_PID: Express
-    ports:
-      - "${DB_PORT:-1433}:1433"
-    volumes:
-      - sqlserver_data:/var/opt/mssql
-    healthcheck:
-      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -Q 'SELECT 1' || /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -Q 'SELECT 1'"]
-      interval: 10s
-      timeout: 10s
-      retries: 10
-      start_period: 30s
-    networks:
-      - homely
-
-  # SQL Server không tự tạo database qua env var (khác Postgres/MySQL) — cần init 1 lần.
-  db-init:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: homely_db_init
-    environment:
-      MSSQL_SA_PASSWORD: ${DB_PASSWORD:-YourStrong!Passw0rd}
-      DB_NAME: ${DB_NAME:-homely_db}
-    depends_on:
-      sqlserver:
-        condition: service_healthy
-    entrypoint: >
-      bash -c "
-      SQLCMD=/opt/mssql-tools18/bin/sqlcmd;
-      [ -x \"$$SQLCMD\" ] || SQLCMD=/opt/mssql-tools/bin/sqlcmd;
-      $$SQLCMD -C -S sqlserver -U sa -P \"$$MSSQL_SA_PASSWORD\" -Q \"IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = '$$DB_NAME') CREATE DATABASE [$$DB_NAME]\"
-      "
-    networks:
-      - homely
-
-  # ── Backend API (Spring Boot) ───────────────────────────────
+  # ── Backend API (Spring Boot + SQLite) ──────────────────────
 
   backend:
     build:
@@ -60,20 +18,14 @@ services:
     ports:
       - "${BACKEND_PORT:-8080}:8080"
     environment:
-      DB_URL: "jdbc:sqlserver://sqlserver:1433;databaseName=${DB_NAME:-homely_db};encrypt=true;trustServerCertificate=true"
-      DB_USERNAME: sa
-      DB_PASSWORD: ${DB_PASSWORD:-YourStrong!Passw0rd}
+      DB_URL: "jdbc:sqlite:/app/data/homely.db?date_class=integer"
       JWT_SECRET: ${JWT_SECRET:-change-this-to-a-random-64-char-string}
       AI_PROVIDER: ${AI_PROVIDER:-mock}
       REPLICATE_API_KEY: ${REPLICATE_API_KEY:-}
       UPLOAD_DIR: /app/uploads
     volumes:
+      - ./data:/app/data
       - uploads_data:/app/uploads
-    depends_on:
-      sqlserver:
-        condition: service_healthy
-      db-init:
-        condition: service_completed_successfully
     networks:
       - homely
 
@@ -93,8 +45,6 @@ services:
       - homely
 
 volumes:
-  sqlserver_data:
-    driver: local
   uploads_data:
     driver: local
 
