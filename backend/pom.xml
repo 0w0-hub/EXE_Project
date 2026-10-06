@@ -18,7 +18,7 @@
   <description>Homely API - AI room design backend (modular monolith)</description>
 
   <properties>
-    <java.version>21</java.version>
+    <java.version>17</java.version>
     <jjwt.version>0.12.6</jjwt.version>
   </properties>
 
@@ -44,21 +44,29 @@
       <artifactId>spring-boot-starter-actuator</artifactId>
     </dependency>
 
-    <!-- SQL Server driver -->
+    <!-- SQLite driver & Hibernate Community Dialects -->
     <dependency>
-      <groupId>com.microsoft.sqlserver</groupId>
-      <artifactId>mssql-jdbc</artifactId>
+      <groupId>org.xerial</groupId>
+      <artifactId>sqlite-jdbc</artifactId>
       <scope>runtime</scope>
     </dependency>
 
-    <!-- Flyway migrations -->
+    <dependency>
+      <groupId>org.hibernate.orm</groupId>
+      <artifactId>hibernate-community-dialects</artifactId>
+    </dependency>
+
+    <!-- Flyway migrations for SQLite (built into flyway-core) -->
     <dependency>
       <groupId>org.flywaydb</groupId>
       <artifactId>flyway-core</artifactId>
     </dependency>
+
+    <!-- Swagger UI / OpenAPI Documentation -->
     <dependency>
-      <groupId>org.flywaydb</groupId>
-      <artifactId>flyway-sqlserver</artifactId>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+      <version>2.6.0</version>
     </dependency>
 
     <!-- JWT -->
