@@ -298,7 +298,7 @@ export default function Dashboard() {
                 }}
               >
                 <button type="button">
-                  🎨 Tạo thiết kế 3D
+                  Tạo thiết kế 3D
                 </button>
               </Link>
 
