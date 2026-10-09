@@ -601,19 +601,19 @@ export function FloorPlan2DView() {
         <div className="absolute top-16 left-1/2 -translate-x-1/2 z-10 px-4 py-1.5 rounded-full bg-slate-900/90 backdrop-blur-md border border-blue-500/40 text-xs text-blue-300 shadow-xl pointer-events-none flex items-center gap-2">
           {mode === 'draw-wall' && (
             wallDrawingState
-              ? '✏️ Click để đặt điểm cuối đoạn tường • Giữ Shift để khóa góc • Esc để hủy'
-              : '✏️ Click vị trí bất kỳ để bắt đầu vẽ tường'
+              ? ' Click để đặt điểm cuối đoạn tường • Giữ Shift để khóa góc • Esc để hủy'
+              : ' Click vị trí bất kỳ để bắt đầu vẽ tường'
           )}
-          {mode === 'add-node' && '➕ Click lên đoạn tường bất kỳ để thêm 1 nút mới bẻ góc'}
-          {mode === 'place-door' && '🚪 Click vào đoạn tường để đặt cửa đi'}
-          {mode === 'place-window' && '🪟 Click vào đoạn tường để đặt cửa sổ'}
-          {mode === 'delete' && '🗑️ Click vào đỉnh tường hoặc đoạn tường để xóa'}
+          {mode === 'add-node' && ' Click lên đoạn tường bất kỳ để thêm 1 nút mới bẻ góc'}
+          {mode === 'place-door' && ' Click vào đoạn tường để đặt cửa đi'}
+          {mode === 'place-window' && ' Click vào đoạn tường để đặt cửa sổ'}
+          {mode === 'delete' && ' Click vào đỉnh tường hoặc đoạn tường để xóa'}
         </div>
       )}
 
       {/* ── Thẻ thống kê kích thước phòng góc dưới phải ────────────────────── */}
       <div className="absolute bottom-3 right-4 z-10 hidden sm:flex items-center gap-2 bg-slate-900/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-800 text-[11px] text-slate-400 pointer-events-none">
-        <span>📐 {graphW.toFixed(1)}m × {graphL.toFixed(1)}m ({areaM2} m²)</span>
+        <span> {graphW.toFixed(1)}m × {graphL.toFixed(1)}m ({areaM2} m²)</span>
         <span>•</span>
         <span>{Object.keys(wallGraph.segments).length} đoạn tường</span>
         <span>•</span>
@@ -804,7 +804,7 @@ export function FloorPlan2DView() {
                   fontWeight="600"
                   fill="#ffffff"
                 >
-                  {isDoor ? '🚪 Click để đặt cửa đi (0.9m)' : '🪟 Click để đặt cửa sổ (1.2m)'}
+                  {isDoor ? ' Click để đặt cửa đi (0.9m)' : ' Click để đặt cửa sổ (1.2m)'}
                 </text>
               </g>
             </g>

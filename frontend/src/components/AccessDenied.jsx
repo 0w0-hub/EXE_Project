@@ -1,4 +1,6 @@
-// git add . git commit -m "Mô tả thay đổi" git push origin main
+// git add . 
+// git commit -m "Mô tả thay đổi" 
+// git push origin main
 export default function AccessDenied({ message }) {
   return (
     <div className="card" style={{ textAlign: 'center', maxWidth: 480, margin: '0 auto' }}>

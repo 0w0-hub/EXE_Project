@@ -59,7 +59,7 @@ const SUGGESTED_QUESTIONS = [
 
 const BOT_AVATAR = (
   <span className="ai-chat__avatar ai-chat__avatar--bot" aria-hidden="true">
-    ✦
+    
   </span>
 )
 
@@ -69,7 +69,7 @@ export default function AIChatbox() {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: `Xin chào${user?.fullName ? ` **${user.fullName}**` : ''}! 👋\nTôi là trợ lý AI của **Homely**. Hãy hỏi tôi bất cứ điều gì về thiết kế nội thất nhé!`,
+      content: `Xin chào${user?.fullName ? ` **${user.fullName}**` : ''}! \nTôi là trợ lý AI của **Homely**. Hãy hỏi tôi bất cứ điều gì về thiết kế nội thất nhé!`,
       id: 'init',
     },
   ])
@@ -140,7 +140,7 @@ export default function AIChatbox() {
     setMessages([
       {
         role: 'assistant',
-        content: `Xin chào${user?.fullName ? ` **${user.fullName}**` : ''}! 👋\nTôi là trợ lý AI của **Homely**. Hãy hỏi tôi bất cứ điều gì về thiết kế nội thất nhé!`,
+        content: `Xin chào${user?.fullName ? ` **${user.fullName}**` : ''}! \nTôi là trợ lý AI của **Homely**. Hãy hỏi tôi bất cứ điều gì về thiết kế nội thất nhé!`,
         id: 'init',
       },
     ])
@@ -198,7 +198,7 @@ export default function AIChatbox() {
         {/* Header */}
         <div className="ai-chat__header">
           <div className="ai-chat__header-left">
-            <span className="ai-chat__header-icon" aria-hidden="true">✦</span>
+            <span className="ai-chat__header-icon" aria-hidden="true"></span>
             <div>
               <p className="ai-chat__header-title">Trợ lý AI Homely</p>
               <p className="ai-chat__header-subtitle">

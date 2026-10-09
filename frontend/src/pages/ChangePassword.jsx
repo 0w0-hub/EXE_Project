@@ -59,7 +59,7 @@ export default function ChangePassword() {
               aria-label={showCurrentPassword ? 'Ẩn mật khẩu hiện tại' : 'Hiện mật khẩu hiện tại'}
               aria-pressed={showCurrentPassword}
             >
-              {showCurrentPassword ? '🙈' : '👁'}
+              {showCurrentPassword ? '' : ''}
             </button>
           </div>
         </div>
@@ -80,7 +80,7 @@ export default function ChangePassword() {
               aria-label={showNewPassword ? 'Ẩn mật khẩu mới' : 'Hiện mật khẩu mới'}
               aria-pressed={showNewPassword}
             >
-              {showNewPassword ? '🙈' : '👁'}
+              {showNewPassword ? '' : ''}
             </button>
           </div>
         </div>
@@ -101,7 +101,7 @@ export default function ChangePassword() {
               aria-label={showConfirmNewPassword ? 'Ẩn xác nhận mật khẩu mới' : 'Hiện xác nhận mật khẩu mới'}
               aria-pressed={showConfirmNewPassword}
             >
-              {showConfirmNewPassword ? '🙈' : '👁'}
+              {showConfirmNewPassword ? '' : ''}
             </button>
           </div>
         </div>

@@ -8,7 +8,7 @@ export default function DesignHealthCheck({ job, room, preference }) {
         : 'Đang xử lý — chưa có kết quả để kiểm tra.'
     return (
       <div className="card card--warning no-print" style={{ marginTop: 12, marginBottom: 16, padding: 16 }}>
-        <p style={{ margin: 0 }}>🩺 Kiểm tra thiết kế: {statusText}</p>
+        <p style={{ margin: 0 }}> Kiểm tra thiết kế: {statusText}</p>
       </div>
     )
   }
@@ -55,17 +55,17 @@ export default function DesignHealthCheck({ job, room, preference }) {
       className={`card no-print ${hasProblems ? 'card--danger' : 'card--success'}`}
       style={{ marginTop: 12, marginBottom: 16 }}
     >
-      <h4 style={{ marginTop: 0, marginBottom: 8 }}>🩺 Kiểm tra thiết kế</h4>
+      <h4 style={{ marginTop: 0, marginBottom: 8 }}> Kiểm tra thiết kế</h4>
 
       {!hasProblems && (
         <p style={{ margin: 0, color: 'var(--color-accent-dark)', fontWeight: 600 }}>
-          ✓ Thiết kế đã sẵn sàng
+           Thiết kế đã sẵn sàng
         </p>
       )}
 
       {problems.map((problem) => (
         <p key={problem.key} style={{ margin: '4px 0', color: 'var(--color-danger)' }}>
-          ⚠️ {problem.text}
+           {problem.text}
           {problem.action && (
             <>
               {' '}

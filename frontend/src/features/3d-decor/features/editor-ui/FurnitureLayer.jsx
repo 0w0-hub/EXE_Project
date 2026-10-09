@@ -841,7 +841,7 @@ function FurnitureItem2D({ item, toSvgX, toSvgY, toWorldX, toWorldZ, scale, svgR
                 fontSize={9}
                 fontWeight="600"
               >
-                {isDanger ? '⚠️ Va chạm!' : `${item.dimensions.width.toFixed(2)}m × ${item.dimensions.depth.toFixed(2)}m`}
+                {isDanger ? ' Va chạm!' : `${item.dimensions.width.toFixed(2)}m × ${item.dimensions.depth.toFixed(2)}m`}
               </text>
             </g>
           )}

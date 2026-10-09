@@ -23,7 +23,7 @@ function CheckCard({ check }) {
       }}
     >
       <p style={{ margin: 0, display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-        <span style={{ fontSize: '1.1rem' }}>{hasOrphans ? '⚠️' : '✅'}</span>
+        <span style={{ fontSize: '1.1rem' }}>{hasOrphans ? '' : ''}</span>
         <strong style={{ fontFamily: 'monospace', fontSize: '0.9rem' }}>{check.checkName}</strong>
       </p>
       <p className="text-muted" style={{ fontSize: '0.85rem', margin: '4px 0 8px' }}>
@@ -99,7 +99,7 @@ export default function AdminDataIntegrity() {
       </p>
 
       <button type="button" onClick={load} disabled={loading} style={{ marginBottom: 16 }}>
-        {loading ? 'Đang kiểm tra...' : '🔄 Làm mới'}
+        {loading ? 'Đang kiểm tra...' : ' Làm mới'}
       </button>
 
       {error && error.status !== 403 && <p className="error-text">{error.message}</p>}
@@ -114,7 +114,7 @@ export default function AdminDataIntegrity() {
               color: result.anyOrphansFound ? 'var(--color-danger)' : 'var(--color-accent)',
             }}
           >
-            {result.anyOrphansFound ? '⚠️ Phát hiện dữ liệu mồ côi — xem chi tiết bên dưới.' : '✅ Không phát hiện dữ liệu mồ côi nào.'}
+            {result.anyOrphansFound ? ' Phát hiện dữ liệu mồ côi — xem chi tiết bên dưới.' : ' Không phát hiện dữ liệu mồ côi nào.'}
           </p>
           <p className="text-muted" style={{ fontSize: '0.8rem', marginTop: -8, marginBottom: 16 }}>
             Kiểm tra lúc {new Date(result.checkedAt).toLocaleString('vi-VN')}

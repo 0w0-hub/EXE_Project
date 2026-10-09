@@ -82,7 +82,7 @@ const ROOM_ICONS = [
 
 function iconForRoomType(roomType) {
   const n = normalize(roomType)
-  return ROOM_ICONS.find((r) => n.includes(r.keyword))?.icon || '🏠'
+  return ROOM_ICONS.find((r) => n.includes(r.keyword))?.icon || ''
 }
 
 function displayName(job) {
@@ -582,7 +582,7 @@ export default function Projects() {
   const groupDateField = sort === 'updatedAt_desc' ? 'updatedAt' : 'createdAt'
   const dateGroups = groupByRelativeDate(unpinnedDisplayItems, groupDateField)
   const displaySections = [
-    ...(pinnedDisplayItems.length > 0 ? [{ label: '📌 Đã ghim', items: pinnedDisplayItems }] : []),
+    ...(pinnedDisplayItems.length > 0 ? [{ label: ' Đã ghim', items: pinnedDisplayItems }] : []),
     ...dateGroups,
   ]
   const orderedDisplayItems = displaySections.flatMap((group) => group.items)
@@ -598,7 +598,7 @@ export default function Projects() {
         icon: iconForRoomType(job.roomType),
       }
     }
-    return { jobId, href: `/designs/${jobId}`, label: 'Dự án đã mở', icon: '🏠' }
+    return { jobId, href: `/designs/${jobId}`, label: 'Dự án đã mở', icon: '' }
   })
   const isFilterActive = status !== '' || favoriteOnly || search.trim() !== ''
   const noDesignsAtAll = !loading && !error && items.length === 0 && !isFilterActive

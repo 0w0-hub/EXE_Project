@@ -2452,3 +2452,15 @@ button.secondary:active:not(:disabled) {
     max-height: 70vh;
   }
 }
+
+/* Keep small decorative icons out of the interface; large SVG room/floor-plan
+   drawings remain visible. */
+.lucide,
+svg[width="14"],
+svg[width="16"],
+svg[width="18"],
+svg[width="20"],
+svg[width="22"],
+svg[width="24"] {
+  display: none !important;
+}

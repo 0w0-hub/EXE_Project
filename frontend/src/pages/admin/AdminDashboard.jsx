@@ -41,35 +41,35 @@ export default function AdminDashboard() {
           (route mới) rơi vào đúng tình trạng tương tự. */}
       <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
         <NavLink to="/admin/users" className="secondary" style={{ padding: '8px 16px', borderRadius: 'var(--radius-pill)' }}>
-          👤 Người dùng
+           Người dùng
         </NavLink>
         <NavLink to="/admin/designs" className="secondary" style={{ padding: '8px 16px', borderRadius: 'var(--radius-pill)' }}>
-          🎨 Thiết kế
+           Thiết kế
         </NavLink>
         <NavLink to="/admin/moderation" className="secondary" style={{ padding: '8px 16px', borderRadius: 'var(--radius-pill)' }}>
-          🛡️ Kiểm duyệt chia sẻ
+           Kiểm duyệt chia sẻ
         </NavLink>
         {/* TASK-104: coordinator nối dây — agent được yêu cầu không tự sửa file này để tránh xung đột,
             giữ đúng quy ước dải link nhanh cho các trang admin con đã thiết lập từ TASK-097. */}
         <NavLink to="/admin/explorer" className="secondary" style={{ padding: '8px 16px', borderRadius: 'var(--radius-pill)' }}>
-          🔎 Tra cứu dữ liệu
+           Tra cứu dữ liệu
         </NavLink>
         {/* TASK-111: coordinator nối dây — cùng lý do TASK-104. */}
         <NavLink to="/admin/integrity" className="secondary" style={{ padding: '8px 16px', borderRadius: 'var(--radius-pill)' }}>
-          🩺 Kiểm tra dữ liệu
+           Kiểm tra dữ liệu
         </NavLink>
       </div>
       <div className="room-grid">
         <div className="stat-tile" style={{ '--tile-bg': 'var(--color-primary-tint)' }}>
-          <p className="stat-tile-label">👤 Tổng người dùng</p>
+          <p className="stat-tile-label"> Tổng người dùng</p>
           <p className="stat-tile-value">{stats.totalUsers}</p>
         </div>
         <div className="stat-tile" style={{ '--tile-bg': 'var(--color-secondary-tint)' }}>
-          <p className="stat-tile-label">🏠 Tổng phòng</p>
+          <p className="stat-tile-label"> Tổng phòng</p>
           <p className="stat-tile-value">{stats.totalRooms}</p>
         </div>
         <div className="stat-tile" style={{ '--tile-bg': 'var(--color-accent-tint)' }}>
-          <p className="stat-tile-label">🎨 Tổng thiết kế đã tạo</p>
+          <p className="stat-tile-label"> Tổng thiết kế đã tạo</p>
           <p className="stat-tile-value">{stats.totalDesignJobs}</p>
         </div>
       </div>
@@ -96,7 +96,7 @@ export default function AdminDashboard() {
         <>
           <div className="room-grid">
             <div className="stat-tile" style={{ '--tile-bg': healthTileBg }}>
-              <p className="stat-tile-label">🩺 Cơ sở dữ liệu</p>
+              <p className="stat-tile-label"> Cơ sở dữ liệu</p>
               <p className="stat-tile-value">{health.databaseStatus === 'UP' ? 'Hoạt động' : 'Gián đoạn'}</p>
             </div>
             <div className="stat-tile" style={{ '--tile-bg': healthTileBg }}>
@@ -104,11 +104,11 @@ export default function AdminDashboard() {
               <p className="stat-tile-value">{health.pendingJobsCount}</p>
             </div>
             <div className="stat-tile" style={{ '--tile-bg': healthTileBg }}>
-              <p className="stat-tile-label">❌ Job lỗi 24h qua</p>
+              <p className="stat-tile-label"> Job lỗi 24h qua</p>
               <p className="stat-tile-value">{health.failedJobsLast24h}</p>
             </div>
             <div className="stat-tile" style={{ '--tile-bg': healthTileBg }}>
-              <p className="stat-tile-label">🚧 Job nghi bị treo</p>
+              <p className="stat-tile-label"> Job nghi bị treo</p>
               <p className="stat-tile-value">{health.stuckJobsCount}</p>
             </div>
           </div>

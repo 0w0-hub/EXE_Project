@@ -56,7 +56,7 @@ export default function Achievements() {
                 }}
               >
                 <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-                  <span style={{ fontSize: '1.8rem' }}>{item.achieved ? '🏆' : '🔒'}</span>
+                  <span style={{ fontSize: '1.8rem' }}>{item.achieved ? '' : ''}</span>
                   <div>
                     <p style={{ margin: 0, fontWeight: 600 }}>{item.name}</p>
                     <p className="text-muted" style={{ margin: '4px 0 0', fontSize: '0.85rem' }}>

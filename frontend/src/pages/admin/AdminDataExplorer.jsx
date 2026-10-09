@@ -31,7 +31,7 @@ function RoomBlock({ entry }) {
   return (
     <div className="card" style={{ marginTop: 8, marginLeft: 16 }}>
       <p style={{ margin: 0, fontWeight: 600 }}>
-        🏠 {room.roomType || 'Chưa đặt tên loại phòng'}{' '}
+         {room.roomType || 'Chưa đặt tên loại phòng'}{' '}
         <span className="text-muted" style={{ fontWeight: 400, fontSize: '0.85rem' }} title={room.id}>
           ({shortId(room.id)})
         </span>
@@ -203,10 +203,10 @@ export default function AdminDataExplorer() {
                 Job {jobResult.job.id} · tạo lúc {formatDate(jobResult.job.createdAt)}
               </p>
               <p style={{ margin: '8px 0 0' }}>
-                👤 Chủ sở hữu: <strong>{jobResult.ownerEmail}</strong>
+                 Chủ sở hữu: <strong>{jobResult.ownerEmail}</strong>
               </p>
               <p style={{ margin: '4px 0 0' }}>
-                🏠 Room: {jobResult.room.roomType || 'Chưa đặt tên loại phòng'}{' '}
+                 Room: {jobResult.room.roomType || 'Chưa đặt tên loại phòng'}{' '}
                 <span className="text-muted" style={{ fontSize: '0.8rem' }} title={jobResult.room.id}>
                   ({shortId(jobResult.room.id)})
                 </span>

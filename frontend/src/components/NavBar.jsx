@@ -95,7 +95,7 @@ function AccountMenu({ displayName, initial, onLogout }) {
           <NavLink to="/account/achievements" onClick={() => setOpen(false)}>Huy hiệu</NavLink>
           <NavLink to="/account/export" onClick={() => setOpen(false)}>Xuất dữ liệu của tôi</NavLink>
           {/* TASK-107: gộp link vào dropdown "Tài khoản" có sẵn, cùng cách TASK-083/084/087/091. */}
-          <NavLink to="/trash" onClick={() => setOpen(false)}>🗑️ Thùng rác</NavLink>
+          <NavLink to="/trash" onClick={() => setOpen(false)}> Thùng rác</NavLink>
           <button type="button" className="secondary" onClick={onLogout}>Đăng xuất</button>
         </div>
       )}

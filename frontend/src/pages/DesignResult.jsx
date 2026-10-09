@@ -307,12 +307,12 @@ export default function DesignResult() {
         {job.status === 'COMPLETED' && job.result && (
           <div className="no-print design-actions">
             <button type="button" className="secondary" onClick={handleShare}>
-              {shareCopied ? 'Đã sao chép liên kết!' : '🔗 Chia sẻ'}
+              {shareCopied ? 'Đã sao chép liên kết!' : ' Chia sẻ'}
             </button>
             <button type="button" className="secondary" onClick={handlePublicShare} disabled={publicShareState === 'loading'}>
               {publicShareState === 'copied' && 'Đã sao chép liên kết công khai!'}
               {publicShareState === 'error' && 'Lỗi, thử lại'}
-              {(publicShareState === 'idle' || publicShareState === 'loading') && '🔗 Tạo link chia sẻ công khai (xem + góp ý)'}
+              {(publicShareState === 'idle' || publicShareState === 'loading') && ' Tạo link chia sẻ công khai (xem + góp ý)'}
             </button>
             <button type="button" className="secondary" onClick={() => window.print()}>
               In / Xuất PDF
@@ -437,7 +437,7 @@ export default function DesignResult() {
                 <h3>Yêu cầu đặc thù đã xem xét</h3>
                 {items.map((item) => (
                   <div className="requirement-item" key={item.label}>
-                    <span className="requirement-item__icon">✓</span>
+                    <span className="requirement-item__icon"></span>
                     <span><strong>{item.label}:</strong> {item.value}</span>
                   </div>
                 ))}

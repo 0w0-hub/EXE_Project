@@ -120,7 +120,7 @@ export default function DesignSummary() {
             <h3>Yêu cầu gốc đã nhập</h3>
             {requirementItems.map((item) => (
               <div className="requirement-item" key={item.label}>
-                <span className="requirement-item__icon">✓</span>
+                <span className="requirement-item__icon"></span>
                 <span><strong>{item.label}:</strong> {item.value}</span>
               </div>
             ))}

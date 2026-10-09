@@ -403,7 +403,7 @@ export default function RoomNew() {
                   <span className="text-muted">{formatFileSize(photoFile.size)}</span>
                 </div>
                 <button type="button" className="secondary" onClick={handleRemovePhoto}>
-                  ✕ Bỏ ảnh
+                   Bỏ ảnh
                 </button>
               </div>
             ) : (

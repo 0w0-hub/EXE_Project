@@ -151,11 +151,11 @@ export function FloorPlan2DToolbar() {
 
       {/* 2. Dòng hướng dẫn thao tác theo từng chế độ */}
       <div className="px-3.5 py-1 bg-slate-900/80 backdrop-blur-md border border-slate-800/80 rounded-full text-[11px] text-slate-400 shadow-md">
-        {mode === 'select' && '💡 Kéo nút tròn xanh để co giãn phòng • Kéo đồ nội thất để sắp xếp'}
-        {mode === 'add-node' && '➕ Click lên đoạn tường bất kỳ để thêm 1 nút mới • Kéo nút để bẻ góc phòng'}
-        {mode === 'place-door' && '🚪 Rê chuột lên tường và click để đặt cửa đi 3D'}
-        {mode === 'place-window' && '🪟 Rê chuột lên tường và click để đặt cửa sổ 3D'}
-        {mode === 'delete' && '🗑️ Click vào nút tròn đỉnh tường để xóa (2 cạnh kề sẽ tự động nối lại)'}
+        {mode === 'select' && ' Kéo nút tròn xanh để co giãn phòng • Kéo đồ nội thất để sắp xếp'}
+        {mode === 'add-node' && ' Click lên đoạn tường bất kỳ để thêm 1 nút mới • Kéo nút để bẻ góc phòng'}
+        {mode === 'place-door' && ' Rê chuột lên tường và click để đặt cửa đi 3D'}
+        {mode === 'place-window' && ' Rê chuột lên tường và click để đặt cửa sổ 3D'}
+        {mode === 'delete' && ' Click vào nút tròn đỉnh tường để xóa (2 cạnh kề sẽ tự động nối lại)'}
       </div>
     </div>
   );

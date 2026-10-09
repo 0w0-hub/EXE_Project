@@ -4,7 +4,7 @@ import useEscapeKey from '../hooks/useEscapeKey'
 
 const STEPS = [
   {
-    title: 'Chào mừng đến với Homely 👋',
+    title: 'Chào mừng đến với Homely ',
     description:
       'Homely giúp bạn biến một căn phòng thật thành phương án thiết kế nội thất do AI đề xuất, kèm phối cảnh 2D và 3D. Hãy xem qua 4 bước nhanh dưới đây trước khi bắt đầu.',
   },

@@ -82,7 +82,7 @@ export function InspectorPanel() {
         <div className="flex items-center justify-between pb-3 border-b border-slate-800">
           <div>
             <h3 className="font-semibold text-white text-sm">
-              {isWindow ? '🪟 Cửa sổ tường' : '🚪 Cửa đi chính'}
+              {isWindow ? ' Cửa sổ tường' : ' Cửa đi chính'}
             </h3>
             <span className="text-[11px] text-blue-400 font-mono">
               ID: {selectedOpening.id.slice(0, 10)}
@@ -174,10 +174,10 @@ export function InspectorPanel() {
                 <span className="block text-slate-400 mb-1.5 font-medium">Kiểu dáng cửa sổ kiến trúc:</span>
                 <div className="grid grid-cols-2 gap-1.5">
                   {[
-                    { id: 'sliding', name: '🪟 Cửa sổ lùa 2 cánh' },
-                    { id: 'casement', name: '🪟 Cửa mở quay/hất' },
-                    { id: 'picture', name: '🪟 Kính lớn tràn viền' },
-                    { id: 'grid', name: '🪟 Cửa chia ô cổ điển' },
+                    { id: 'sliding', name: ' Cửa sổ lùa 2 cánh' },
+                    { id: 'casement', name: ' Cửa mở quay/hất' },
+                    { id: 'picture', name: ' Kính lớn tràn viền' },
+                    { id: 'grid', name: ' Cửa chia ô cổ điển' },
                   ].map((style) => {
                     const isSel = (selectedOpening.windowStyle || 'sliding') === style.id && !selectedOpening.modelPath;
                     return (
@@ -261,7 +261,7 @@ export function InspectorPanel() {
                       : 'border-slate-800 bg-slate-800/40 text-slate-400 hover:text-white'
                   }`}
                 >
-                  🚪 Cửa gỗ đơn
+                   Cửa gỗ đơn
                 </button>
                 <button
                   onClick={() => wgUpdateOpening(selectedOpening.id, { modelPath: '/furniture/doorwayFront.glb' })}
@@ -271,7 +271,7 @@ export function InspectorPanel() {
                       : 'border-slate-800 bg-slate-800/40 text-slate-400 hover:text-white'
                   }`}
                 >
-                  🚪 Cửa kính xingfa
+                   Cửa kính xingfa
                 </button>
               </div>
             </div>
@@ -294,7 +294,7 @@ export function InspectorPanel() {
                       : 'bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700'
                   }`}
                 >
-                  <span>{(selectedOpening.openAngle ?? 75) > 0 ? '🟢 Đang mở' : '🔴 Đang đóng'}</span>
+                  <span>{(selectedOpening.openAngle ?? 75) > 0 ? ' Đang mở' : ' Đang đóng'}</span>
                 </button>
               </div>
 
@@ -405,7 +405,7 @@ export function InspectorPanel() {
         <div className="flex items-center justify-between pb-3 border-b border-slate-800">
           <div>
             <h3 className="font-semibold text-white text-sm flex items-center gap-1.5">
-              <span>🧱</span>
+              <span></span>
               <span>{selectedSegment.label || 'Đoạn tường phòng'}</span>
             </h3>
             <span className="text-[11px] text-blue-400 font-mono">
@@ -426,7 +426,7 @@ export function InspectorPanel() {
             <div className="flex items-center justify-between mb-2">
               <span className="font-semibold text-slate-300">Vật Liệu Đoạn Tường:</span>
               <span className="text-[10px] text-emerald-400 font-medium">
-                {isCustomMat ? '★ Tường điểm nhấn' : 'Theo phòng'}
+                {isCustomMat ? ' Tường điểm nhấn' : 'Theo phòng'}
               </span>
             </div>
 

@@ -45,7 +45,7 @@ export default function ThemeToggle() {
       aria-label={isDark ? 'Chuyển sang giao diện sáng' : 'Chuyển sang giao diện tối'}
       title={isDark ? 'Giao diện sáng' : 'Giao diện tối'}
     >
-      {isDark ? '☀️' : '🌙'}
+      {isDark ? '' : ''}
     </button>
   )
 }

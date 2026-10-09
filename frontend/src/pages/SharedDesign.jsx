@@ -96,7 +96,7 @@ export default function SharedDesign() {
               style={{ width: '100%', borderRadius: 12, marginBottom: 16 }}
             />
           ) : (
-            <div className="room-card-photo-placeholder" style={{ marginBottom: 16 }}>🖼️</div>
+            <div className="room-card-photo-placeholder" style={{ marginBottom: 16 }}></div>
           )}
 
           <h3>Phương án decor</h3>

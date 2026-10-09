@@ -641,7 +641,7 @@ function Room2DPlan({ room, furniture, selectedIndex }) {
     <div>
       <div className="no-print" style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 6 }}>
         <button type="button" className="secondary" onClick={() => downloadSvgAsPng(svgRef.current)}>
-          📷 Tải sơ đồ
+           Tải sơ đồ
         </button>
       </div>
       <svg
@@ -964,7 +964,7 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
   // đụng layout tự sinh (`resolveFurniturePositions`) hay góc xoay.
   const [snapStep, setSnapStep] = useState(0)
   // TASK-118 (phản hồi user "quá nhiều nút" sau 18 round tích luỹ trên thanh công cụ 3D): gộp 5 nút
-  // góc nhìn camera vào 1 dropdown "📷 Góc nhìn ▾" và 2 nút ít dùng (Tải ảnh/Phím tắt) vào "⋯ Thêm ▾" —
+  // góc nhìn camera vào 1 dropdown " Góc nhìn ▾" và 2 nút ít dùng (Tải ảnh/Phím tắt) vào "⋯ Thêm ▾" —
   // cùng pattern dropdown đã có ở `NavBar.jsx` (AccountMenu/NotificationBell, TASK-082/083, click-outside
   // + Esc qua `useEscapeKey`).
   const [showCameraMenu, setShowCameraMenu] = useState(false)
@@ -1242,7 +1242,7 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
     controls.update()
   }
 
-  // TASK-138: "Về giữa phòng" cho CAMERA — khác hẳn "🎯 Về tâm phòng" (TASK-135, di chuyển NỘI THẤT
+  // TASK-138: "Về giữa phòng" cho CAMERA — khác hẳn " Về tâm phòng" (TASK-135, di chuyển NỘI THẤT
   // đang chọn). Khôi phục điểm nhìn (`controls.target`) về giữa phòng theo trục ngang (x=0,z=0) sau khi
   // user đã pan (kéo chuột phải, OrbitControls mặc định bật `enablePan`) đi xa — GIỮ NGUYÊN khoảng
   // cách/góc nhìn hiện tại (tịnh tiến cả camera lẫn target theo cùng độ lệch), khác `resetView` (nhảy hẳn
@@ -2571,7 +2571,7 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
                 aria-haspopup="true"
                 aria-expanded={showCameraMenu}
               >
-                📷 Góc nhìn ▾
+                 Góc nhìn ▾
               </button>
               {showCameraMenu && (
                 <span className="room3d-dropdown__menu">
@@ -2585,17 +2585,17 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
                     → Nhìn từ bên
                   </button>
                   <button type="button" onClick={() => { setWalkthroughView(); setShowCameraMenu(false) }} title="Góc nhìn ngang tầm mắt, như đang đứng trong phòng">
-                    🚶 Góc nhìn đi bộ
+                     Góc nhìn đi bộ
                   </button>
                   <button type="button" onClick={() => { resetView(); setShowCameraMenu(false) }} title="Về hẳn góc nhìn mặc định ban đầu (khoảng cách/góc cố định)">
                     ↺ Đặt lại góc nhìn
                   </button>
                   <button type="button" onClick={() => { focusAll(); setShowCameraMenu(false) }} title="Canh khung hình sát đúng khu vực có nội thất hiện có">
-                    🔭 Xem toàn bộ
+                     Xem toàn bộ
                   </button>
-                  {/* TASK-138: khác "🎯 Về tâm phòng" (TASK-135, di chuyển NỘI THẤT) — đây di chuyển CAMERA. */}
+                  {/* TASK-138: khác " Về tâm phòng" (TASK-135, di chuyển NỘI THẤT) — đây di chuyển CAMERA. */}
                   <button type="button" onClick={() => { centerView(); setShowCameraMenu(false) }} title="Đưa điểm nhìn về giữa phòng, GIỮ NGUYÊN khoảng cách/góc nhìn hiện tại (khác Đặt lại góc nhìn)">
-                    🧭 Về giữa phòng
+                     Về giữa phòng
                   </button>
                 </span>
               )}
@@ -2607,7 +2607,7 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
               aria-pressed={isAutoRotating}
               title="Tự động xoay quanh phòng liên tục, không cần giữ chuột kéo"
             >
-              {isAutoRotating ? '⏸ Dừng tự xoay' : '🔄 Tự động xoay 360°'}
+              {isAutoRotating ? '⏸ Dừng tự xoay' : ' Tự động xoay 360°'}
             </button>
             {/* TASK-118: 4 nút thao tác món đang chọn CHỈ hiện khi ĐÃ chọn 1 món — trước đó luôn hiện cả 4
                 nhưng bị disabled + báo "Nhấp chọn 1 món trong scene trước" khi chưa chọn, nên ẩn hẳn khi
@@ -2615,7 +2615,7 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
             {selectedFurnitureIndex != null && (
               <>
                 <button type="button" className="secondary" onClick={focusOnSelected} title="Camera phóng to, canh giữa đúng vào món đang chọn">
-                  🔍 Phóng to món đã chọn
+                   Phóng to món đã chọn
                 </button>
                 {/* TASK-141: khoá món đang chọn — không kéo/xoay được (nhầm lẫn), vẫn chọn/xem/đổi màu/xoá
                     được bình thường. Không disabled bởi previewMode (Preview đã khoá TOÀN BỘ chỉnh sửa
@@ -2626,7 +2626,7 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
                   onClick={() => toggleLock(selectedFurnitureIndex)}
                   title="Khoá vị trí/góc xoay món này — vẫn chọn/xem/đổi màu/xoá được bình thường"
                 >
-                  {lockedIndices.has(selectedFurnitureIndex) ? '🔓 Mở khoá' : '🔒 Khoá món này'}
+                  {lockedIndices.has(selectedFurnitureIndex) ? ' Mở khoá' : ' Khoá món này'}
                 </button>
                 <button
                   type="button"
@@ -2634,7 +2634,7 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
                   onClick={toggleIsolate}
                   title={isIsolating ? 'Hiện lại tất cả nội thất' : 'Tạm ẩn mọi món khác, chỉ giữ món đang chọn'}
                 >
-                  {isIsolating ? '↩️ Hiện lại tất cả' : '🔎 Cô lập món này'}
+                  {isIsolating ? '↩️ Hiện lại tất cả' : ' Cô lập món này'}
                 </button>
                 <button
                   type="button"
@@ -2642,7 +2642,7 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
                   onClick={() => toggleXrayRef.current()}
                   title="Xem xuyên nhẹ CHỈ món đang chọn (không ẩn/khoá), giúp kiểm tra vị trí bên trong scene"
                 >
-                  {xrayEnabled ? '👻 Tắt xuyên nhẹ' : '👻 Xuyên nhẹ'}
+                  {xrayEnabled ? ' Tắt xuyên nhẹ' : ' Xuyên nhẹ'}
                 </button>
                 <button
                   type="button"
@@ -2678,10 +2678,10 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
                   disabled={previewMode || lockedIndices.has(selectedFurnitureIndex)}
                   title="Đưa món đang chọn về đúng tâm mặt bằng phòng, giữ nguyên góc xoay"
                 >
-                  🎯 Về tâm phòng
+                   Về tâm phòng
                 </button>
                 <span className="text-muted" style={{ fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: 4 }}>
-                  📐 Góc xoay:
+                   Góc xoay:
                   <input
                     type="number"
                     min="0"
@@ -2697,7 +2697,7 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
                 {/* TASK-138: chỉ đọc — bổ sung cho Góc xoay, giúp biết chính xác vị trí thay vì áng chừng. */}
                 {selectedPosition && (
                   <span className="text-muted" style={{ fontSize: '0.8rem' }}>
-                    📍 Vị trí: ({selectedPosition.x}, {selectedPosition.z})m
+                     Vị trí: ({selectedPosition.x}, {selectedPosition.z})m
                   </span>
                 )}
                 {/* TASK-143: chỉ đọc — kích thước xấp xỉ theo nhóm nội thất, đúng bảng `furnitureSize()` đã dùng để dựng mesh. */}
@@ -2705,21 +2705,21 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
                   const size = furnitureSize(localFurniture[selectedFurnitureIndex].category)
                   return (
                     <span className="text-muted" style={{ fontSize: '0.8rem' }}>
-                      📏 Kích thước: {size.w}×{size.d}×{size.h}m
+                       Kích thước: {size.w}×{size.d}×{size.h}m
                     </span>
                   )
                 })()}
               </>
             )}
             <button type="button" className="secondary" onClick={toggleFullscreen}>
-              ⛶ Toàn màn hình
+               Toàn màn hình
             </button>
             <button
               type="button"
               className="secondary"
               onClick={() => setLightingMode((prev) => (prev === 'day' ? 'evening' : 'day'))}
             >
-              {lightingMode === 'evening' ? '☀️ Ban ngày' : '🌙 Buổi tối'}
+              {lightingMode === 'evening' ? ' Ban ngày' : ' Buổi tối'}
             </button>
             <button
               type="button"
@@ -2728,7 +2728,7 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
               aria-pressed={previewMode}
               title={previewMode ? 'Đang xem trước — mọi chỉnh sửa bị khoá, bấm để mở khoá' : 'Khoá mọi chỉnh sửa để xem lại an toàn, không sợ bấm nhầm'}
             >
-              {previewMode ? '🔓 Chế độ chỉnh sửa' : '🔒 Chế độ xem trước'}
+              {previewMode ? ' Chế độ chỉnh sửa' : ' Chế độ xem trước'}
             </button>
             <button
               type="button"
@@ -2736,7 +2736,7 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
               onClick={toggleLabels}
               title="Ẩn/hiện nhãn tên + giá nổi trên mỗi món nội thất"
             >
-              {showLabels ? '🏷️ Ẩn nhãn' : '🏷️ Hiện nhãn'}
+              {showLabels ? ' Ẩn nhãn' : ' Hiện nhãn'}
             </button>
             <button
               type="button"
@@ -2744,7 +2744,7 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
               onClick={() => setSnapStep((prev) => (prev === 0 ? 0.1 : prev === 0.1 ? 0.25 : 0))}
               title="Làm tròn vị trí về lưới khi kéo-thả nội thất bằng chuột, giúp căn hàng thẳng dễ hơn"
             >
-              {snapStep === 0 ? '🧲 Snap: Tắt' : `🧲 Snap: ${snapStep}m`}
+              {snapStep === 0 ? ' Snap: Tắt' : ` Snap: ${snapStep}m`}
             </button>
             {/* TASK-118: 2 tiện ích dùng không thường xuyên (Tải ảnh, Phím tắt) gộp vào dropdown "⋯ Thêm". */}
             <span className="room3d-dropdown" ref={moreMenuRef}>
@@ -2762,24 +2762,24 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
                   {/* TASK-121: 3 mức độ phân giải thay 1 nút "Tải ảnh" cũ — mỗi mức gọi thẳng
                       `captureScreenshot(multiplier)`, không cần bước chọn trung gian. */}
                   <button type="button" onClick={() => { captureScreenshot(1); setShowMoreMenu(false) }}>
-                    📷 Tải ảnh (Chuẩn)
+                     Tải ảnh (Chuẩn)
                   </button>
                   <button type="button" onClick={() => { captureScreenshot(2); setShowMoreMenu(false) }}>
-                    📷 Tải ảnh (Cao — 2x)
+                     Tải ảnh (Cao — 2x)
                   </button>
                   <button type="button" onClick={() => { captureScreenshot(3); setShowMoreMenu(false) }}>
-                    📷 Tải ảnh (Ultra — 3x)
+                     Tải ảnh (Ultra — 3x)
                   </button>
                   {/* TASK-136: "Sao chép ảnh" — KHÔNG đóng dropdown ngay để user thấy phản hồi thành
                       công/lỗi ngay cạnh nút, tự đóng lại sau khi bấm lần tiếp theo/click ra ngoài. */}
                   <button type="button" onClick={copyScreenshotToClipboard}>
-                    📋 Sao chép ảnh{copyImageStatus === 'success' ? ' ✓' : copyImageStatus === 'error' ? ' (lỗi)' : ''}
+                     Sao chép ảnh{copyImageStatus === 'success' ? ' ' : copyImageStatus === 'error' ? ' (lỗi)' : ''}
                   </button>
                   <button
                     type="button"
                     onClick={() => { setShowShortcutsHelp((prev) => !prev); setShowMoreMenu(false) }}
                   >
-                    ❓ Phím tắt
+                     Phím tắt
                   </button>
                   {/* TASK-131: tạm ẩn tường/sàn để nhìn nội thất rõ hơn — không đặt top-level, tránh
                       tái diễn "quá nhiều nút" đã sửa ở TASK-118. */}
@@ -2787,14 +2787,14 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
                     type="button"
                     onClick={() => { setShowRoomSurfaces((prev) => !prev); setShowMoreMenu(false) }}
                   >
-                    {showRoomSurfaces ? '🧱 Ẩn tường/sàn' : '🧱 Hiện tường/sàn'}
+                    {showRoomSurfaces ? ' Ẩn tường/sàn' : ' Hiện tường/sàn'}
                   </button>
                   {/* TASK-136: chế độ khung dây — chỉ áp cho nội thất, không áp tường/sàn/trần. */}
                   <button
                     type="button"
                     onClick={() => { setWireframeMode((prev) => !prev); setShowMoreMenu(false) }}
                   >
-                    {wireframeMode ? '🧊 Chế độ đặc' : '🔲 Chế độ khung dây'}
+                    {wireframeMode ? ' Chế độ đặc' : ' Chế độ khung dây'}
                   </button>
                   {/* TASK-136: tuần hoàn 3 mức tốc độ camera, giống cách `snapStep` tuần hoàn ở toolbar chính. */}
                   <button
@@ -2804,28 +2804,28 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
                       setShowMoreMenu(false)
                     }}
                   >
-                    {cameraSpeed === 'slow' ? '🐢 Tốc độ camera: Chậm' : cameraSpeed === 'fast' ? '🐇 Tốc độ camera: Nhanh' : '🚶 Tốc độ camera: Bình thường'}
+                    {cameraSpeed === 'slow' ? ' Tốc độ camera: Chậm' : cameraSpeed === 'fast' ? ' Tốc độ camera: Nhanh' : ' Tốc độ camera: Bình thường'}
                   </button>
                   {/* TASK-137: tắt bóng đổ toàn scene — giúp nhìn hình khối rõ hơn khi phòng đông món. */}
                   <button
                     type="button"
                     onClick={() => { setShadowsEnabled((prev) => !prev); setShowMoreMenu(false) }}
                   >
-                    {shadowsEnabled ? '🌑 Tắt bóng đổ' : '☀️ Bật bóng đổ'}
+                    {shadowsEnabled ? ' Tắt bóng đổ' : ' Bật bóng đổ'}
                   </button>
                   {/* TASK-137: 5 mức độ sáng, tuần hoàn — độc lập với toggle Ngày/Đêm (lightingMode). */}
                   <button
                     type="button"
                     onClick={() => { setBrightnessLevel((prev) => (prev + 1) % 5); setShowMoreMenu(false) }}
                   >
-                    {['🔅 Độ sáng: Rất tối', '🔅 Độ sáng: Tối', '💡 Độ sáng: Bình thường', '🔆 Độ sáng: Sáng', '🔆 Độ sáng: Rất sáng'][brightnessLevel]}
+                    {[' Độ sáng: Rất tối', ' Độ sáng: Tối', ' Độ sáng: Bình thường', ' Độ sáng: Sáng', ' Độ sáng: Rất sáng'][brightnessLevel]}
                   </button>
                   {/* TASK-139: ẩn đồ trang trí phụ (thảm/chậu cây/tranh tường), giữ nội thất chính. */}
                   <button
                     type="button"
                     onClick={() => { setDecorOnlyMode((prev) => !prev); setShowMoreMenu(false) }}
                   >
-                    {decorOnlyMode ? '🖼️ Hiện đồ trang trí' : '🪴 Chỉ nội thất'}
+                    {decorOnlyMode ? ' Hiện đồ trang trí' : ' Chỉ nội thất'}
                   </button>
                   {/* TASK-141: lưới 3D trên mặt sàn — độc lập với Snap-to-Grid (TASK-117). */}
                   <button
@@ -2839,7 +2839,7 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
                     type="button"
                     onClick={() => { setCameraLocked((prev) => !prev); setShowMoreMenu(false) }}
                   >
-                    {cameraLocked ? '🔓 Mở khoá góc nhìn' : '🔒 Khoá góc nhìn'}
+                    {cameraLocked ? ' Mở khoá góc nhìn' : ' Khoá góc nhìn'}
                   </button>
                 </span>
               )}
@@ -2858,30 +2858,30 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
               <li>Delete / Backspace (khi đã chọn): xoá món</li>
               <li>Kéo chấm đỏ ở góc tường: đổi kích thước phòng</li>
               <li>Nút "↑ Nhìn từ trước"/"→ Nhìn từ bên": 2 góc nhìn nhanh thêm, tiện kiểm tra bố trí tường/chiều sâu nội thất</li>
-              <li>Nút "🔄 Tự động xoay 360°": xoay camera liên tục quanh phòng, không cần giữ chuột</li>
-              <li>Nút "🚶 Góc nhìn đi bộ": chuyển sang góc nhìn ngang tầm mắt, như đang đứng trong phòng</li>
+              <li>Nút " Tự động xoay 360°": xoay camera liên tục quanh phòng, không cần giữ chuột</li>
+              <li>Nút " Góc nhìn đi bộ": chuyển sang góc nhìn ngang tầm mắt, như đang đứng trong phòng</li>
               <li>Ctrl/Cmd+Z: Hoàn tác thêm/xoá/nhân đôi/sửa giá/đổi màu — hoặc nút "↶ Hoàn tác"</li>
               <li>Ctrl/Cmd+Shift+Z hoặc Ctrl/Cmd+Y: Làm lại — hoặc nút "↷ Làm lại"</li>
-              <li>Nút "🔒 Chế độ xem trước": khoá mọi chỉnh sửa (thêm/xoá/kéo-thả/đổi màu/xoay), vẫn xoay góc nhìn/đổi tab/chọn món để xem được</li>
-              <li>Nút 👁️/🙈 trong danh sách nội thất: ẩn/hiện tạm 1 món khỏi scene (không xoá) — bấm vào tên món để chọn nhanh, kể cả khi đang ẩn</li>
-              <li>Nút "🧱 Ẩn/Hiện tường-sàn" (trong "⋯ Thêm"): tạm ẩn sàn + 2 mặt tường để nhìn nội thất rõ hơn khi chỉnh bố cục</li>
-              <li>Đang kéo 1 món: dòng "📏 Cách tường trái/sau" phía trên khung 3D hiện khoảng cách thật tới 2 mặt tường</li>
-              <li>Nút "🎯 Về tâm phòng": đưa món đang chọn về đúng giữa phòng, giữ nguyên góc xoay — khác "↺ Đặt lại vị trí/góc xoay" (về vị trí ban đầu + góc xoay 0°)</li>
-              <li>Dòng "📐 Góc xoay": hiện góc xoay hiện tại (độ) của món đang chọn, cập nhật ngay khi xoay</li>
-              <li>Nút "🔲 Chế độ khung dây" (trong "⋯ Thêm"): nhìn xuyên nội thất dạng khung dây, dễ phát hiện món bị che khuất</li>
+              <li>Nút " Chế độ xem trước": khoá mọi chỉnh sửa (thêm/xoá/kéo-thả/đổi màu/xoay), vẫn xoay góc nhìn/đổi tab/chọn món để xem được</li>
+              <li>Nút / trong danh sách nội thất: ẩn/hiện tạm 1 món khỏi scene (không xoá) — bấm vào tên món để chọn nhanh, kể cả khi đang ẩn</li>
+              <li>Nút " Ẩn/Hiện tường-sàn" (trong "⋯ Thêm"): tạm ẩn sàn + 2 mặt tường để nhìn nội thất rõ hơn khi chỉnh bố cục</li>
+              <li>Đang kéo 1 món: dòng " Cách tường trái/sau" phía trên khung 3D hiện khoảng cách thật tới 2 mặt tường</li>
+              <li>Nút " Về tâm phòng": đưa món đang chọn về đúng giữa phòng, giữ nguyên góc xoay — khác "↺ Đặt lại vị trí/góc xoay" (về vị trí ban đầu + góc xoay 0°)</li>
+              <li>Dòng " Góc xoay": hiện góc xoay hiện tại (độ) của món đang chọn, cập nhật ngay khi xoay</li>
+              <li>Nút " Chế độ khung dây" (trong "⋯ Thêm"): nhìn xuyên nội thất dạng khung dây, dễ phát hiện món bị che khuất</li>
               <li>Nút tốc độ camera (trong "⋯ Thêm"): 3 mức Chậm/Bình thường/Nhanh cho xoay/pan/zoom bằng chuột</li>
-              <li>Nút "📋 Sao chép ảnh" (trong "⋯ Thêm"): sao chép khung hình 3D hiện tại thẳng vào clipboard, dán được ngay vào ứng dụng khác</li>
+              <li>Nút " Sao chép ảnh" (trong "⋯ Thêm"): sao chép khung hình 3D hiện tại thẳng vào clipboard, dán được ngay vào ứng dụng khác</li>
               <li>Ô nhập cạnh "Góc xoay": gõ trực tiếp số độ (0-359) thay vì bấm nhiều lần nút xoay</li>
               <li>Esc (khi đang chọn 1 món, không có dropdown/menu nào mở): bỏ chọn món ngay</li>
-              <li>Nút "🌑/☀️ bóng đổ" và "🔅/🔆 Độ sáng" (trong "⋯ Thêm"): tắt bóng đổ hoặc chỉnh độ sáng scene, độc lập với chế độ Ngày/Đêm</li>
-              <li>Nút "🧭 Về giữa phòng" (trong "Góc nhìn ▾"): đưa điểm nhìn CAMERA về giữa phòng, giữ nguyên khoảng cách/góc nhìn — khác "🎯 Về tâm phòng" (di chuyển nội thất đang chọn)</li>
-              <li>Nút "🕘 Hoạt động gần đây": xem thêm vài thao tác gần nhất (không chỉ 1 mục như dòng "Thao tác gần nhất")</li>
-              <li>Nút "🪴 Chỉ nội thất" (trong "⋯ Thêm"): tạm ẩn thảm/chậu cây/tranh tường, giữ nguyên nội thất chính</li>
+              <li>Nút "/ bóng đổ" và "/ Độ sáng" (trong "⋯ Thêm"): tắt bóng đổ hoặc chỉnh độ sáng scene, độc lập với chế độ Ngày/Đêm</li>
+              <li>Nút " Về giữa phòng" (trong "Góc nhìn ▾"): đưa điểm nhìn CAMERA về giữa phòng, giữ nguyên khoảng cách/góc nhìn — khác " Về tâm phòng" (di chuyển nội thất đang chọn)</li>
+              <li>Nút " Hoạt động gần đây": xem thêm vài thao tác gần nhất (không chỉ 1 mục như dòng "Thao tác gần nhất")</li>
+              <li>Nút " Chỉ nội thất" (trong "⋯ Thêm"): tạm ẩn thảm/chậu cây/tranh tường, giữ nguyên nội thất chính</li>
               <li>W/A/S/D (khi CHƯA chọn món nào): điều khiển camera — giống hệt phím mũi tên tương ứng</li>
               <li>Rê chuột lên 1 món (không cần click): tên món hiện ngay gần con trỏ</li>
               <li>Camera giữ nguyên vị trí/góc nhìn qua mọi thao tác bật/tắt khác (Ẩn nhãn, Buổi tối, Khung dây...) — chỉ đổi khi bấm "Đặt lại góc nhìn" hoặc chuyển sang thiết kế khác</li>
-              <li>Nút "🔒/🔓 Khoá món này": khoá vị trí/góc xoay món đang chọn (tránh kéo/xoay nhầm), vẫn chọn/xem/đổi màu/xoá được</li>
-              <li>Nút "🔎 Cô lập món này"/"↩️ Hiện lại tất cả": tạm ẩn mọi món khác để tập trung chỉnh 1 món cụ thể</li>
+              <li>Nút "/ Khoá món này": khoá vị trí/góc xoay món đang chọn (tránh kéo/xoay nhầm), vẫn chọn/xem/đổi màu/xoá được</li>
+              <li>Nút " Cô lập món này"/"↩️ Hiện lại tất cả": tạm ẩn mọi món khác để tập trung chỉnh 1 món cụ thể</li>
               <li>Nút "▦ Hiện/Ẩn lưới sàn" (trong "⋯ Thêm"): lưới tham chiếu trên mặt sàn, độc lập với Snap-to-Grid</li>
               <li>Đang kéo 1 món: vùng sàn ngay dưới món được tô sáng nhẹ theo thời gian thực</li>
             </ul>
@@ -2890,7 +2890,7 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
               căn chỉnh (khác Alignment Guides TASK-128, hoạt động độc lập song song). */}
           {dragWallDistance && (
             <p className="text-muted" style={{ fontSize: '0.8rem', margin: '0 0 6px' }}>
-              📏 Cách tường trái: {dragWallDistance.toLeft.toFixed(1)}m · Cách tường sau: {dragWallDistance.toBack.toFixed(1)}m
+               Cách tường trái: {dragWallDistance.toLeft.toFixed(1)}m · Cách tường sau: {dragWallDistance.toBack.toFixed(1)}m
             </p>
           )}
           <div ref={mountRef} className="room3d-mount" />
@@ -2933,13 +2933,13 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
                 disabled={previewMode}
                 onClick={() => { removeFurniture(contextMenu.index); setContextMenu(null) }}
               >
-                ✕ Xoá
+                 Xoá
               </button>
               <button
                 type="button"
                 onClick={() => { toggleVisibility(contextMenu.index); setContextMenu(null) }}
               >
-                {hiddenIndices.has(contextMenu.index) ? '👁️ Hiện lại' : '🙈 Ẩn tạm'}
+                {hiddenIndices.has(contextMenu.index) ? ' Hiện lại' : ' Ẩn tạm'}
               </button>
               <button
                 type="button"
@@ -2949,7 +2949,7 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
                 ↺ Đặt lại vị trí/góc xoay
               </button>
               <button type="button" onClick={() => { focusOnSelected(); setContextMenu(null) }}>
-                🔍 Phóng to
+                 Phóng to
               </button>
             </span>
           )}
@@ -3004,7 +3004,7 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
                 kiếm) khi mở lại. Vị trí đóng thẻ xác định bằng script đếm thẻ cân bằng, không đếm thủ công. */}
             <div style={{ display: furniturePanelOpen ? undefined : 'none' }}>
             {/* TASK-105: fieldset bọc phần thông tin ngân sách + nút gợi ý xoá (mutation thật) — KHÔNG
-                bọc `<ul>` danh sách nội thất bên dưới (TASK-109 cần nút 👁️/🙈 + chọn món hoạt động được
+                bọc `<ul>` danh sách nội thất bên dưới (TASK-109 cần nút / + chọn món hoạt động được
                 cả trong preview mode, chỉ 3 control mutation thật trong mỗi dòng — sửa giá/nhân đôi/xoá —
                 mới bọc fieldset riêng ở CHÍNH dòng đó). Đóng lại trước `<ul>`, mở lại 1 fieldset khác sau
                 `</ul>` cho phần còn lại (Hoàn tác/Làm lại, ô tìm kiếm, nút thêm loại đồ). */}
@@ -3046,7 +3046,7 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
               if (over <= 0) {
                 return (
                   <p style={{ fontSize: '0.85rem', margin: '0 0 8px', color: 'var(--color-accent-dark)' }}>
-                    ✅ Trong ngân sách, còn dư {(-over).toLocaleString('vi-VN')} đ
+                     Trong ngân sách, còn dư {(-over).toLocaleString('vi-VN')} đ
                   </p>
                 )
               }
@@ -3069,15 +3069,15 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
               return (
                 <div style={{ margin: '0 0 8px' }}>
                   <p style={{ fontSize: '0.85rem', margin: '0 0 4px', color: 'var(--color-danger)' }}>
-                    ⚠️ Vượt ngân sách {over.toLocaleString('vi-VN')} đ
+                     Vượt ngân sách {over.toLocaleString('vi-VN')} đ
                   </p>
                   {removingPriciestEnough ? (
                     <button type="button" className="secondary" onClick={() => removeFurniture(priciest.index)}>
-                      💡 Xoá "{priciest.item.name || 'Nội thất'}" ({(priciest.item.estimatedCost || 0).toLocaleString('vi-VN')} đ) để về đúng ngân sách
+                       Xoá "{priciest.item.name || 'Nội thất'}" ({(priciest.item.estimatedCost || 0).toLocaleString('vi-VN')} đ) để về đúng ngân sách
                     </button>
                   ) : (
                     <p className="text-muted" style={{ fontSize: '0.8rem', margin: 0 }}>
-                      💡 Cần bớt khoảng {itemsNeeded} món giá trị cao nhất để về đúng ngân sách.
+                       Cần bớt khoảng {itemsNeeded} món giá trị cao nhất để về đúng ngân sách.
                     </p>
                   )}
                 </div>
@@ -3102,7 +3102,7 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
                       title={hiddenIndices.has(idx) ? 'Hiện lại trong scene 3D' : 'Ẩn tạm khỏi scene 3D (không xoá)'}
                       onClick={() => toggleVisibility(idx)}
                     >
-                      {hiddenIndices.has(idx) ? '🙈' : '👁️'}
+                      {hiddenIndices.has(idx) ? '' : ''}
                     </button>
                     <span
                       role="button"
@@ -3114,7 +3114,7 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
                     >
                       {item.name || 'Nội thất'}
                     </span>
-                    {lockedIndices.has(idx) && <span title="Đã khoá vị trí/góc xoay">🔒</span>}
+                    {lockedIndices.has(idx) && <span title="Đã khoá vị trí/góc xoay"></span>}
                   </span>
                   <fieldset
                     disabled={previewMode}
@@ -3147,7 +3147,7 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
                       aria-label={`Xoá ${item.name || 'món nội thất này'}`}
                       onClick={() => removeFurniture(idx)}
                     >
-                      ✕
+                      
                     </button>
                   </fieldset>
                 </li>
@@ -3188,7 +3188,7 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
                     onClick={() => setShowRecentActions((prev) => !prev)}
                     aria-expanded={showRecentActions}
                   >
-                    🕘 Hoạt động gần đây
+                     Hoạt động gần đây
                   </button>
                 )}
               </div>
@@ -3206,7 +3206,7 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
               if (validRecent.length === 0) return null
               return (
                 <div>
-                  <span className="room3d-furniture-group-label">🕘 Vừa dùng gần đây</span>
+                  <span className="room3d-furniture-group-label"> Vừa dùng gần đây</span>
                   <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 4 }}>
                     {validRecent.map((category) => (
                       <button type="button" className="secondary" key={category} title={estimatedCostHint(category)} onClick={() => addFurniture(category)}>
@@ -3221,7 +3221,7 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
               ref={furnitureSearchInputRef}
               type="text"
               className="room3d-furniture-search"
-              placeholder="🔍 Tìm loại đồ (vd: bàn, đèn, may)... (phím / để focus nhanh)"
+              placeholder=" Tìm loại đồ (vd: bàn, đèn, may)... (phím / để focus nhanh)"
               value={furnitureSearch}
               onChange={(e) => setFurnitureSearch(e.target.value)}
             />
@@ -3326,15 +3326,15 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
                 : (() => {
                     const roomWidth = room?.widthMeters > 0 ? room.widthMeters : DEFAULT_SIZE_METERS
                     const roomLength = room?.lengthMeters > 0 ? room.lengthMeters : DEFAULT_SIZE_METERS
-                    return `📐 Kích thước phòng: ${roomWidth.toFixed(1)}m × ${roomLength.toFixed(1)}m (diện tích ${(roomWidth * roomLength).toFixed(1)} m²) — Kéo chuột để xoay/pan, cuộn để zoom. Kéo chấm đỏ để đổi kích thước phòng, kéo một món nội thất để đổi vị trí, nhấp đúp để xoay 90°, nhấp 1 lần để chọn rồi dùng phím mũi tên/Delete (chỉ trong phiên xem này, chưa lưu lại).`
+                    return ` Kích thước phòng: ${roomWidth.toFixed(1)}m × ${roomLength.toFixed(1)}m (diện tích ${(roomWidth * roomLength).toFixed(1)} m²) — Kéo chuột để xoay/pan, cuộn để zoom. Kéo chấm đỏ để đổi kích thước phòng, kéo một món nội thất để đổi vị trí, nhấp đúp để xoay 90°, nhấp 1 lần để chọn rồi dùng phím mũi tên/Delete (chỉ trong phiên xem này, chưa lưu lại).`
                   })()}
             </p>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               <button type="button" className="secondary" onClick={exportLayout} title="Lưu bố trí hiện tại (nội thất + màu) thành file JSON trên máy">
-                💾 Lưu bố trí
+                 Lưu bố trí
               </button>
               <button type="button" className="secondary" disabled={previewMode} onClick={() => importInputRef.current?.click()} title="Khôi phục bố trí đã lưu từ file JSON">
-                📂 Tải bố trí đã lưu
+                 Tải bố trí đã lưu
               </button>
               <input
                 ref={importInputRef}
@@ -3348,7 +3348,7 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
               />
               {localFurniture.some((item) => item.isCustom) && (
                 <button type="button" className="secondary" disabled={previewMode} onClick={removeAllCustom}>
-                  🧹 Xoá món tự thêm
+                   Xoá món tự thêm
                 </button>
               )}
               <button

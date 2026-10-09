@@ -274,7 +274,7 @@ export function RoomSettingsModal() {
                             </span>
                             {mat.unitSizeLabel && (
                               <span className="text-[9px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 font-medium">
-                                📐 {mat.unitSizeLabel}
+                                 {mat.unitSizeLabel}
                               </span>
                             )}
                           </div>
@@ -324,7 +324,7 @@ export function RoomSettingsModal() {
                     <div className="flex items-center gap-2">
                       <span className="text-amber-400 font-semibold">{(room.floorRepeat || 1.0).toFixed(2)}x</span>
                       <span className="text-[11px] font-medium text-amber-300 bg-amber-950/60 border border-amber-500/30 px-2 py-0.5 rounded-full">
-                        📐 {getMaterialScaledDimensionText(currentFloorMat, room.floorRepeat || 1.0)}
+                         {getMaterialScaledDimensionText(currentFloorMat, room.floorRepeat || 1.0)}
                       </span>
                     </div>
                   </div>
@@ -435,7 +435,7 @@ export function RoomSettingsModal() {
                             </span>
                             {mat.unitSizeLabel && (
                               <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-medium">
-                                📐 {mat.unitSizeLabel}
+                                 {mat.unitSizeLabel}
                               </span>
                             )}
                           </div>
@@ -484,7 +484,7 @@ export function RoomSettingsModal() {
                     <div className="flex items-center gap-2">
                       <span className="text-emerald-400 font-semibold">{(room.wallRepeat || 1.0).toFixed(2)}x</span>
                       <span className="text-[11px] font-medium text-emerald-300 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded-full">
-                        📐 {getMaterialScaledDimensionText(currentWallMat, room.wallRepeat || 1.0)}
+                         {getMaterialScaledDimensionText(currentWallMat, room.wallRepeat || 1.0)}
                       </span>
                     </div>
                   </div>

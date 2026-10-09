@@ -125,7 +125,7 @@ function CompareColumn({ label, side }) {
       {imageUrl ? (
         <img className="compare-col-img" src={imageUrl} alt={`Ảnh AI thiết kế ${label}`} />
       ) : (
-        <div className="room-card-photo-placeholder compare-col-img">🖼️</div>
+        <div className="room-card-photo-placeholder compare-col-img"></div>
       )}
 
       <p>

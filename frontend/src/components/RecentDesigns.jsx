@@ -27,7 +27,7 @@ function iconForRoomType(roomType) {
 
   return (
     ROOM_ICONS.find((room) => normalized.includes(room.keyword))?.icon ||
-    '🏠'
+    ''
   )
 }
 
