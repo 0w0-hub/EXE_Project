@@ -40,16 +40,6 @@
   --font-body: 'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* TASK-088: Dark mode — kích hoạt qua [data-theme="dark"] trên <html> (ThemeToggle.jsx set/đọc
-   localStorage, KHÔNG dùng prefers-color-scheme). Giữ nguyên --color-primary/--color-secondary/
-   --color-accent/--color-danger (màu thương hiệu không đổi theo theme).
-   Ngoài 6 biến tối thiểu theo task (bg/surface/text/text-muted/border/neutral-tint), rà toàn bộ
-   styles.css cho thấy nhiều nơi ghép "nền *-tint/--color-support (màu pastel sáng cố định) + chữ mặc
-   định --color-text/--color-neutral-text" (.chip, .compare-diff-card, .card--warning,
-   .notification-bell__list li.is-unread, .table tbody tr:hover, .step-indicator__item,
-   .status-PENDING, .role-badge--USER, .viewer-3d-placeholder, .section-tint...) — nếu chỉ đổi
-   --color-text sang màu sáng mà giữ nguyên các nền tint sáng đó thì sẽ bị "chữ sáng trên nền sáng",
-   đúng lỗi mà Acceptance Criteria yêu cầu tránh. Vì vậy phải đổi thêm các biến này cho đồng bộ. */
 :root[data-theme="dark"] {
   --color-bg: #14161D;
   --color-surface: #1C1F28;
@@ -74,10 +64,6 @@
   --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
-/* TASK-132: Font size control — kích hoạt qua [data-font-size="sm"|"lg"] trên <html>
-   (FontSizeControl.jsx set/đọc localStorage). Chỉ đổi font-size gốc trên :root — toàn bộ
-   styles.css dùng rem/em nên hiệu ứng lan toả tự nhiên, không cần sửa từng component/trang.
-   "md" (mặc định) = 100% hiện tại, không cần rule riêng. */
 :root[data-font-size="sm"] {
   font-size: 90%;
 }
@@ -231,9 +217,6 @@ h4 {
   box-shadow: none;
 }
 
-/* TASK-101: DesignHealthCheck.jsx — .card--danger cho các mục có vấn đề thật (thiếu ảnh/chưa nội
-   thất/vượt ngân sách), .card--success cho dòng xác nhận tích cực khi mọi mục đều pass. Cùng pattern
-   với .card--warning ở trên, dùng các token màu danger/accent đã có sẵn trong :root. */
 .card--danger {
   background: var(--color-danger-tint);
   border: 1px solid var(--color-danger);
@@ -250,6 +233,14 @@ h4 {
   background: var(--color-bg-tint);
   border-radius: var(--radius-lg);
   padding: 24px;
+}
+
+.dashboard-hero-tint {
+  background: var(--color-primary-tint);
+}
+
+:root[data-theme="dark"] .dashboard-hero-tint {
+  background: var(--color-danger-tint);
 }
 
 .form-group {
@@ -284,8 +275,6 @@ h4 {
   box-shadow: 0 0 0 3px var(--color-secondary-tint);
 }
 
-/* TASK-165: toggle hiện/ẩn mật khẩu trên trang Đổi mật khẩu — icon nằm trong ô input, tái dùng
-   token màu hiện có (--color-text-muted/--color-text), không thêm màu mới. */
 .password-input-wrap {
   position: relative;
 }
@@ -359,17 +348,12 @@ button.secondary:hover:not(:disabled) {
   margin-top: 4px;
 }
 
-/* TASK-083: thông báo thành công (đổi mật khẩu, ...) — chưa có --color-success trong theme. */
 .success-text {
   color: #2E7D32;
   font-size: 0.85rem;
   margin-top: 4px;
 }
 
-/* TASK-088: #2E7D32 ở trên là literal (chưa có token --color-success, nợ kỹ thuật từ TASK-083), không
-   tự đổi theo theme. Giữ nguyên ở light mode; ở dark mode, đo tương phản với --color-bg mới (~3.5:1)
-   không đạt AA (4.5:1) cho chữ thường — đổi sang xanh sáng hơn (~6.5:1) để vẫn đọc được, không tạo
-   token mới (ngoài scope task này). */
 :root[data-theme="dark"] .success-text {
   color: #4CAF50;
 }
@@ -380,8 +364,6 @@ button.secondary:hover:not(:disabled) {
   gap: 16px;
 }
 
-/* TASK-119: kiểu hiển thị "Danh sách" thay thế cho .room-grid (toggle qua viewMode ở Projects.jsx) —
-   mỗi dự án 1 hàng ngang gọn thay vì card, dùng chung .card/border token cho nhất quán theme. */
 .room-list {
   display: flex;
   flex-direction: column;
@@ -397,8 +379,6 @@ button.secondary:hover:not(:disabled) {
   border: 1px solid var(--color-border, var(--color-support));
   border-radius: var(--radius-md, 8px);
   flex-wrap: wrap;
-  /* TASK-144: neo popup xem trước nhanh (.project-preview-popup, position: absolute) đúng vào hàng
-     này thay vì trôi theo toàn trang. */
   position: relative;
 }
 
@@ -424,7 +404,6 @@ button.secondary:hover:not(:disabled) {
   flex-wrap: wrap;
 }
 
-/* TASK-119: nhóm 2 nút toggle Lưới/Danh sách — sát nhau, không có khoảng cách lớn như các nhóm nút khác. */
 .view-mode-toggle {
   display: flex;
   gap: 4px;
@@ -446,11 +425,6 @@ button.secondary:hover:not(:disabled) {
   background: var(--tile-bg, var(--color-support));
 }
 
-/* TASK-088: Dashboard.jsx/AdminDashboard.jsx set --tile-bg qua inline style (hex cố định per tile) —
-   inline style luôn thắng CSS thường nên không thể override biến --tile-bg từ stylesheet. Ép thẳng
-   background (không qua biến --tile-bg) để tile không giữ màu pastel sáng cố định ở dark mode, tránh
-   .stat-tile-label/.stat-tile-value (dùng --color-text/--color-text-muted, đã đổi sáng) bị chữ sáng
-   trên nền sáng. Không sửa Dashboard.jsx/AdminDashboard.jsx theo đúng scope task. */
 :root[data-theme="dark"] .stat-tile {
   background: var(--color-support);
 }
@@ -496,11 +470,6 @@ button.secondary:hover:not(:disabled) {
   color: var(--color-danger);
 }
 
-/* TASK-163: huy hiệu "Vừa mở" (Projects.jsx) — cùng kích thước/hình dạng pill như .status-badge nhưng
-   dùng --color-primary (chưa dùng cho status-* nào ở trên: PENDING=neutral, PROCESSING=secondary,
-   COMPLETED=accent, FAILED=danger) để phân biệt rõ đây là 1 NGỮ CẢNH khác (vừa truy cập), không phải
-   trạng thái xử lý. Đặt CÙNG hàng flow bình thường với .status-badge trong JSX (không absolute) nên
-   không cần z-index/vị trí riêng ở đây. */
 .badge-recent {
   display: inline-block;
   padding: 4px 12px;
@@ -2128,9 +2097,9 @@ button.secondary:active:not(:disabled) {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--color-primary) 0%, #ff6b35 100%);
+  background: var(--color-primary);
   color: #fff;
-  box-shadow: 0 4px 20px rgba(211, 47, 47, 0.45), 0 2px 8px rgba(0,0,0,.2);
+  box-shadow: 0 4px 20px rgba(211, 47, 47, 0.4), 0 2px 8px rgba(0,0,0,.2);
   transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.2s ease, background 0.2s;
   outline: none;
 }
@@ -2143,8 +2112,14 @@ button.secondary:active:not(:disabled) {
   outline-offset: 3px;
 }
 .ai-chat__fab--open {
-  background: linear-gradient(135deg, #444 0%, #222 100%);
+  background: var(--color-primary-hover);
   box-shadow: 0 4px 16px rgba(0,0,0,.35);
+}
+.ai-chat__fab-label {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  line-height: 1;
 }
 .ai-chat__fab-dot {
   position: absolute;
@@ -2322,8 +2297,8 @@ button.secondary:active:not(:disabled) {
   border-bottom-left-radius: 4px;
 }
 .ai-chat__msg--user .ai-chat__bubble {
-  background: linear-gradient(135deg, var(--color-primary) 0%, #ff6b35 100%);
-  color: #fff;
+  background: var(--color-primary-tint);
+  color: var(--color-primary-hover);
   border-bottom-right-radius: 4px;
 }
 

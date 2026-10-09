@@ -175,14 +175,7 @@ export default function AIChatbox() {
         aria-label={open ? 'Đóng trợ lý AI' : 'Mở trợ lý AI'}
         title={open ? 'Đóng trợ lý AI' : 'Mở trợ lý AI'}
       >
-        {open ? (
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        ) : (
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-            <path d="M9.5 9h5M9.5 13h3" strokeWidth="1.6"/>
-          </svg>
-        )}
+        <span className="ai-chat__fab-label" aria-hidden="true">AI</span>
         {/* Dot trạng thái online */}
         <span className="ai-chat__fab-dot" aria-hidden="true" />
       </button>

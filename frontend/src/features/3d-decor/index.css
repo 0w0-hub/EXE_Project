@@ -4,9 +4,90 @@
 .decor-studio-root {
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  color: #f8fafc;
+  color: #111111;
 }
 
 .decor-studio-root * {
   box-sizing: border-box;
+}
+
+/* Homely studio skin: soft red surfaces and stronger red outlines, matching
+   the rest of the application while keeping the room canvas unobtrusive. */
+.decor-studio-root [class*="bg-slate-950"] {
+  background-color: #fff8f8 !important;
+}
+
+.decor-studio-root [class*="bg-slate-900"],
+.decor-studio-root [class*="bg-slate-800"] {
+  background-color: #fff2f3 !important;
+}
+
+.decor-studio-root [class*="border-slate-"] {
+  border-color: #b42332 !important;
+}
+
+.decor-studio-root [class*="bg-blue-"] {
+  background-color: #fff0f1 !important;
+}
+
+.decor-studio-root [class~="bg-blue-600"],
+.decor-studio-root [class~="bg-blue-700"] {
+  background-color: #d32f2f !important;
+}
+
+.decor-studio-root [class*="border-blue-"] {
+  border-color: #b42332 !important;
+}
+
+.decor-studio-root [class*="text-blue-"] {
+  color: #b42332 !important;
+}
+
+.decor-studio-root [class*="text-slate-100"],
+.decor-studio-root [class*="text-slate-200"],
+.decor-studio-root [class*="text-slate-300"],
+.decor-studio-root [class*="text-slate-400"] {
+  color: #554246 !important;
+}
+
+.decor-studio-root h1.text-white,
+.decor-studio-root h2.text-white,
+.decor-studio-root h3.text-white,
+.decor-studio-root h4.text-white {
+  color: #352326 !important;
+}
+
+.decor-studio-root [class*="shadow-blue-"] {
+  --tw-shadow-color: rgb(211 47 47 / 25%) !important;
+}
+
+.decor-studio-root button:hover[class*="hover:bg-slate-"] {
+  background-color: #ffe2e4 !important;
+}
+
+.decor-studio-root button:hover[class*="hover:bg-blue-"] {
+  background-color: #b42332 !important;
+}
+
+/* Daylight editor controls use dark text for clear contrast on the light
+   surfaces. Active red controls keep their white labels. */
+.decor-studio-root [class*="text-"] {
+  color: #111111 !important;
+}
+
+.decor-studio-root input,
+.decor-studio-root select,
+.decor-studio-root textarea {
+  color: #111111 !important;
+}
+
+.decor-studio-root [class~="bg-blue-600"] [class*="text-"],
+.decor-studio-root [class~="bg-blue-700"] [class*="text-"],
+.decor-studio-root [class*="bg-red-"] [class*="text-"],
+.decor-studio-root [class*="bg-rose-"] [class*="text-"],
+.decor-studio-root button[class~="bg-blue-600"],
+.decor-studio-root button[class~="bg-blue-700"],
+.decor-studio-root button[class*="bg-red-"],
+.decor-studio-root button[class*="bg-rose-"] {
+  color: #ffffff !important;
 }

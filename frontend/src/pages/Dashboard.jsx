@@ -156,7 +156,7 @@ export default function Dashboard() {
       {showTour && <OnboardingTour onClose={closeTour} />}
 
       <div
-        className="section-tint"
+        className="section-tint dashboard-hero-tint"
         style={{
           width: 'calc(100vw - 10px)',
           marginLeft: 'calc(50% - 50vw + 5px)',

@@ -146,7 +146,7 @@ export function TopBar() {
         </div>
 
         {/* Tab 3D vs 2D CAD */}
-        <div className="flex bg-slate-900/90 backdrop-blur-md p-1 rounded-xl border border-slate-700/80 shadow-xl">
+        <div className="flex items-center gap-1 bg-slate-900/90 backdrop-blur-md p-1 rounded-xl border border-slate-700/80 shadow-xl">
           <button
             onClick={() => setActiveTab('3d')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${

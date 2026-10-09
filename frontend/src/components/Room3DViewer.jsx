@@ -3318,11 +3318,6 @@ export default function Room3DViewer({ room, furniture = [], colors = [], result
                   : `Đã chọn "${localFurniture[selectedFurnitureIndex]?.name || 'món nội thất'}" — phím mũi tên để di chuyển tinh, Q/E để xoay 15°, Delete để xoá, nhấp chỗ trống để bỏ chọn.`
                 : previewMode
                 ? 'Đang ở chế độ xem trước — vẫn xoay/pan/zoom camera, đổi tab, chọn món để xem thông tin được, nhưng mọi chỉnh sửa đã bị khoá.'
-                // TASK-140: hiện kích thước phòng thường trực ở nhánh mặc định (trước đó CHỈ hiện tạm
-                // thời lúc đang kéo-resize qua `previewDims` ở nhánh đầu tiên) — giữ nguyên phần hướng
-                // dẫn thao tác cũ, chỉ thêm thông tin kích thước lên trước. Tính lại `width`/`length` tại
-                // chỗ (cùng công thức `room?.widthMeters > 0 ? ... : DEFAULT_SIZE_METERS` dùng xuyên suốt
-                // file) vì 2 biến này chỉ tồn tại cục bộ trong effect dựng scene, không có sẵn ở JSX.
                 : (() => {
                     const roomWidth = room?.widthMeters > 0 ? room.widthMeters : DEFAULT_SIZE_METERS
                     const roomLength = room?.lengthMeters > 0 ? room.lengthMeters : DEFAULT_SIZE_METERS
