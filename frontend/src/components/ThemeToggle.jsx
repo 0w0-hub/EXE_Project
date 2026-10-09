@@ -33,8 +33,6 @@ export default function ThemeToggle() {
     try {
       window.localStorage.setItem(THEME_STORAGE_KEY, next)
     } catch {
-      // TASK-088: nếu không lưu được (chế độ riêng tư/quota) vẫn áp dụng theme cho phiên hiện tại,
-      // chỉ là không giữ được lựa chọn sau khi tải lại trang.
     }
     setTheme(next)
   }

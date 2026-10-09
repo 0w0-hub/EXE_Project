@@ -14,15 +14,8 @@ function areaOf(room) {
   return room.widthMeters * room.lengthMeters
 }
 
-/**
- * TASK-077: tải 1 vế so sánh (job + room + preference + ảnh AI 2D) song song cho jobId truyền vào.
- * Không đụng DesignResult.jsx — tái tạo lại cùng pattern (assetApi.fetchObjectUrl vì endpoint asset
- * cần auth header, <img src="..."> gọi thẳng không gắn được header) trong trang riêng biệt này.
- */
 function useDesignSide(jobId) {
   const [state, setState] = useState(INITIAL_SIDE)
-  // TASK-129: đổi giá trị này để useEffect bên dưới chạy lại đúng logic load (dùng cho nút "Thử lại"
-  // của RequestError trong CompareColumn) — không viết lại logic fetch riêng.
   const [reloadToken, setReloadToken] = useState(0)
 
   useEffect(() => {
@@ -93,8 +86,6 @@ function useDesignSide(jobId) {
     }
   }, [jobId, reloadToken])
 
-  // TASK-129: expose để CompareColumn truyền vào RequestError onRetry — chỉ tải lại đúng vế này
-  // (jobId của cột đang lỗi), không đụng vế còn lại.
   function reload() {
     setReloadToken((t) => t + 1)
   }
@@ -116,8 +107,6 @@ function CompareColumn({ label, side }) {
     return (
       <div className="card">
         <h3 className="compare-col-title">{label}</h3>
-        {/* TASK-129: RequestError (nút "🔄 Thử lại" thủ công) — gọi lại đúng vế (jobId) đang lỗi qua
-            side.reload, không đụng vế còn lại. */}
         <RequestError message={side.error || 'Không tải được phương án này.'} onRetry={side.reload} />
       </div>
     )

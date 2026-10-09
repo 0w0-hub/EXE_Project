@@ -1,17 +1,12 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
-// TASK-085: trang 404 riêng — coordinator sẽ tự gắn route catch-all `path="*"` vào App.jsx sau khi mọi
-// agent trong round này báo cáo xong (tránh xung đột thứ tự route do nhiều agent cùng sửa App.jsx song
-// song). Component này chỉ đứng riêng, chưa được import ở đâu.
+
 export default function NotFound() {
   const { user } = useAuth()
   const navigate = useNavigate()
 
-  // TASK-085: ý tưởng gốc (ChatGPT) giả định có route "/dashboard" riêng, nhưng App.jsx hiện mount
-  // Dashboard ngay tại "/" (ProtectedRoute tự chuyển "/" sang "/login" khi chưa đăng nhập) — nên điều
-  // hướng thẳng "/" khi đã đăng nhập, "/login" khi chưa, thay vì phải đi vòng qua "/" rồi để
-  // ProtectedRoute bounce lần nữa.
+
   const homeTarget = user ? '/' : '/login'
 
   return (

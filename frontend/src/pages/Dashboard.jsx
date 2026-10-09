@@ -8,10 +8,8 @@ import RecentDesigns from '../components/RecentDesigns'
 import RequestError from '../components/RequestError'
 import useDocumentTitle from '../hooks/useDocumentTitle'
 
-// TASK-081: cờ "đã xem tour onboarding"
 const ONBOARDING_STORAGE_KEY = 'homely_onboarding_seen'
 
-// TASK-162: format giờ:phút:giây
 function formatTimeHms(date) {
   const pad = (n) => String(n).padStart(2, '0')
   return `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`
@@ -31,17 +29,12 @@ export default function Dashboard() {
 
   useDocumentTitle('Trang chủ')
 
-  // Container dùng chung cho toàn bộ nội dung Dashboard.
   const contentStyle = {
     width: '100%',
     maxWidth: 1500,
     margin: '0 auto',
     boxSizing: 'border-box',
   }
-
-  // =========================================================
-  // LOAD ROOMS
-  // =========================================================
 
   function loadRooms() {
     setLoading(true)
@@ -54,10 +47,6 @@ export default function Dashboard() {
       .finally(() => setLoading(false))
   }
 
-  // =========================================================
-  // REFRESH
-  // =========================================================
-
   function handleRefresh() {
     setRefreshing(true)
 
@@ -67,22 +56,13 @@ export default function Dashboard() {
     })
   }
 
-  // =========================================================
-  // INITIAL LOAD
-  // =========================================================
-
   useEffect(() => {
     loadRooms()
 
     usageApi.me().then(setUsage).catch(() => {})
     subscriptionApi.me().then(setSubscription).catch(() => {})
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  // =========================================================
-  // SHIFT + R
-  // =========================================================
 
   useEffect(() => {
     function onGlobalKeyDown(evt) {
@@ -112,12 +92,7 @@ export default function Dashboard() {
       document.removeEventListener('keydown', onGlobalKeyDown)
     }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refreshing])
-
-  // =========================================================
-  // ONBOARDING
-  // =========================================================
 
   useEffect(() => {
     try {
@@ -125,7 +100,6 @@ export default function Dashboard() {
         setShowTour(true)
       }
     } catch {
-      // Bỏ qua nếu localStorage bị chặn.
     }
   }, [])
 
@@ -133,15 +107,10 @@ export default function Dashboard() {
     try {
       localStorage.setItem(ONBOARDING_STORAGE_KEY, '1')
     } catch {
-      // Bỏ qua nếu localStorage bị chặn.
     }
 
     setShowTour(false)
   }
-
-  // =========================================================
-  // ROOM PHOTOS
-  // =========================================================
 
   useEffect(() => {
     const roomsWithPhoto = rooms.filter((room) => room.photoAssetId)
@@ -178,25 +147,14 @@ export default function Dashboard() {
     }
   }, [rooms])
 
-  // =========================================================
-  // SEARCH
-  // =========================================================
-
   const visibleRooms = rooms.filter((room) =>
     room.roomType?.toLowerCase().includes(search.trim().toLowerCase())
   )
-
-  // =========================================================
-  // UI
-  // =========================================================
 
   return (
     <div>
       {showTour && <OnboardingTour onClose={closeTour} />}
 
-      {/* =====================================================
-          HERO / GIỚI THIỆU
-          ===================================================== */}
       <div
         className="section-tint"
         style={{
@@ -217,9 +175,6 @@ export default function Dashboard() {
             textAlign: 'center',
           }}
         >
-          {/* =========================
-              GIF TRUNG TÂM
-              ========================= */}
           <div
             style={{
               width: '100%',
@@ -243,9 +198,6 @@ export default function Dashboard() {
             />
           </div>
 
-          {/* =========================
-              GIỚI THIỆU NGẮN
-              ========================= */}
           <div
             style={{
               width: '100%',
@@ -318,9 +270,6 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* =========================
-              3D DECOR
-              ========================= */}
           <div
             style={{
               width: '100%',
@@ -478,9 +427,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* =========================
-            SEARCH
-            ========================= */}
         {rooms.length > 0 && (
           <div
             style={{
@@ -507,18 +453,12 @@ export default function Dashboard() {
         )}
       </div>
 
-      {/* =====================================================
-          NỘI DUNG BÊN DƯỚI
-          ===================================================== */}
       <div
         className="dashboard-panel"
         style={contentStyle}
       >
         <RecentDesigns />
 
-        {/* =========================
-            THỐNG KÊ GÓI / USAGE / PHÒNG
-            ========================= */}
         {usage && subscription && (
           <div
             className="room-grid"
@@ -574,9 +514,6 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* =========================
-            DESIGN INSIGHTS
-            ========================= */}
         <div
           style={{
             width: '100%',
@@ -586,18 +523,12 @@ export default function Dashboard() {
           <DesignInsightsCard />
         </div>
 
-        {/* =========================
-            LOADING
-            ========================= */}
         {loading && (
           <p style={{ marginTop: 16 }}>
             Đang tải...
           </p>
         )}
 
-        {/* =========================
-            ERROR
-            ========================= */}
         {error && (
           <div style={{ marginTop: 16 }}>
             <RequestError
@@ -607,9 +538,6 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* =========================
-            EMPTY STATE
-            ========================= */}
         {!loading &&
           !error &&
           rooms.length === 0 && (
@@ -629,15 +557,12 @@ export default function Dashboard() {
 
               <Link to="/designs">
                 <button>
-                  🎨 Tạo thiết kế 3D đầu tiên
+                  Tạo thiết kế 3D đầu tiên
                 </button>
               </Link>
             </div>
           )}
 
-        {/* =========================
-            SEARCH EMPTY
-            ========================= */}
         {!loading &&
           !error &&
           rooms.length > 0 &&
@@ -687,7 +612,7 @@ export default function Dashboard() {
                     />
                   ) : (
                     <div className="room-card-photo-placeholder">
-                      🏠
+                      
                     </div>
                   )}
 

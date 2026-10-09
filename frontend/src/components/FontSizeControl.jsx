@@ -52,36 +52,6 @@ export default function FontSizeControl() {
 
   return (
     <span className="font-size-control">
-      {/* <button
-        type="button"
-        className="secondary"
-        onClick={decrease}
-        disabled={level === 'sm'}
-        aria-label="Giảm cỡ chữ"
-        title="Giảm cỡ chữ"
-      >
-        
-      </button>
-      <button
-        type="button"
-        className="secondary"
-        onClick={reset}
-        disabled={level === 'md'}
-        aria-label="Đặt lại cỡ chữ mặc định"
-        title="Cỡ chữ mặc định"
-      >
-        
-      </button>
-      <button
-        type="button"
-        className="secondary"
-        onClick={increase}
-        disabled={level === 'lg'}
-        aria-label="Tăng cỡ chữ"
-        title="Tăng cỡ chữ"
-      >
-        
-      </button> */}
     </span>
   )
 }

@@ -2,12 +2,10 @@ import { useEffect, useState } from 'react'
 import { activityApi } from '../services/api'
 import RequestError from '../components/RequestError'
 
-// TASK-084: icon/nhãn hiển thị theo `type` trả về từ GET /users/me/activity — KHÔNG có type nào
-// khác ngoài 3 loại này (xem UserService.getActivity ở backend).
 const TYPE_META = {
-  ROOM_CREATED: { icon: '🏠', label: 'Tạo phòng' },
-  DESIGN_GENERATED: { icon: '🎨', label: 'Tạo thiết kế AI' },
-  DESIGN_SHARED: { icon: '🔗', label: 'Chia sẻ công khai' },
+  ROOM_CREATED: { label: 'Tạo phòng' },
+  DESIGN_GENERATED: { label: 'Tạo thiết kế AI' },
+  DESIGN_SHARED: { label: 'Chia sẻ công khai' },
 }
 
 export default function ActivityHistory() {
@@ -15,8 +13,6 @@ export default function ActivityHistory() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  // TASK-129: tách riêng để nút "Thử lại" (RequestError) gọi lại đúng logic fetch này — cùng pattern
-  // loadItems/loadRooms ở Projects.jsx/Dashboard.jsx.
   function loadActivity() {
     setLoading(true)
     setError(null)
@@ -40,7 +36,6 @@ export default function ActivityHistory() {
         công khai đã bật.
       </p>
 
-      {/* TASK-129: RequestError (nút "🔄 Thử lại" thủ công) thay cho <p className="error-text"> trần. */}
       {error && <RequestError message={error} onRetry={loadActivity} />}
       {loading && <p>Đang tải...</p>}
 
@@ -53,7 +48,7 @@ export default function ActivityHistory() {
       {!loading && items.length > 0 && (
         <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
           {items.map((item, index) => {
-            const meta = TYPE_META[item.type] || { icon: '•', label: item.type }
+            const meta = TYPE_META[item.type] || { label: item.type }
             return (
               <li key={`${item.type}-${item.createdAt}-${index}`} className="card" style={{ marginBottom: 12 }}>
                 <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>

@@ -7,8 +7,6 @@ import ThemeToggle from './ThemeToggle'
 import FontSizeControl from './FontSizeControl'
 import logoImg from '../assets/logo.png'  
 
-// TASK-082: poll interval cho unread-count — đơn giản đúng quy mô MVP, KHÔNG dùng WebSocket/SSE
-// (xem tasks/active/TASK-082-notification-center.md).
 const NOTIFICATION_POLL_MS = 20000
 
 export default function NavBar() {
@@ -39,11 +37,7 @@ export default function NavBar() {
         />
       </NavLink>
       <nav className="navbar-nav">
-        {/* TASK-088 (coordinator): hiện cho cả 2 trạng thái đăng nhập — theme là sở thích trình duyệt,
-            không phải dữ liệu tài khoản. */}
         <ThemeToggle />
-        {/* TASK-132: cùng vị trí/điều kiện hiển thị với ThemeToggle — cỡ chữ là sở thích trình duyệt,
-            không phải dữ liệu tài khoản. */}
         <FontSizeControl />
         {user ? (
           <>
@@ -65,9 +59,6 @@ export default function NavBar() {
   )
 }
 
-// TASK-083/084/087 (coordinator, sau khi 4 agent round 3 báo cáo xong): gộp link tới 3 trang tài
-// khoản mới (đổi mật khẩu, lịch sử hoạt động, xuất dữ liệu) vào 1 dropdown thay vì thêm 3 nút rời —
-// đỡ rối thanh nav vốn đã có nhiều mục. Khối riêng, tự quản lý state, cùng pattern NotificationBell.
 function AccountMenu({ displayName, initial, onLogout }) {
   const [open, setOpen] = useState(false)
   const wrapRef = useRef(null)
@@ -82,7 +73,6 @@ function AccountMenu({ displayName, initial, onLogout }) {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  // TASK-090: Esc đóng dropdown khi đang mở.
   useEscapeKey(open, () => setOpen(false))
 
   return (
@@ -113,8 +103,6 @@ function AccountMenu({ displayName, initial, onLogout }) {
   )
 }
 
-// TASK-082: khối riêng, tự quản lý state — thêm additive vào NavBar để giảm rủi ro merge với các
-// task khác cùng đụng NavBar.jsx.
 function NotificationBell({ navigate }) {
   const [open, setOpen] = useState(false)
   const [items, setItems] = useState([])
@@ -180,20 +168,12 @@ function NotificationBell({ navigate }) {
     navigate(`/designs/${item.jobId}`)
   }
 
-  // TASK-151: "Đánh dấu tất cả đã đọc". Spec gốc giả định `notificationApi` CHƯA có endpoint hàng
-  // loạt (yêu cầu lặp `markRead(id)` qua từng thông báo chưa đọc trong state client nếu vậy) — nhưng
-  // kiểm tra `services/api.js` cho thấy `notificationApi.markAllRead()` (PATCH /notifications/read-all)
-  // đã tồn tại sẵn (backend TASK-082, cùng đợt, đang ở working tree chưa commit). Vì endpoint hàng loạt
-  // đã có thật (không phải bịa mới), dùng thẳng 1 lệnh gọi thay vì lặp N lệnh `markRead` riêng lẻ —
-  // đúng tinh thần "không thêm dữ liệu backend mới", chỉ khác là dùng cái đã có thay vì loop client.
   async function handleMarkAllRead() {
     try {
       await notificationApi.markAllRead()
       setItems((prev) => prev.map((item) => ({ ...item, read: true })))
       setUnreadCount(0)
     } catch {
-      // Giữ nguyên items/unreadCount hiện tại nếu API lỗi — tránh hiển thị sai "đã đọc hết" trong khi
-      // thực tế thất bại (không có cách nào biết phần nào đã thành công với 1 lệnh PATCH gộp).
     }
   }
 

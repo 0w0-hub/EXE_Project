@@ -9,8 +9,6 @@ import industrialPhoto from '../assets/templates/industrial.jpg'
 import bohemianPhoto from '../assets/templates/bohemian.jpg'
 import minimalistPhoto from '../assets/templates/minimalist.jpg'
 
-// Map theo từ khoá trong field `style` thật của API — không hardcode theo tên mẫu cụ thể,
-// để vẫn đúng khi backend thêm mẫu mới cùng phong cách đã biết.
 const STYLE_PHOTOS = [
   { keyword: 'japandi', photo: japandiPhoto },
   { keyword: 'scandinavian', photo: scandinavianPhoto },

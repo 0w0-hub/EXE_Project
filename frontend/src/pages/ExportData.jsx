@@ -1,9 +1,6 @@
 import { useState } from 'react'
 import { userExportApi } from '../services/api'
 
-// TASK-087: user tự tải toàn bộ dữ liệu cá nhân (profile + room + design job) về máy dưới dạng
-// file JSON để backup/tham khảo ngoài app — pattern Blob/URL.createObjectURL tham khảo
-// exportLayout() ở Room3DViewer.jsx (TASK-075), không đụng file đó.
 export default function ExportData() {
   const [error, setError] = useState(null)
   const [downloading, setDownloading] = useState(false)

@@ -511,9 +511,6 @@ function makeFabricTexture(baseColor) {
   return texture
 }
 
-// Nâng vật liệu nội thất theo tên material trong glTF (Kenney kit đặt tên nhất quán "wood"/"carpet"
-// (vải bọc)/"metal"/"glass"/"lamp" trên toàn bộ 12 model — đã xác nhận qua đọc trực tiếp JSON chunk
-// của từng file .glb). Không đổi hình dạng model, chỉ đổi material để đỡ "màu nhựa phẳng" như gốc.
 function enhanceMaterial(material) {
   if (!material || material.userData.enhanced) return
   material.userData.enhanced = true

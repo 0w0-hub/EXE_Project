@@ -1,7 +1,4 @@
-// TASK-085: khối hiển thị 403 dùng chung, nhúng vào trang admin khi API trả lỗi quyền truy cập — KHÔNG
-// phải route riêng. Route "/admin/*" đã được `AdminRoute` (App.jsx) chặn theo `user.role` phía client;
-// đây chỉ là fallback hiển thị khi tầng API vẫn trả 403 (ví dụ quyền bị thu hồi giữa phiên đăng nhập),
-// không thay đổi logic RBAC nào.
+// git add . git commit -m "Mô tả thay đổi" git push origin main
 export default function AccessDenied({ message }) {
   return (
     <div className="card" style={{ textAlign: 'center', maxWidth: 480, margin: '0 auto' }}>

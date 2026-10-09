@@ -4,12 +4,6 @@ import { publicShareApi } from '../services/api'
 import RequestError from '../components/RequestError'
 
 const CATEGORY_LABELS = { seating: 'Ghế/sofa', table: 'Bàn', lighting: 'Đèn', storage: 'Tủ/kệ lưu trữ' }
-
-/**
- * TASK-078: trang PUBLIC xem chia sẻ (view-only, không cần đăng nhập) — đọc `shareToken` từ URL,
- * KHÔNG dùng ProtectedRoute (giống /login, xem App.jsx). Chỉ hiển thị đọc-only, không có 3D
- * editor (Out of scope TASK-078 — xem tasks/active/TASK-078-share-feedback.md).
- */
 export default function SharedDesign() {
   const { shareToken } = useParams()
   const [share, setShare] = useState(null)
@@ -20,12 +14,6 @@ export default function SharedDesign() {
   const [submitting, setSubmitting] = useState(false)
   const [commentError, setCommentError] = useState(null)
 
-  // TASK-129: tách riêng để nút "Thử lại" (RequestError) gọi lại đúng logic fetch này — cùng pattern
-  // loadItems/loadRooms ở Projects.jsx/Dashboard.jsx. Trang public này đặc biệt đáng có retry vì
-  // người xem ngoài (không đăng nhập) gặp lỗi mạng thì không còn cách nào khác quay lại (xem Scope
-  // TASK-129). Bỏ cờ `cancelled` gốc (chỉ cần thiết khi shareToken đổi giữa chừng mà không remount —
-  // route này không có link điều hướng nội bộ đổi thẳng shareToken) để khớp đúng pattern
-  // loadItems/loadRooms/load (Projects/Dashboard/Trash) — các trang đó cũng không có cờ cancelled.
   function loadShare() {
     setLoading(true)
     setError(null)
@@ -42,7 +30,6 @@ export default function SharedDesign() {
 
   useEffect(() => {
     loadShare()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shareToken])
 
   async function refreshComments() {
@@ -50,7 +37,6 @@ export default function SharedDesign() {
       const data = await publicShareApi.listComments(shareToken)
       setComments(data)
     } catch {
-      // Bỏ qua — form vẫn giữ nguyên, người dùng có thể thử tải lại trang.
     }
   }
 
@@ -103,9 +89,6 @@ export default function SharedDesign() {
 
       {result && (
         <div className="card">
-          {/* TASK-078 fix (phát hiện lúc verify E2E): job mock provider không có resultAssetId — <img>
-              vô điều kiện trỏ tới endpoint public trả 404, hiện icon ảnh vỡ. Theo đúng pattern đã có ở
-              DesignResult.jsx/CompareDesigns.jsx (chỉ render <img> khi có asset thật, còn lại placeholder). */}
           {result.resultAssetId ? (
             <img
               src={publicShareApi.assetUrl(shareToken)}

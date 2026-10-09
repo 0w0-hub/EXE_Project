@@ -5,17 +5,12 @@ import RequestError from '../components/RequestError'
 
 const PAGE_SIZE = 10
 
-// TASK-107: Thùng rác — liệt kê job đã xoá mềm của chính user (GET /designs/trash), cho khôi phục
-// hoặc xoá vĩnh viễn. Cấu trúc trang tham khảo Projects.jsx (card/room-grid/phân trang) nhưng KHÔNG
-// có nút yêu thích/đổi tên/so sánh — job trong thùng rác không thao tác được các việc đó.
 export default function Trash() {
   const [items, setItems] = useState([])
   const [meta, setMeta] = useState(null)
   const [page, setPage] = useState(0)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  // TASK-107: báo trạng thái riêng cho từng job đang restore/xoá vĩnh viễn — tránh double-click gọi
-  // API 2 lần trong lúc đang chờ phản hồi.
   const [busyJobId, setBusyJobId] = useState(null)
 
   function load() {
@@ -43,9 +38,6 @@ export default function Trash() {
       .finally(() => setBusyJobId(null))
   }
 
-  // TASK-107: hành động KHÔNG THỂ HOÀN TÁC — bắt buộc xác nhận rõ ràng trước khi gọi API (xem
-  // Acceptance Criteria/tasks/active/TASK-107-trash-soft-delete.md). window.confirm đủ rõ ràng cho
-  // quy mô MVP, cùng mức xác nhận với các hành động phá huỷ khác trong app.
   function handlePermanentDelete(job) {
     const label = job.customName || job.suggestedName || job.roomType || 'thiết kế này'
     const confirmed = window.confirm(
@@ -64,22 +56,19 @@ export default function Trash() {
 
   return (
     <div>
-      <h2>🗑️ Thùng rác</h2>
+      <h2>Thùng rác</h2>
       <p className="text-muted">
         Thiết kế đã xoá mềm nằm ở đây. Khôi phục để đưa lại vào "Dự án của tôi", hoặc xoá vĩnh viễn để
         xoá hẳn (không thể hoàn tác). Homely hiện chưa tự động dọn rác — thiết kế nằm ở đây cho tới khi
         bạn tự khôi phục hoặc xoá vĩnh viễn.
       </p>
 
-      {/* TASK-129: dùng RequestError (nút "🔄 Thử lại" thủ công) thay cho <p className="error-text">
-          trần — gọi lại đúng hàm load() hiện có, cùng pattern Projects.jsx/Dashboard.jsx. */}
       {error && <RequestError message={error} onRetry={load} />}
       {loading && <p>Đang tải...</p>}
 
       {!loading && items.length === 0 && (
         <div className="card">
           <p>Thùng rác trống.</p>
-          {/* TASK-113: gợi ý điều hướng về danh sách chính thay vì chỉ hiện text rỗng. */}
           <Link to="/projects">
             <button type="button" className="secondary">
               ← Về Dự án của tôi

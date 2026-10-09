@@ -1,13 +1,11 @@
 import { useState } from 'react'
 import { authApi } from '../services/api'
 
-// TASK-083: đổi mật khẩu khi ĐÃ đăng nhập — không liên quan tính năng "quên mật khẩu" (out of scope).
 export default function ChangePassword() {
   const [form, setForm] = useState({ currentPassword: '', newPassword: '', confirmNewPassword: '' })
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(null)
   const [submitting, setSubmitting] = useState(false)
-  // TASK-165: 3 state độc lập, mỗi ô mật khẩu tự quản lý hiện/ẩn riêng — không dùng chung 1 state.
   const [showCurrentPassword, setShowCurrentPassword] = useState(false)
   const [showNewPassword, setShowNewPassword] = useState(false)
   const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false)

@@ -13,7 +13,6 @@ async function sendToAI(messages, signal) {
     return data?.reply || data?.message || 'Xin lỗi, tôi không hiểu yêu cầu đó.'
   }
 
-  // Gọi Gemini API trực tiếp khi có VITE_GEMINI_API_KEY
   const contents = messages.map((m) => ({
     role: m.role === 'assistant' ? 'model' : 'user',
     parts: [{ text: m.content }],

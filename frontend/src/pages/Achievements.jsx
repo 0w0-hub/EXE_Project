@@ -7,8 +7,6 @@ export default function Achievements() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  // TASK-129: tách riêng để nút "Thử lại" (RequestError) gọi lại đúng logic fetch này — cùng pattern
-  // loadItems/loadRooms ở Projects.jsx/Dashboard.jsx.
   function loadAchievements() {
     setLoading(true)
     setError(null)
@@ -21,7 +19,6 @@ export default function Achievements() {
 
   useEffect(() => {
     loadAchievements()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const achievedCount = items.filter((item) => item.achieved).length
@@ -34,7 +31,6 @@ export default function Achievements() {
         chia sẻ của bạn — không cần tự đánh dấu.
       </p>
 
-      {/* TASK-129: RequestError (nút "🔄 Thử lại" thủ công) thay cho <p className="error-text"> trần. */}
       {error && <RequestError message={error} onRetry={loadAchievements} />}
       {loading && <p>Đang tải...</p>}
 

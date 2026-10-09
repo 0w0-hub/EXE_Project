@@ -1,21 +1,6 @@
-// TASK-101: "Project Health Check" — cảnh báo CHỦ ĐỘNG khi kết quả thiết kế có vấn đề thật (thiếu ảnh
-// gốc, chưa có nội thất, vượt ngân sách) TRƯỚC KHI user coi là "xong" (chia sẻ/in/xuất). Khác hẳn
-// khối "Yêu cầu đặc thù đã xem xét" (TASK-015) trong DesignResult.jsx — khối đó chỉ HIỂN THỊ LẠI sở
-// thích user đã nhập, không kiểm tra/cảnh báo gì. Thuần frontend, không gọi API riêng — chỉ đọc lại
-// state `job`/`room`/`preference` mà DesignResult.jsx đã load sẵn.
-//
-// Dùng ĐÚNG field thật đã có trong DesignResult.jsx (không bịa thêm):
-// - room.photoAssetId          (ảnh phòng gốc)
-// - job.result.furniture       (mảng nội thất kết quả)
-// - job.result.estimatedCost / preference.budget — ĐÚNG công thức so sánh của khối "budget-bar" hiện
-//   có trong DesignResult.jsx (preference?.budget > 0 && job.result.estimatedCost > preference.budget),
-//   không viết lại công thức khác để tránh lệch số với khối budget-bar đã hiển thị.
 export default function DesignHealthCheck({ job, room, preference }) {
   if (!job) return null
 
-  // Job chưa COMPLETED (PENDING/PROCESSING/FAILED, hoặc trạng thái lạ khác trong tương lai): dữ liệu
-  // result chưa đầy đủ/không tồn tại — chỉ hiện 1 dòng trạng thái tương ứng, không chạy các mục kiểm
-  // tra khác (tránh đọc job.result.* khi null → crash, và tránh cảnh báo sai ngữ cảnh).
   if (job.status !== 'COMPLETED') {
     const statusText =
       job.status === 'FAILED'
@@ -28,7 +13,6 @@ export default function DesignHealthCheck({ job, room, preference }) {
     )
   }
 
-  // Phòng ngừa: COMPLETED nhưng result null (không nên xảy ra) — không crash, đơn giản không hiện gì.
   if (!job.result) return null
 
   const furniture = job.result.furniture || []
@@ -48,7 +32,6 @@ export default function DesignHealthCheck({ job, room, preference }) {
     })
   }
 
-  // Đúng công thức so sánh của khối "budget-bar" hiện có trong DesignResult.jsx.
   const isOverBudget = preference?.budget > 0 && job.result.estimatedCost > preference.budget
   if (isOverBudget) {
     const overAmount = job.result.estimatedCost - preference.budget
@@ -59,7 +42,6 @@ export default function DesignHealthCheck({ job, room, preference }) {
     })
   }
 
-  // Chưa đặt ngân sách: không phải lỗi, chỉ là gợi ý thông tin — hiện style nhẹ hơn, không dùng màu đỏ.
   const noBudgetSet = !(preference?.budget > 0)
 
   function handleScrollToBudgetGuard() {
@@ -102,7 +84,7 @@ export default function DesignHealthCheck({ job, room, preference }) {
 
       {noBudgetSet && (
         <p className="text-muted" style={{ margin: '4px 0 0', fontSize: '0.85rem' }}>
-          ℹ️ Chưa đặt ngân sách dự kiến — không thể so sánh chi phí kết quả với ngân sách.
+          Chưa đặt ngân sách dự kiến — không thể so sánh chi phí kết quả với ngân sách.
         </p>
       )}
     </div>

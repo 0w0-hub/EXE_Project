@@ -2,14 +2,6 @@ import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { assetApi, designApi, roomApi } from '../services/api'
 
-/**
- * TASK-108: trang tóm tắt thiết kế TỐI GIẢN để in/lưu hồ sơ (đưa cho thợ thi công tham khảo) —
- * KHÁC `DesignResult.jsx` (nguyên trang trực quan: before/after, khung 3D, biểu đồ ngân sách).
- * Trang này CHỈ hiển thị dữ liệu văn bản THẬT đã lưu (job.result đã COMPLETED), không có state
- * tạm thời (localFurniture của Room3DViewer) — xem Scope/Out of scope trong task file.
- * Dùng đúng API `GET /designs/jobs/{jobId}` + `GET /rooms/{roomId}/preferences/{preferenceId}`
- * đã có, đúng pattern ownership của DesignResult.jsx (backend tự trả 403/404 qua interceptor).
- */
 export default function DesignSummary() {
   const { jobId } = useParams()
   const [job, setJob] = useState(null)
@@ -18,7 +10,6 @@ export default function DesignSummary() {
   const [beforeUrl, setBeforeUrl] = useState(null)
   const [error, setError] = useState(null)
 
-  // Không polling như DesignResult — trang này chỉ có ý nghĩa với job đã COMPLETED, fetch 1 lần.
   useEffect(() => {
     let cancelled = false
     designApi.getJob(jobId).then((data) => {
@@ -42,8 +33,6 @@ export default function DesignSummary() {
     }
   }, [job?.status, job?.roomId])
 
-  // Sở thích thật đã lưu lúc tạo phòng (TASK-011) — cùng nguồn dữ liệu khối "Yêu cầu đặc thù đã
-  // xem xét" (TASK-015) trên DesignResult.jsx, tái dùng đúng field, không suy diễn thêm.
   useEffect(() => {
     if (job?.status !== 'COMPLETED' || !job.roomId || !job.preferenceId) return
     let cancelled = false
@@ -55,8 +44,6 @@ export default function DesignSummary() {
     }
   }, [job?.status, job?.roomId, job?.preferenceId])
 
-  // Chỉ ảnh gốc (trước khi thiết kế) — trang tóm tắt để in không cần ảnh AI "sau" (đã có ở
-  // DesignResult.jsx), đúng tinh thần tối giản của task.
   useEffect(() => {
     if (!room?.photoAssetId) {
       setBeforeUrl(null)
@@ -102,7 +89,7 @@ export default function DesignSummary() {
       <div className="no-print" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
         <Link to={`/designs/${jobId}`}>← Quay lại trang kết quả</Link>
         <button type="button" className="secondary" onClick={() => window.print()}>
-          🖨️ In trang tóm tắt
+          In trang tóm tắt
         </button>
       </div>
 

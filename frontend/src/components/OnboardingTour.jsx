@@ -2,8 +2,6 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useEscapeKey from '../hooks/useEscapeKey'
 
-// TASK-081: nội dung tour mô tả ĐÚNG luồng thật của Homely (tạo phòng → ảnh hiện trạng (tuỳ chọn) →
-// phong cách/ngân sách → AI tạo thiết kế 2D/3D) — không dùng "sample room" giả, chỉ giải thích bằng text.
 const STEPS = [
   {
     title: 'Chào mừng đến với Homely 👋',
@@ -33,7 +31,6 @@ export default function OnboardingTour({ onClose }) {
   const step = STEPS[stepIndex]
   const isLastStep = stepIndex === STEPS.length - 1
 
-  // TASK-090: Esc đóng tour, coi như tương đương bấm "Bỏ qua" (gọi đúng onClose có sẵn).
   useEscapeKey(true, onClose)
 
   function handleNext() {
