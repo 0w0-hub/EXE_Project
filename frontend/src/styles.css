@@ -2105,9 +2105,8 @@ button.secondary:active:not(:disabled) {
 }
 
 .notification-bell__icon {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
+  font-size: 20px;
+  line-height: 1;
   display: block;
 }
 

@@ -91,10 +91,8 @@ function AccountMenu({ displayName, initial, onLogout }) {
         <div className="account-menu__dropdown">
           <NavLink to="/account/password" onClick={() => setOpen(false)}>Đổi mật khẩu</NavLink>
           <NavLink to="/account/activity" onClick={() => setOpen(false)}>Lịch sử hoạt động</NavLink>
-          {/* TASK-091 (coordinator): gộp link vào dropdown "Tài khoản" có sẵn, cùng cách TASK-083/084/087. */}
           <NavLink to="/account/achievements" onClick={() => setOpen(false)}>Huy hiệu</NavLink>
           <NavLink to="/account/export" onClick={() => setOpen(false)}>Xuất dữ liệu của tôi</NavLink>
-          {/* TASK-107: gộp link vào dropdown "Tài khoản" có sẵn, cùng cách TASK-083/084/087/091. */}
           <NavLink to="/trash" onClick={() => setOpen(false)}> Thùng rác</NavLink>
           <button type="button" className="secondary" onClick={onLogout}>Đăng xuất</button>
         </div>
@@ -117,7 +115,6 @@ function NotificationBell({ navigate }) {
         const data = await notificationApi.unreadCount()
         if (!cancelled) setUnreadCount(data?.count ?? 0)
       } catch {
-        // Bỏ qua lỗi poll nền — không làm phiền user bằng lỗi mạng tạm thời.
       }
     }
 
@@ -139,7 +136,6 @@ function NotificationBell({ navigate }) {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  // TASK-090: Esc đóng dropdown khi đang mở.
   useEscapeKey(open, () => setOpen(false))
 
   async function toggleOpen() {
@@ -162,7 +158,6 @@ function NotificationBell({ navigate }) {
         await notificationApi.markRead(item.id)
         setUnreadCount((count) => Math.max(0, count - 1))
       } catch {
-        // Điều hướng vẫn tiếp tục dù đánh dấu đã đọc thất bại — không chặn luồng chính của user.
       }
     }
     navigate(`/designs/${item.jobId}`)
@@ -187,11 +182,7 @@ function NotificationBell({ navigate }) {
         aria-haspopup="true"
         aria-expanded={open}
       >
-        <img
-          src="/dist/assets/bell.png"
-          alt="Thông báo"
-          className="notification-bell__icon"
-        />
+        <span className="notification-bell__icon" aria-hidden="true">🔔</span>
         {unreadCount > 0 && (
           <span className="notification-bell__badge">{unreadCount > 9 ? '9+' : unreadCount}</span>
         )}
