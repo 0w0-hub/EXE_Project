@@ -94,8 +94,16 @@ public class SecurityConfig {
     }
 
     private AuthenticationEntryPoint authenticationEntryPoint() {
-        return (request, response, ex) -> writeJsonError(response, 401, "UNAUTHENTICATED",
-                "Vui lòng đăng nhập để tiếp tục");
+        return (request, response, ex) -> {
+            String jwtErrorCode = (String) request.getAttribute("JWT_ERROR_CODE");
+            if ("TOKEN_EXPIRED".equals(jwtErrorCode)) {
+                writeJsonError(response, 401, "TOKEN_EXPIRED",
+                        "Phiên đăng nhập đã hết hạn, vui lòng làm mới token");
+            } else {
+                writeJsonError(response, 401, "UNAUTHENTICATED",
+                        "Vui lòng đăng nhập để tiếp tục");
+            }
+        };
     }
 
     private void writeJsonError(jakarta.servlet.http.HttpServletResponse response, int status,

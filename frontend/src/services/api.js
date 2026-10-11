@@ -4,6 +4,23 @@ const baseURL = import.meta.env.VITE_API_BASE_URL || '/api/v1'
 
 export const api = axios.create({ baseURL })
 
+// Instance riêng để gọi refresh token, tránh bị interceptor của api can thiệp
+const refreshClient = axios.create({ baseURL })
+
+let isRefreshing = false
+let failedQueue = []
+
+const processQueue = (error, token = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error)
+    } else {
+      prom.resolve(token)
+    }
+  })
+  failedQueue = []
+}
+
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('homely_access_token')
   if (token) {
@@ -16,8 +33,75 @@ api.interceptors.request.use((config) => {
 // Interceptor này "mở" sẵn để nơi gọi chỉ cần dùng trực tiếp payload.
 api.interceptors.response.use(
   (response) => response.data?.data,
-  (error) => {
+  async (error) => {
+    const originalRequest = error.config
     const apiError = error.response?.data?.error
+    const status = error.response?.status
+
+    // Xử lý Silent Refresh khi Access Token hết hạn
+    if (status === 401 && apiError?.code === 'TOKEN_EXPIRED' && !originalRequest._retry) {
+      const refreshToken = localStorage.getItem('homely_refresh_token')
+
+      // Nếu không có refreshToken, xóa token và reject
+      if (!refreshToken) {
+        localStorage.removeItem('homely_access_token')
+        localStorage.removeItem('homely_refresh_token')
+        return Promise.reject({
+          code: 'TOKEN_EXPIRED',
+          message: 'Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại',
+          status: 401,
+        })
+      }
+
+      if (isRefreshing) {
+        // Đang có tiến trình refresh dở -> xếp vào hàng đợi chờ token mới
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject })
+        })
+          .then((token) => {
+            originalRequest.headers.Authorization = `Bearer ${token}`
+            return api(originalRequest)
+          })
+          .catch((err) => Promise.reject(err))
+      }
+
+      originalRequest._retry = true
+      isRefreshing = true
+
+      try {
+        const res = await refreshClient.post('/auth/refresh', { refreshToken })
+        const authData = res.data?.data
+        const newAccessToken = authData?.accessToken
+        const newRefreshToken = authData?.refreshToken
+
+        if (newAccessToken) {
+          localStorage.setItem('homely_access_token', newAccessToken)
+          if (newRefreshToken) {
+            localStorage.setItem('homely_refresh_token', newRefreshToken)
+          }
+
+          api.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
+          processQueue(null, newAccessToken)
+          return api(originalRequest)
+        } else {
+          throw new Error('Không nhận được token mới từ server')
+        }
+      } catch (refreshErr) {
+        processQueue(refreshErr, null)
+        localStorage.removeItem('homely_access_token')
+        localStorage.removeItem('homely_refresh_token')
+        window.dispatchEvent(new CustomEvent('homely:session-expired'))
+        return Promise.reject({
+          code: 'REFRESH_TOKEN_EXPIRED',
+          message: 'Phiên đăng nhập đã hết hạn hoàn toàn, vui lòng đăng nhập lại.',
+          status: 401,
+        })
+      } finally {
+        isRefreshing = false
+      }
+    }
+
     return Promise.reject({
       code: apiError?.code || 'NETWORK_ERROR',
       message: apiError?.message || 'Không thể kết nối tới server',
@@ -29,6 +113,7 @@ api.interceptors.response.use(
 export const authApi = {
   register: (payload) => api.post('/auth/register', payload),
   login: (payload) => api.post('/auth/login', payload),
+  refresh: (refreshToken) => refreshClient.post('/auth/refresh', { refreshToken }).then((res) => res.data?.data),
   me: () => api.get('/users/me'),
   // TASK-083: đổi mật khẩu khi đã đăng nhập — interceptor tự gắn Bearer token.
   changePassword: (payload) => api.patch('/auth/password', payload),

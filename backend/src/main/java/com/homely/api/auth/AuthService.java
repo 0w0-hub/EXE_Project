@@ -3,9 +3,13 @@ package com.homely.api.auth;
 import com.homely.api.auth.dto.AuthResponse;
 import com.homely.api.auth.dto.ChangePasswordRequest;
 import com.homely.api.auth.dto.LoginRequest;
+import com.homely.api.auth.dto.RefreshTokenRequest;
 import com.homely.api.auth.dto.RegisterRequest;
 import com.homely.api.billing.BillingService;
 import com.homely.api.common.ApiException;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import com.homely.api.user.User;
 import com.homely.api.user.UserRepository;
 import com.homely.api.user.dto.UserResponse;
@@ -66,6 +70,29 @@ public class AuthService {
         }
         user.setPasswordHash(passwordEncoder.encode(request.newPassword()));
         userRepository.save(user);
+    }
+
+    public AuthResponse refresh(RefreshTokenRequest request) {
+        String token = request.refreshToken();
+        Claims claims;
+        try {
+            claims = jwtService.parseClaims(token);
+        } catch (ExpiredJwtException ex) {
+            throw new ApiException(HttpStatus.UNAUTHORIZED, "REFRESH_TOKEN_EXPIRED", "Phiên đăng nhập đã hết hạn hoàn toàn, vui lòng đăng nhập lại");
+        } catch (JwtException | IllegalArgumentException ex) {
+            throw new ApiException(HttpStatus.UNAUTHORIZED, "INVALID_REFRESH_TOKEN", "Refresh token không hợp lệ");
+        }
+
+        String tokenType = claims.get("type", String.class);
+        if (!"refresh".equals(tokenType)) {
+            throw new ApiException(HttpStatus.UNAUTHORIZED, "INVALID_TOKEN_TYPE", "Token cung cấp không phải là refresh token");
+        }
+
+        UUID userId = UUID.fromString(claims.getSubject());
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ApiException(HttpStatus.UNAUTHORIZED, "USER_NOT_FOUND", "Người dùng không tồn tại"));
+
+        return issueTokens(user);
     }
 
     private AuthResponse issueTokens(User user) {
