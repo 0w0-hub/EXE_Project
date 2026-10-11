@@ -4,6 +4,7 @@ import { authApi } from '../services/api'
 const AuthContext = createContext(null)
 
 const TOKEN_KEY = 'homely_access_token'
+const REFRESH_TOKEN_KEY = 'homely_refresh_token'
 const MOCK_USER_KEY = 'homely_mock_user'
 const MOCK_AUTH_ENABLED = import.meta.env.VITE_MOCK_AUTH === 'true'
 
@@ -35,8 +36,18 @@ export function AuthProvider({ children }) {
     authApi
       .me()
       .then((data) => setUser(data))
-      .catch(() => localStorage.removeItem(TOKEN_KEY))
+      .catch(() => {
+        localStorage.removeItem(TOKEN_KEY)
+        localStorage.removeItem(REFRESH_TOKEN_KEY)
+      })
       .finally(() => setLoading(false))
+
+    // Lắng nghe sự kiện session expired từ Axios interceptor khi refresh token cũng hết hạn
+    const handleSessionExpired = () => {
+      setUser(null)
+    }
+    window.addEventListener('homely:session-expired', handleSessionExpired)
+    return () => window.removeEventListener('homely:session-expired', handleSessionExpired)
   }, [])
 
   async function register(payload) {
@@ -47,13 +58,17 @@ export function AuthProvider({ children }) {
         email: payload.email || MOCK_USER.email,
       }
       localStorage.setItem(TOKEN_KEY, 'mock-access-token')
+      localStorage.setItem(REFRESH_TOKEN_KEY, 'mock-refresh-token')
       localStorage.setItem(MOCK_USER_KEY, JSON.stringify(user))
       setUser(user)
-      return { accessToken: 'mock-access-token', user }
+      return { accessToken: 'mock-access-token', refreshToken: 'mock-refresh-token', user }
     }
 
     const data = await authApi.register(payload)
     localStorage.setItem(TOKEN_KEY, data.accessToken)
+    if (data.refreshToken) {
+      localStorage.setItem(REFRESH_TOKEN_KEY, data.refreshToken)
+    }
     setUser(data.user)
     return data
   }
@@ -62,19 +77,24 @@ export function AuthProvider({ children }) {
     if (MOCK_AUTH_ENABLED) {
       const user = { ...MOCK_USER, email: payload.email || MOCK_USER.email }
       localStorage.setItem(TOKEN_KEY, 'mock-access-token')
+      localStorage.setItem(REFRESH_TOKEN_KEY, 'mock-refresh-token')
       localStorage.setItem(MOCK_USER_KEY, JSON.stringify(user))
       setUser(user)
-      return { accessToken: 'mock-access-token', user }
+      return { accessToken: 'mock-access-token', refreshToken: 'mock-refresh-token', user }
     }
 
     const data = await authApi.login(payload)
     localStorage.setItem(TOKEN_KEY, data.accessToken)
+    if (data.refreshToken) {
+      localStorage.setItem(REFRESH_TOKEN_KEY, data.refreshToken)
+    }
     setUser(data.user)
     return data
   }
 
   function logout() {
     localStorage.removeItem(TOKEN_KEY)
+    localStorage.removeItem(REFRESH_TOKEN_KEY)
     localStorage.removeItem(MOCK_USER_KEY)
     setUser(null)
   }

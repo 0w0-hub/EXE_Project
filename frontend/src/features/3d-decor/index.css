@@ -11,6 +11,7 @@
   box-sizing: border-box;
 }
 
+
 /* Homely studio skin: soft red surfaces and stronger red outlines, matching
    the rest of the application while keeping the room canvas unobtrusive. */
 .decor-studio-root [class*="bg-slate-950"] {

@@ -3,6 +3,7 @@ package com.homely.api.auth;
 import com.homely.api.auth.dto.AuthResponse;
 import com.homely.api.auth.dto.ChangePasswordRequest;
 import com.homely.api.auth.dto.LoginRequest;
+import com.homely.api.auth.dto.RefreshTokenRequest;
 import com.homely.api.auth.dto.RegisterRequest;
 import com.homely.api.common.ApiResponse;
 import com.homely.api.common.CurrentUser;
@@ -31,6 +32,11 @@ public class AuthController {
     @PostMapping("/login")
     public ApiResponse<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
         return ApiResponse.success(authService.login(request));
+    }
+
+    @PostMapping("/refresh")
+    public ApiResponse<AuthResponse> refresh(@Valid @RequestBody RefreshTokenRequest request) {
+        return ApiResponse.success(authService.refresh(request));
     }
 
     // TASK-083: đổi mật khẩu — yêu cầu đăng nhập, xem SecurityConfig cho rule authenticated() riêng của endpoint này.

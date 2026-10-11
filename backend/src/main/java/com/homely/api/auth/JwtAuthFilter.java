@@ -1,5 +1,6 @@
 package com.homely.api.auth;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -41,9 +42,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 var authorities = List.of(new SimpleGrantedAuthority("ROLE_" + role));
                 var authentication = new UsernamePasswordAuthenticationToken(userId, null, authorities);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+            } catch (ExpiredJwtException ex) {
+                // Token đã hết hạn -> đánh dấu để AuthenticationEntryPoint trả mã TOKEN_EXPIRED
+                request.setAttribute("JWT_ERROR_CODE", "TOKEN_EXPIRED");
+                SecurityContextHolder.clearContext();
             } catch (JwtException | IllegalArgumentException ex) {
-                // Token không hợp lệ/hết hạn -> request đi tiếp không có authentication,
-                // các endpoint yêu cầu auth sẽ tự trả 401 qua SecurityConfig.
+                // Token không hợp lệ/sai chữ ký -> request đi tiếp không có authentication
+                request.setAttribute("JWT_ERROR_CODE", "INVALID_TOKEN");
                 SecurityContextHolder.clearContext();
             }
         }
