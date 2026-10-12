@@ -954,18 +954,56 @@ function FurnitureItem2D({ item, toSvgX, toSvgY, toWorldX, toWorldZ, scale, svgR
 // ─── Main FurnitureLayer ──────────────────────────────────────────────────────
 export function FurnitureLayer({ toSvgX, toSvgY, toWorldX, toWorldZ, scale, svgRef }) {
   const items = useSceneStore((s) => s.items);
+  const selectedItemId = useSceneStore((s) => s.selectedItemId);
 
-  // Sắp xếp thứ tự render SVG: Đồ sàn vẽ trước -> Đồ trên mặt bàn vẽ đè lên trên -> Đồ treo tường vẽ sau cùng
+  // Sắp xếp thứ tự render SVG: Hệ Thống Phân Tầng Z-Ordering Đa Cấp Tự Động
+  // Tier 1: Thảm trải sàn (luôn sát mặt sàn nhất, dưới mọi đồ đạc)
+  // Tier 2: Đồ sàn thông thường (Ghế, Bàn, Sofa, Giường, Tủ kệ) - so sánh theo độ cao đáy & đỉnh
+  // Tier 3: Đồ trên bề mặt bàn/kệ (attachedTo) - luôn nổi trên bàn đỡ
+  // Tier 4: Đồ gắn tường (mountType === 'wall') - tranh, gương, đèn vách
+  // Tier 5: Vật thể đang được chọn (selectedItemId) - luôn nổi lên trên cùng để viền chọn và nút xoay không bị che lấp
   const sortedItems = useMemo(() => {
+    const getZIndexScore = (item) => {
+      const isSelected = item.instanceId === selectedItemId;
+      const isWallMounted = item.mountType === 'wall';
+      const isAttached = Boolean(item.attachedTo);
+      const isRug =
+        item.modelType === 'rug' ||
+        item.category === 'rug' ||
+        item.catalogId?.includes('rug') ||
+        item.name?.toLowerCase().includes('thảm');
+
+      // 1. Phân tầng cơ sở (Base Tier)
+      let tier = 100;
+      if (isRug) {
+        tier = 10;
+      } else if (isWallMounted) {
+        tier = 700;
+      } else if (isAttached) {
+        tier = 500;
+      }
+
+      // 2. Độ cao thực tế 3D (trục Y so với mặt sàn)
+      const posY = Number(item.position?.[1]) || 0;
+      const height = Number(item.dimensions?.height) || 0;
+      const topY = posY + height;
+      const elevationScore = posY * 100 + topY * 10;
+
+      // 3. Vật thể đang được chọn được ưu tiên nổi lên trên cùng của toàn bộ đồ nội thất
+      const selectionBoost = isSelected ? 10000 : 0;
+
+      return tier + elevationScore + selectionBoost;
+    };
+
     return [...items].sort((a, b) => {
-      const getOrder = (it) => {
-        if (it.mountType === 'wall') return 2;
-        if (it.attachedTo) return 1;
-        return 0;
-      };
-      return getOrder(a) - getOrder(b);
+      const scoreA = getZIndexScore(a);
+      const scoreB = getZIndexScore(b);
+      if (scoreA !== scoreB) {
+        return scoreA - scoreB;
+      }
+      return a.instanceId.localeCompare(b.instanceId);
     });
-  }, [items]);
+  }, [items, selectedItemId]);
 
   return (
     <g className="furniture-layer">
