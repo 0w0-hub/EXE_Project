@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
@@ -41,7 +42,7 @@ export default function NavBar() {
         <FontSizeControl />
         {user ? (
           <>
-            <NavLink to="/designs">🎨 Thiết kế 3D</NavLink>
+            <NavLink to="/designs">Thiết kế 3D</NavLink>
             <NavLink to="/templates">Mẫu thiết kế</NavLink>
             <NavLink to="/projects">Dự án của tôi</NavLink>
             {user.role === 'ADMIN' && <NavLink to="/admin">Quản trị</NavLink>}
