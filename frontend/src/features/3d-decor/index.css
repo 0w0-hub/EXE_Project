@@ -3,7 +3,8 @@
 
 .decor-studio-root {
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, sans-serif;
   color: #111111;
 }
 
@@ -11,16 +12,69 @@
   box-sizing: border-box;
 }
 
+/* Small controls stay separated even when their Tailwind parent has no gap. */
+.decor-studio-root button {
+  margin: 2px;
+}
 
-/* Homely studio skin: soft red surfaces and stronger red outlines, matching
-   the rest of the application while keeping the room canvas unobtrusive. */
+/* Saved designs search icon */
+.decor-studio-root .saved-designs-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  display: block;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* Catalog search icon */
+.decor-studio-root .catalog-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  display: block;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* Catalog search input */
+.decor-studio-root .catalog-search-input {
+  color: #352326 !important;
+  background-color: #f1e7e8 !important;
+  padding-left: 36px !important;
+  min-height: 36px;
+}
+
+.decor-studio-root .catalog-search-input::placeholder {
+  color: #655358 !important;
+  opacity: 1;
+}
+
+/* Slate controls */
+.decor-studio-root input[class*="bg-slate-"],
+.decor-studio-root button[class*="bg-slate-"] {
+  background-color: #737b72 !important;
+  color: #ffffff !important;
+}
+
+.decor-studio-root span[class*="bg-slate-700"],
+.decor-studio-root span[class*="bg-slate-800"] {
+  background-color: #737b72 !important;
+  color: #ffffff !important;
+}
+
+/* Homely studio skin: soft red surfaces and stronger red outlines. */
 .decor-studio-root [class*="bg-slate-950"] {
-  background-color: #fff8f8 !important;
+  background-color: #ffeded !important;
 }
 
 .decor-studio-root [class*="bg-slate-900"],
 .decor-studio-root [class*="bg-slate-800"] {
-  background-color: #fff2f3 !important;
+  background-color: #ffe3e5 !important;
 }
 
 .decor-studio-root [class*="border-slate-"] {
@@ -28,7 +82,7 @@
 }
 
 .decor-studio-root [class*="bg-blue-"] {
-  background-color: #fff0f1 !important;
+  background-color: #ffdcdf !important;
 }
 
 .decor-studio-root [class~="bg-blue-600"],
@@ -70,8 +124,7 @@
   background-color: #b42332 !important;
 }
 
-/* Daylight editor controls use dark text for clear contrast on the light
-   surfaces. Active red controls keep their white labels. */
+/* Daylight editor controls use dark text for contrast. */
 .decor-studio-root [class*="text-"] {
   color: #111111 !important;
 }
@@ -82,6 +135,7 @@
   color: #111111 !important;
 }
 
+/* Keep white labels on active colored controls. */
 .decor-studio-root [class~="bg-blue-600"] [class*="text-"],
 .decor-studio-root [class~="bg-blue-700"] [class*="text-"],
 .decor-studio-root [class*="bg-red-"] [class*="text-"],
@@ -91,4 +145,26 @@
 .decor-studio-root button[class*="bg-red-"],
 .decor-studio-root button[class*="bg-rose-"] {
   color: #ffffff !important;
+}
+
+/* Preserve catalog search colors. */
+.decor-studio-root input.catalog-search-input {
+  color: #352326 !important;
+  background-color: #f1e7e8 !important;
+}
+
+.decor-studio-root input.catalog-search-input::placeholder {
+  color: #655358 !important;
+  opacity: 1;
+}
+
+/* New design button */
+.decor-studio-root button.saved-designs-new-button {
+  background-color: #c43a48 !important;
+  border-color: #b42332 !important;
+  color: #ffffff !important;
+}
+
+.decor-studio-root button.saved-designs-new-button:hover[class*="hover:bg-blue-"] {
+  background-color: #a82030 !important;
 }

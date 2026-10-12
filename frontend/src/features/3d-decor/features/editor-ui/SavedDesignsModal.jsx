@@ -141,7 +141,7 @@ export function SavedDesignsModal({ onLoadDesign }) {
           <div className="flex items-center gap-2">
             <button
               onClick={handleCreateNewBlank}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-600/20 text-blue-300 border border-blue-500/40 hover:bg-blue-600 hover:text-white rounded-xl text-xs font-semibold transition-all"
+              className="saved-designs-new-button flex items-center gap-1.5 px-3 py-1.5 bg-blue-600/20 text-blue-300 border border-blue-500/40 hover:bg-blue-600 hover:text-white rounded-xl text-xs font-semibold transition-all"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>Phòng Mới</span>
@@ -158,13 +158,13 @@ export function SavedDesignsModal({ onLoadDesign }) {
         {/* Search & Stats Bar */}
         <div className="p-3 bg-slate-950/60 border-b border-slate-800 flex items-center justify-between gap-3">
           <div className="relative flex-1">
-            <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+            <Search className="catalog-search-icon text-slate-500" aria-hidden="true" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Tìm kiếm thiết kế theo tên..."
-              className="w-full bg-slate-800/80 border border-slate-700 rounded-xl pl-8 pr-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-all"
+              className="catalog-search-input w-full bg-slate-800/80 border border-slate-700 rounded-xl pl-9 pr-3 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-all"
             />
           </div>
           <button
