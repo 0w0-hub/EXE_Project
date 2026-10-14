@@ -57,14 +57,30 @@
 /* Slate controls */
 .decor-studio-root input[class*="bg-slate-"],
 .decor-studio-root button[class*="bg-slate-"] {
-  background-color: #737b72 !important;
+  background-color: #d32f2f !important;
   color: #ffffff !important;
 }
 
 .decor-studio-root span[class*="bg-slate-700"],
 .decor-studio-root span[class*="bg-slate-800"] {
-  background-color: #737b72 !important;
+  background-color: #d32f2f !important;
   color: #ffffff !important;
+}
+
+/* Keep studio icons white on the red controls and tiles. */
+.decor-studio-root button svg {
+  color: #ffffff !important;
+}
+
+/* Hover labels and icons should dim to gray, including children of hovered buttons. */
+.decor-studio-root button:hover,
+.decor-studio-root button:hover [class*="text-"],
+.decor-studio-root button:hover svg {
+  color: #9ca3af !important;
+}
+
+.decor-studio-root button:hover[class*="hover:bg-slate-"] {
+  background-color: #b42332 !important;
 }
 
 /* Homely studio skin: soft red surfaces and stronger red outlines. */
@@ -167,4 +183,43 @@
 
 .decor-studio-root button.saved-designs-new-button:hover[class*="hover:bg-blue-"] {
   background-color: #a82030 !important;
+}
+
+/* Final studio overrides: slate tiles were still getting the earlier pale-surface rule. */
+.decor-studio-root [class*="bg-slate-700"],
+.decor-studio-root [class*="bg-slate-800"] {
+  background-color: #d32f2f !important;
+}
+
+.decor-studio-root svg {
+  color: #ffffff !important;
+}
+
+/* TopBar controls: beat the generic [class*="text-"] dark-text rule above. */
+.decor-studio-root header button[title] svg,
+.decor-studio-root header button[title] span {
+  color: #ffffff !important;
+}
+
+.decor-studio-root header button[title]:hover,
+.decor-studio-root header button[title]:hover svg,
+.decor-studio-root header button[title]:hover span {
+  color: #9ca3af !important;
+}
+
+.decor-studio-root header button[title]:hover[class*="hover:bg-slate-"] {
+  background-color: #b42332 !important;
+}
+
+/* Catalog product tiles: white product names, while the thumbnail icon stays dark. */
+.decor-studio-root .catalog-product-card .catalog-product-name {
+  color: #ffffff !important;
+}
+
+.decor-studio-root .catalog-product-card .catalog-product-dimensions {
+  color: #ffffff !important;
+}
+
+.decor-studio-root .catalog-product-card .catalog-product-add-button svg {
+  color: #111111 !important;
 }

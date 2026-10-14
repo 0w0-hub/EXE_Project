@@ -128,7 +128,7 @@ export function CatalogDrawer() {
             return (
               <div
                 key={item.id}
-                className="group bg-slate-800/50 hover:bg-slate-800 border border-slate-700/60 hover:border-blue-500/50 rounded-xl p-3 flex items-center justify-between transition-all"
+                className="catalog-product-card group bg-slate-800/50 hover:bg-slate-800 border border-slate-700/60 hover:border-blue-500/50 rounded-xl p-3 flex items-center justify-between transition-all"
               >
                 <div className="flex items-center gap-3">
                   <div
@@ -138,10 +138,10 @@ export function CatalogDrawer() {
                     <IconComponent className="w-5 h-5 text-white/90 drop-shadow" />
                   </div>
                   <div>
-                    <h3 className="text-xs font-semibold text-slate-200 group-hover:text-white transition-colors">
+                    <h3 className="catalog-product-name text-xs font-semibold text-slate-200 group-hover:text-white transition-colors">
                       {item.name}
                     </h3>
-                    <p className="text-[11px] text-slate-400">
+                    <p className="catalog-product-dimensions text-[11px] text-slate-400">
                       {item.dimensions.width}m × {item.dimensions.depth}m × {item.dimensions.height}m
                     </p>
                   </div>
@@ -149,7 +149,7 @@ export function CatalogDrawer() {
 
                 <button
                   onClick={() => handleAddItem(item)}
-                  className="px-3 py-1.5 rounded-lg bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white text-xs font-medium flex items-center gap-1 transition-all"
+                  className="catalog-product-add-button px-3 py-1.5 rounded-lg bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white text-xs font-medium flex items-center gap-1 transition-all"
                   title="Thêm món đồ này vào phòng"
                 >
                   <Plus className="w-3.5 h-3.5" />

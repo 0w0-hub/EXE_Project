@@ -1306,6 +1306,17 @@ button.secondary:hover:not(:disabled) {
   margin: 2px;
 }
 
+/* Room3DViewer uses its own light/dark themed controls; keep all viewer copy white. */
+.room3d-viewer,
+.room3d-viewer :where(p, span, label, li, h1, h2, h3, h4, small, strong, em, button, input, select, textarea) {
+  color: #fff !important;
+}
+
+.room3d-viewer input::placeholder,
+.room3d-viewer textarea::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
 .room2d-plan {
   width: 100%;
   max-height: 480px;
