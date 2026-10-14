@@ -83,6 +83,7 @@ export DB_USERNAME=sa
 export DB_PASSWORD="YourStrong!Passw0rd"
 export JWT_SECRET="dev-secret-change-me"
 export AI_PROVIDER=mock
+export GEMINI_API_KEY="your-gemini-api-key" # Bật trợ lý chat; key chỉ ở backend
 
 mvn spring-boot:run
 ```
@@ -100,7 +101,7 @@ npm install
 npm run dev
 ```
 
-Frontend dev server chạy tại `http://localhost:5173`, tự proxy `/api` sang backend `http://localhost:8080` (xem `vite.config.js`). Không cần Nginx khi chạy dev.
+Frontend dev server chạy tại `http://localhost:5175`, tự proxy `/api` sang backend `http://localhost:8080` (xem `vite.config.js`). Trong `frontend/.env`, đặt `VITE_MOCK_AUTH=false` để đăng nhập thật và gọi API backend. Không cần Nginx khi chạy dev.
 
 ### 2.4. Chỉ xem UI bằng mock login
 
@@ -114,7 +115,7 @@ npm run dev:mock
 
 Mở `http://localhost:5173/login`, nhập email và mật khẩu bất kỳ. Frontend sẽ tạo user giả trong `localStorage` và cho vào các route cần đăng nhập. Cờ này chỉ mock đăng nhập; các màn hình cần dữ liệu server vẫn có thể hiện trạng thái không kết nối nếu backend chưa chạy. Auth thật mặc định vẫn giữ nguyên khi không bật cờ.
 
-Trang gói dịch vụ có sẵn giá mẫu khi chạy `npm run dev:mock`, không cần backend. Để dùng bảng giá từ API, chạy backend ở bước 2.2 và frontend bằng `npm run dev` với đăng nhập thật. `GET /api/v1/plans` trả giá Plus (49.000đ/tháng; 29.000đ/tháng khi thanh toán năm) và Studio (79.000đ/tháng; 59.000đ/tháng khi thanh toán năm). Phần xác nhận đăng ký hiện là prototype, chưa tạo giao dịch hay thu tiền.
+Trang gói dịch vụ có sẵn giá mẫu khi chạy `npm run dev:mock`, không cần backend. Để dùng bảng giá và các API khác, chạy backend ở bước 2.2 và frontend bằng `npm run dev` với đăng nhập thật. `GET /api/v1/plans` trả giá Plus (49.000đ/tháng; 29.000đ/tháng khi thanh toán năm) và Studio (79.000đ/tháng; 59.000đ/tháng khi thanh toán năm). Chat AI dùng endpoint `POST /api/v1/ai/chat`; cần đặt `GEMINI_API_KEY` trong terminal backend. Phần xác nhận đăng ký hiện là prototype, chưa tạo giao dịch hay thu tiền.
 
 ---
 

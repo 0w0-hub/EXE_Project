@@ -3,52 +3,9 @@ import { House, MessageSquarePlus, Send, Sparkles, X } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { api } from '../services/api'
 
-// Sử dụng endpoint /ai/chat nếu backend hỗ trợ, hoặc gọi Gemini trực tiếp qua VITE_GEMINI_API_KEY
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY
-const USE_BACKEND = !GEMINI_API_KEY
-
 async function sendToAI(messages, signal) {
-  if (USE_BACKEND) {
-    // Gọi endpoint backend /ai/chat
-    const data = await api.post('/ai/chat', { messages }, { signal })
-    return data?.reply || data?.message || 'Xin lỗi, tôi không hiểu yêu cầu đó.'
-  }
-
-  const contents = messages.map((m) => ({
-    role: m.role === 'assistant' ? 'model' : 'user',
-    parts: [{ text: m.content }],
-  }))
-
-  const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        system_instruction: {
-          parts: [
-            {
-              text: `Bạn là trợ lý AI thông minh của Homely — nền tảng thiết kế nội thất bằng AI.
-Bạn giúp người dùng:
-- Tư vấn phong cách nội thất (tối giản, Scandinavian, Japandi, hiện đại, cổ điển…)
-- Gợi ý màu sắc, vật liệu, bố cục phòng
-- Giải thích các tính năng của Homely
-- Trả lời câu hỏi về thiết kế phòng
-
-Luôn trả lời bằng tiếng Việt, ngắn gọn, thân thiện, chuyên nghiệp.`,
-            },
-          ],
-        },
-        contents,
-        generationConfig: { maxOutputTokens: 512, temperature: 0.7 },
-      }),
-      signal,
-    }
-  )
-
-  if (!res.ok) throw new Error('AI service không khả dụng')
-  const json = await res.json()
-  return json.candidates?.[0]?.content?.parts?.[0]?.text || 'Xin lỗi, tôi gặp sự cố. Vui lòng thử lại.'
+  const data = await api.post('/ai/chat', { messages }, { signal })
+  return data?.reply || data?.message || 'Xin lỗi, tôi không hiểu yêu cầu đó.'
 }
 
 const SUGGESTED_QUESTIONS = [
@@ -117,13 +74,13 @@ export default function AIChatbox() {
 
     try {
       const reply = await sendToAI(
-        history.map(({ role, content }) => ({ role, content })),
+        history.filter((message) => message.id !== 'init').slice(-20).map(({ role, content }) => ({ role, content })),
         abortRef.current.signal
       )
       setMessages((prev) => [...prev, { role: 'assistant', content: reply, id: Date.now() + 1 }])
     } catch (err) {
       if (err?.name === 'AbortError' || err?.code === 20) return
-      setError('Không thể kết nối AI. Vui lòng thử lại.')
+      setError(err?.message || 'Không thể kết nối AI. Vui lòng thử lại.')
     } finally {
       setLoading(false)
     }

@@ -47,6 +47,9 @@ homely:
     upload-dir: ${UPLOAD_DIR:./uploads}
   ai:
     provider: ${AI_PROVIDER:mock}
+    gemini:
+      api-key: ${GEMINI_API_KEY:}
+      model: ${GEMINI_CHAT_MODEL:gemini-3.8-flash}
     replicate:
       api-key: ${REPLICATE_API_KEY:}
 
