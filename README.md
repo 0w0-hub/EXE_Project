@@ -114,6 +114,8 @@ npm run dev:mock
 
 Mở `http://localhost:5173/login`, nhập email và mật khẩu bất kỳ. Frontend sẽ tạo user giả trong `localStorage` và cho vào các route cần đăng nhập. Cờ này chỉ mock đăng nhập; các màn hình cần dữ liệu server vẫn có thể hiện trạng thái không kết nối nếu backend chưa chạy. Auth thật mặc định vẫn giữ nguyên khi không bật cờ.
 
+Trang gói dịch vụ có sẵn giá mẫu khi chạy `npm run dev:mock`, không cần backend. Để dùng bảng giá từ API, chạy backend ở bước 2.2 và frontend bằng `npm run dev` với đăng nhập thật. `GET /api/v1/plans` trả giá Plus (49.000đ/tháng; 29.000đ/tháng khi thanh toán năm) và Studio (79.000đ/tháng; 59.000đ/tháng khi thanh toán năm). Phần xác nhận đăng ký hiện là prototype, chưa tạo giao dịch hay thu tiền.
+
 ---
 
 ## 3. Trở thành Admin

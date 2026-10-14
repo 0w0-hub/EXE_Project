@@ -25,6 +25,8 @@ import ExportData from './pages/ExportData'
 import ActivityHistory from './pages/ActivityHistory'
 import Achievements from './pages/Achievements'
 import NotFound from './pages/NotFound'
+import Plans from './pages/Plans'
+import Subscribe from './pages/Subscribe'
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth()
@@ -140,6 +142,8 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/plans" element={<ProtectedRoute><Plans /></ProtectedRoute>} />
+          <Route path="/subscribe/:planId" element={<ProtectedRoute><Subscribe /></ProtectedRoute>} />
           {/* TASK-107: thùng rác — yêu cầu đăng nhập, giống các route user thường khác (đã có link
               trong NavBar.jsx dropdown "Tài khoản", xem AccountMenu). */}
           <Route

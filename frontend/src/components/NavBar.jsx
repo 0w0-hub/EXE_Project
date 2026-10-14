@@ -45,6 +45,7 @@ export default function NavBar() {
             <NavLink to="/designs">Thiết kế 3D</NavLink>
             <NavLink to="/templates">Mẫu thiết kế</NavLink>
             <NavLink to="/projects">Dự án của tôi</NavLink>
+            <NavLink to="/plans">Gói dịch vụ</NavLink>
             {user.role === 'ADMIN' && <NavLink to="/admin">Quản trị</NavLink>}
             <NotificationBell navigate={navigate} />
             <AccountMenu displayName={displayName} initial={initial} onLogout={handleLogout} />

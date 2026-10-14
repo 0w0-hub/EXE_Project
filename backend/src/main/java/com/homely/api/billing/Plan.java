@@ -20,13 +20,19 @@ public class Plan {
     private UUID id;
 
     @Column(nullable = false, unique = true, length = 20)
-    private String code; // FREE | PRO
+    private String code; // FREE | PLUS | STUDIO
 
     @Column(nullable = false, length = 100)
     private String name;
 
     @Column(name = "generation_limit")
     private Integer generationLimit; // NULL = không giới hạn
+
+    @Column(name = "monthly_price", nullable = false)
+    private Long monthlyPrice;
+
+    @Column(name = "yearly_price", nullable = false)
+    private Long yearlyPrice;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt = Instant.now();

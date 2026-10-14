@@ -62,7 +62,7 @@ public class DataInitializer implements CommandLineRunner {
             admin.setRole("ADMIN");
             admin = userRepository.save(admin);
 
-            Plan proPlan = planRepository.findByCode("PRO")
+            Plan proPlan = planRepository.findByCode("STUDIO")
                     .orElseGet(() -> planRepository.findByCode("FREE").orElse(null));
 
             if (proPlan != null && subscriptionRepository.findByUserId(admin.getId()).isEmpty()) {
