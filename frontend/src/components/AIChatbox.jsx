@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import { House, MessageSquarePlus, Send, Sparkles, X } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { api } from '../services/api'
 
@@ -59,7 +60,7 @@ const SUGGESTED_QUESTIONS = [
 
 const BOT_AVATAR = (
   <span className="ai-chat__avatar ai-chat__avatar--bot" aria-hidden="true">
-    
+    <Sparkles size={15} strokeWidth={2.2} />
   </span>
 )
 
@@ -191,7 +192,10 @@ export default function AIChatbox() {
         {/* Header */}
         <div className="ai-chat__header">
           <div className="ai-chat__header-left">
-            <span className="ai-chat__header-icon" aria-hidden="true"></span>
+            <span className="ai-chat__header-icon" aria-hidden="true">
+              <House className="ai-chat__house-icon" size={19} strokeWidth={2.1} />
+              <Sparkles className="ai-chat__sparkle-icon" size={11} strokeWidth={2.4} />
+            </span>
             <div>
               <p className="ai-chat__header-title">Trợ lý AI Homely</p>
               <p className="ai-chat__header-subtitle">
@@ -207,9 +211,7 @@ export default function AIChatbox() {
               title="Cuộc trò chuyện mới"
               aria-label="Bắt đầu cuộc trò chuyện mới"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.68"/>
-              </svg>
+              <MessageSquarePlus size={17} strokeWidth={2} aria-hidden="true" />
             </button>
             <button
               className="ai-chat__icon-btn"
@@ -217,7 +219,7 @@ export default function AIChatbox() {
               title="Đóng"
               aria-label="Đóng chatbox"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <X size={18} strokeWidth={2.4} aria-hidden="true" />
             </button>
           </div>
         </div>
@@ -299,9 +301,7 @@ export default function AIChatbox() {
             disabled={!input.trim() || loading}
             aria-label="Gửi tin nhắn"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
-            </svg>
+            <Send size={18} strokeWidth={2.1} aria-hidden="true" />
           </button>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 import { useAuth } from './contexts/AuthContext'
 import NavBar from './components/NavBar'
 import AIChatbox from './components/AIChatbox'
@@ -27,6 +28,7 @@ import Achievements from './pages/Achievements'
 import NotFound from './pages/NotFound'
 import Plans from './pages/Plans'
 import Subscribe from './pages/Subscribe'
+import ForgotPassword from './pages/ForgotPassword'
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth()
@@ -51,16 +53,28 @@ function AIChatboxGuard() {
   return <AIChatbox />
 }
 
+function RouteScrollReset() {
+  const { pathname } = useLocation()
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+  return null
+}
+
 export default function App() {
   const location = useLocation()
   const isStudioRoute = location.pathname.startsWith('/designs') && !location.pathname.endsWith('/summary')
+  const isSoftRedPage = ['/templates', '/projects', '/plans'].includes(location.pathname)
+    || location.pathname.startsWith('/subscribe/')
 
   return (
-    <>
+    <div className={isSoftRedPage ? 'page-soft-red-shell' : undefined}>
+      <RouteScrollReset />
       <NavBar />
-      <main className={isStudioRoute ? 'studio-main-container' : 'container'}>
+      <main className={`${isStudioRoute ? 'studio-main-container' : 'container'}${isSoftRedPage ? ' page-soft-red' : ''}`}>
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/register" element={<Register />} />
           {/* TASK-078: public, không dùng ProtectedRoute — người xem không có tài khoản Homely
               vẫn vào được, cùng cách khai báo với /login ở trên. */}
@@ -259,6 +273,6 @@ export default function App() {
       </main>
       {/* AI Chatbox — fixed overlay, chỉ hiện khi đã đăng nhập */}
       <AIChatboxGuard />
-    </>
+    </div>
   )
 }

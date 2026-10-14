@@ -40,9 +40,10 @@ export default function ChangePassword() {
   }
 
   return (
-    <div className="card" style={{ maxWidth: 420 }}>
-      <h2>Đổi mật khẩu</h2>
-      <form onSubmit={handleSubmit}>
+    <section className="account-form-center">
+      <div className="card account-form-center__card" style={{ maxWidth: 420 }}>
+        <h2>Đổi mật khẩu</h2>
+        <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Mật khẩu hiện tại</label>
           <div className="password-input-wrap">
@@ -110,7 +111,8 @@ export default function ChangePassword() {
         <button type="submit" disabled={submitting}>
           {submitting ? 'Đang lưu...' : 'Đổi mật khẩu'}
         </button>
-      </form>
-    </div>
+        </form>
+      </div>
+    </section>
   )
 }

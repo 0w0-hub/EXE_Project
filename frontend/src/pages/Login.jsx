@@ -61,6 +61,7 @@ export default function Login() {
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
               />
             </div>
+            <p className="login-forgot-link"><Link to="/forgot-password">Quên mật khẩu?</Link></p>
             {error && <p className="error-text">{error}</p>}
             <button type="submit" disabled={submitting}>
               {submitting ? 'Đang đăng nhập...' : 'Đăng nhập'}

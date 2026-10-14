@@ -145,7 +145,7 @@
 body {
   margin: 0;
   font-family: var(--font-body);
-  background: var(--color-bg);
+  background: var(--color-primary-tint);
   color: var(--color-text);
 }
 
@@ -189,6 +189,21 @@ h4 {
 .navbar-nav a.active {
   color: #ffffff;
   font-weight: 700;
+}
+
+.navbar-nav a.navbar-nav__highlight {
+  color: #8f2525;
+  background: #ffebee;
+  border-radius: 9px;
+  padding: 8px 11px;
+  font-weight: 600;
+  transition: background-color .15s ease, transform .15s ease;
+}
+
+.navbar-nav a.navbar-nav__highlight:hover,
+.navbar-nav a.navbar-nav__highlight.active {
+  color: #7f1d1d;
+  background: #ffcdd2;
 }
 
 .navbar-user {
@@ -294,9 +309,41 @@ h4 {
   background: var(--color-primary-tint);
 }
 
+.page-soft-red {
+  width: 100%;
+  max-width: 1500px;
+  box-sizing: border-box;
+  min-height: calc(100vh - 66px);
+  margin: 0 auto;
+  padding: 24px 32px;
+  background: transparent;
+}
+
+.page-soft-red-shell {
+  min-height: 100vh;
+  background: var(--color-primary-tint);
+}
+
 :root[data-theme="dark"] .dashboard-hero-tint {
   background: var(--color-danger-tint);
 }
+
+:root[data-theme="dark"] .page-soft-red-shell {
+  background: var(--color-danger-tint);
+}
+
+.login-forgot-link { margin: -6px 0 14px; text-align: right; font-size: .85rem; }
+.forgot-password-page { min-height: calc(100vh - 114px); display: flex; align-items: center; justify-content: center; padding: 24px; }
+.forgot-password-card { width: min(100%, 460px); margin: 0; padding: 34px; text-align: center; }
+.account-form-center { min-height: calc(100vh - 114px); display: flex; align-items: center; justify-content: center; padding: 24px; }
+.account-form-center__card { width: min(100%, 420px); margin: 0; }
+.forgot-password-icon { width: 52px; height: 52px; display: grid; place-items: center; margin: 0 auto 16px; border-radius: 16px; color: var(--color-primary); background: var(--color-primary-tint); }
+.forgot-password-card h1 { margin: 8px 0; font-size: 1.8rem; }
+.forgot-password-card > .text-muted { line-height: 1.6; margin: 0 auto 22px; }
+.forgot-password-card form { text-align: left; }
+.forgot-password-submit { width: 100%; }
+.forgot-password-notice { padding: 11px 12px; border-radius: 9px; background: var(--color-warning-tint); color: var(--color-text); font-size: .85rem; line-height: 1.5; }
+.forgot-password-back { display: inline-flex; align-items: center; justify-content: center; gap: 7px; margin-top: 15px; color: var(--color-text-muted); text-decoration: none; font-size: .9rem; }
 
 .form-group {
   margin-bottom: 16px;
@@ -2252,6 +2299,7 @@ button.secondary:active:not(:disabled) {
   gap: 10px;
 }
 .ai-chat__header-icon {
+  position: relative;
   width: 36px;
   height: 36px;
   background: rgba(255,255,255,.2);
@@ -2262,6 +2310,7 @@ button.secondary:active:not(:disabled) {
   font-size: 18px;
   flex-shrink: 0;
 }
+.ai-chat__sparkle-icon { position: absolute; right: 2px; top: 1px; }
 .ai-chat__header-title {
   font-family: var(--font-heading);
   font-weight: 700;
@@ -2303,6 +2352,21 @@ button.secondary:active:not(:disabled) {
   cursor: pointer;
   transition: background 0.15s;
 }
+.ai-chat__icon-btn svg,
+.ai-chat__send-btn svg,
+.ai-chat__header-icon svg,
+.ai-chat__avatar--bot svg {
+  display: block;
+  flex: 0 0 auto;
+  color: currentColor;
+  stroke: currentColor;
+  visibility: visible;
+  opacity: 1;
+}
+.ai-chat__icon-btn svg { width: 18px; height: 18px; }
+.ai-chat__send-btn svg { width: 20px; height: 20px; }
+.ai-chat__header-icon svg { color: #fff; }
+.ai-chat__avatar--bot svg { color: #fff; }
 .ai-chat__icon-btn:hover { background: rgba(255,255,255,.28); }
 .ai-chat__icon-btn:focus-visible { outline: 2px solid rgba(255,255,255,.8); outline-offset: 2px; }
 
