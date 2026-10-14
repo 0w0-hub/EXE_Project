@@ -1300,6 +1300,23 @@ button.secondary:hover:not(:disabled) {
   border: 1px solid var(--color-border);
 }
 
+/* Giữ một khe nhỏ giữa các nút trong toàn bộ khung 3D, kể cả các nhóm điều khiển
+   được tạo bằng inline flex và các nút trong danh sách nội thất. */
+.room3d-viewer button {
+  margin: 2px;
+}
+
+/* Room3DViewer uses its own light/dark themed controls; keep all viewer copy white. */
+.room3d-viewer,
+.room3d-viewer :where(p, span, label, li, h1, h2, h3, h4, small, strong, em, button, input, select, textarea) {
+  color: #fff !important;
+}
+
+.room3d-viewer input::placeholder,
+.room3d-viewer textarea::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
 .room2d-plan {
   width: 100%;
   max-height: 480px;
@@ -2425,16 +2442,4 @@ button.secondary:active:not(:disabled) {
     width: auto;
     max-height: 70vh;
   }
-}
-
-/* Keep small decorative icons out of the interface; large SVG room/floor-plan
-   drawings remain visible. */
-.lucide,
-svg[width="14"],
-svg[width="16"],
-svg[width="18"],
-svg[width="20"],
-svg[width="22"],
-svg[width="24"] {
-  display: none !important;
 }

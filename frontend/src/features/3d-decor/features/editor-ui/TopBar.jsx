@@ -189,7 +189,7 @@ export function TopBar() {
       {activeTab === '3d' && (
         <div className="flex items-center gap-1.5 bg-slate-900/90 backdrop-blur-md p-1 rounded-xl border border-slate-700/80 shadow-xl pointer-events-auto">
           {/* Góc nhìn Camera */}
-          <div className="flex bg-slate-800/80 p-0.5 rounded-lg border border-slate-700">
+          <div className="flex items-center gap-1 bg-slate-800/80 p-1 rounded-lg border border-slate-700">
             <button
               onClick={() => setCameraMode('3d')}
               className={`p-1.5 rounded-md text-xs transition-all ${
@@ -249,7 +249,7 @@ export function TopBar() {
           <div className="w-[1px] h-5 bg-slate-700 my-auto" />
 
           {/* Di chuyển / Xoay */}
-          <div className="flex bg-slate-800/80 p-0.5 rounded-lg border border-slate-700">
+          <div className="flex items-center gap-1 bg-slate-800/80 p-1 rounded-lg border border-slate-700">
             <button
               onClick={() => setTransformMode('translate')}
               className={`p-1.5 rounded-md text-xs transition-all ${
