@@ -89,6 +89,8 @@ export function TopBar() {
   const historyLen = useSceneStore((state) => state.history.length);
   const redoLen = useSceneStore((state) => state.redoStack.length);
   const itemCount = useSceneStore((state) => state.items.length);
+  const isAutosavePending = useSceneStore((state) => state.isAutosavePending);
+  const updateDate = useSceneStore((state) => state.updateDate);
 
   const [isGeneratingTopViews, setIsGeneratingTopViews] = useState(false);
   const [topViewProgress, setTopViewProgress] = useState('');
@@ -556,6 +558,21 @@ export function TopBar() {
 
       {/* 3. Chụp ảnh, Cài đặt phòng, JSON */}
       <div className="flex items-center gap-1.5 bg-slate-900/90 backdrop-blur-md p-1 rounded-xl border border-slate-700/80 shadow-xl pointer-events-auto">
+        {/* Trạng thái tự động lưu */}
+        <div
+          className="hidden md:flex items-center gap-1.5 px-2 py-1 text-[11px] text-slate-400 select-none border-r border-slate-800 pr-2 mr-0.5"
+          title={isAutosavePending ? 'Đang chờ lưu bản nháp vào LocalStorage...' : `Đã tự động lưu (${new Date(updateDate).toLocaleTimeString()})`}
+        >
+          <span
+            className={`w-1.5 h-1.5 rounded-full transition-colors ${
+              isAutosavePending ? 'bg-amber-400 animate-pulse' : 'bg-emerald-400'
+            }`}
+          />
+          <span className="text-[10px] hidden xl:inline text-slate-300">
+            {isAutosavePending ? 'Đang lưu...' : 'Đã lưu'}
+          </span>
+        </div>
+
         {/* Chụp ảnh render 3D */}
         {activeTab === '3d' && (
           <button

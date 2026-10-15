@@ -14,6 +14,7 @@ import './index.css';
  * @param {string} props.className - Class CSS bổ sung
  */
 export default function RoomDecorStudio({
+  userId = 'guest',
   initialRoom,
   initialFurniture,
   userRole,
@@ -22,6 +23,7 @@ export default function RoomDecorStudio({
   className = '',
 }) {
   const loadScene = useSceneStore((state) => state.loadScene);
+  const syncWithLocalStorage = useSceneStore((state) => state.syncWithLocalStorage);
   const setUserRole = useEditorStore((state) => state.setUserRole);
 
   useEffect(() => {
@@ -30,14 +32,23 @@ export default function RoomDecorStudio({
     }
   }, [userRole, setUserRole]);
 
+  // Kiểm tra và đồng bộ giữa useSceneStore và LocalStorage theo userId trước khi dữ liệu được nạp
+  useEffect(() => {
+    syncWithLocalStorage(userId || 'guest');
+    return () => {
+      useSceneStore.getState().flushAutoSave();
+    };
+  }, [userId, syncWithLocalStorage]);
+
   useEffect(() => {
     if (initialRoom || initialFurniture) {
       loadScene({
+        userId: userId || 'guest',
         room: initialRoom,
         items: initialFurniture,
       });
     }
-  }, [initialRoom, initialFurniture, loadScene]);
+  }, [initialRoom, initialFurniture, userId, loadScene]);
 
   return (
     <div className={`decor-studio-root w-full h-full relative overflow-hidden ${className}`}>

@@ -27,6 +27,16 @@ import {
   clampOpeningU,
 } from '../features/room/wallGraphUtils';
 
+import {
+  syncStoreAndLocalStorage,
+  AutoSaveManager,
+  writeLocalStorageDraft,
+  removeLocalStorageDraft,
+  DEFAULT_DEBOUNCE_MS,
+} from './sceneStorageHelper';
+
+const autoSaveManager = new AutoSaveManager(DEFAULT_DEBOUNCE_MS);
+
 const MAX_HISTORY = 25;
 
 function computeRoomDimensionsFromGraph(wallGraph, currentRoom) {
@@ -43,130 +53,28 @@ function computeRoomDimensionsFromGraph(wallGraph, currentRoom) {
   return { ...currentRoom, width, length };
 }
 
+export const INITIAL_SCENE_ITEMS = [];
+
+export function getInitialSceneState(userId = 'guest') {
+  return {
+    userId: userId || 'guest',
+    updateDate: new Date().toISOString(),
+    isInitialDefault: true,
+    isAutosavePending: false,
+    room: { ...DEFAULT_ROOM },
+    wallGraph: buildDefaultWallGraph(DEFAULT_ROOM),
+    items: [],
+    selectedItemId: null,
+    selectedVertexId: null,
+    selectedSegmentId: null,
+    selectedOpeningId: null,
+    history: [],
+    redoStack: [],
+  };
+}
+
 export const useSceneStore = create((set, get) => ({
-  // Cấu hình phòng (chiều rộng, dài, cao, màu sắc)
-  room: { ...DEFAULT_ROOM },
-
-  // Đồ thị tường tùy ý (Graph-based wall model)
-  // Layer 1: Nguồn sự thật — vertices (đỉnh) + segments (đoạn tường) + openings (cửa/cửa sổ)
-  // Layer 2 (mesh, SVG paths) và Layer 3 (collision OBBs) được derive trong useMemo tại component
-  wallGraph: buildDefaultWallGraph(DEFAULT_ROOM),
-
-  // ID vertex / segment / opening đang được chọn trong 2D editor
-  selectedVertexId: null,
-  selectedSegmentId: null,
-  selectedOpeningId: null,
-
-  // Danh sách các vật thể đang có trong phòng (nạp model .glb thực tế)
-  items: [
-    // {
-    //   instanceId: 'initial-sofa',
-    //   catalogId: 'sofa-classic',
-    //   name: 'Sofa Văng Dài 3 Chỗ',
-    //   modelPath: '/furniture/seating.glb',
-    //   modelType: 'seating',
-    //   dimensions: { width: 2.1, height: 0.85, depth: 0.9 },
-    //   position: [0, 0, 1.2],
-    //   rotation: [0, 0, 0],
-    //   scale: [1, 1, 1],
-    //   color: '#3b82f6',
-    // },
-    // {
-    //   instanceId: 'initial-table',
-    //   catalogId: 'coffee-table-wood',
-    //   name: 'Bàn Trà Gỗ Chữ Nhật',
-    //   modelPath: '/furniture/table.glb',
-    //   modelType: 'table',
-    //   dimensions: { width: 1.2, height: 0.45, depth: 0.6 },
-    //   position: [0, 0, 0],
-    //   rotation: [0, 0, 0],
-    //   scale: [1, 1, 1],
-    //   color: '#78350f',
-    // },
-    // {
-    //   instanceId: 'initial-tv',
-    //   catalogId: 'tv-console-modern',
-    //   name: 'Kệ Tivi Hiện Đại',
-    //   modelPath: '/furniture/storage-3.glb',
-    //   modelType: 'storage',
-    //   dimensions: { width: 1.8, height: 0.5, depth: 0.42 },
-    //   position: [0, 0, -2.1],
-    //   rotation: [0, 0, 0],
-    //   scale: [1, 1, 1],
-    //   color: '#1e293b',
-    // },
-    // {
-    //   instanceId: 'initial-plant',
-    //   catalogId: 'plant-monstera',
-    //   name: 'Chậu Cây Trầu Bà Chậu Sứ',
-    //   modelPath: '/furniture/decor-plant.glb',
-    //   modelType: 'plant',
-    //   dimensions: { width: 0.6, height: 1.1, depth: 0.6 },
-    //   position: [-2.1, 0, -1.9],
-    //   rotation: [0, 0.4, 0],
-    //   scale: [1, 1, 1],
-    //   color: '#16a34a',
-    // },
-    // {
-    //   instanceId: 'initial-lamp',
-    //   catalogId: 'floor-lamp-nordic',
-    //   name: 'Đèn Cây Đứng Đèn Vàng',
-    //   modelPath: '/furniture/lighting.glb',
-    //   modelType: 'lamp',
-    //   dimensions: { width: 0.45, height: 1.6, depth: 0.45 },
-    //   position: [1.8, 0, 1.4],
-    //   rotation: [0, 0, 0],
-    //   scale: [1, 1, 1],
-    //   color: '#eab308',
-    //   isLightOn: true,
-    // },
-    // {
-    //   instanceId: 'initial-laptop',
-    //   catalogId: 'laptop-work',
-    //   name: 'Laptop Mỏng Nhẹ',
-    //   modelPath: '/furniture/decor-laptop.glb',
-    //   modelType: 'decor',
-    //   dimensions: { width: 0.35, height: 0.22, depth: 0.25 },
-    //   position: [0, 0.45, 0],
-    //   rotation: [0, 0, 0],
-    //   scale: [1, 1, 1],
-    //   color: '#64748b',
-    //   attachedTo: 'initial-table',
-    // },
-    // {
-    //   instanceId: 'initial-tv-screen',
-    //   catalogId: 'tv-screen-flat',
-    //   name: 'Tivi Màn Hình Phẳng 65 inch',
-    //   modelPath: '/furniture/decor-tv.glb',
-    //   modelType: 'decor',
-    //   dimensions: { width: 1.45, height: 0.85, depth: 0.15 },
-    //   position: [0, 0.5, -2.1],
-    //   rotation: [0, 0, 0],
-    //   scale: [1, 1, 1],
-    //   color: '#0f172a',
-    //   attachedTo: 'initial-tv',
-    // },
-    
-    // {
-    //   instanceId: 'initial-proc-chair',
-    //   catalogId: 'proc-chair',
-    //   name: 'Ghế Tựa (Mô Hình Code - Đổi Màu)',
-    //   modelPath: null, // Đồ tạo từ code thủ công (Procedural)
-    //   modelType: 'armchair',
-    //   dimensions: { width: 0.85, height: 0.85, depth: 0.8 },
-    //   position: [-1.4, 0, 0.2],
-    //   rotation: [0, 1.2, 0],
-    //   scale: [1, 1, 1],
-    //   color: '#ef4444', // Màu đỏ nổi bật để dễ quan sát và test đổi màu
-    // },
-  ],
-
-  // ID vật thể đang được chọn
-  selectedItemId: null,
-
-  // Ngăn xếp lưu lịch sử Undo / Redo
-  history: [],
-  redoStack: [],
+  ...getInitialSceneState('guest'),
 
   // Đẩy snapshot vào history
   pushHistorySnapshot: () => {
@@ -182,6 +90,7 @@ export const useSceneStore = create((set, get) => ({
       ],
       redoStack: [],
     }));
+    get().triggerAutoSave();
   },
 
   // Hoàn tác (Undo)
@@ -207,9 +116,9 @@ export const useSceneStore = create((set, get) => ({
       wallGraph: previousSnapshot.wallGraph ?? wallGraph,
       selectedItemId: null,
       selectedVertexId: null,
-      selectedSegmentId: null,
-      selectedOpeningId: null,
+      selectedSegmentId: null,    selectedOpeningId: null,
     });
+    get().triggerAutoSave();
   },
 
   // Làm lại (Redo)
@@ -663,12 +572,18 @@ export const useSceneStore = create((set, get) => ({
     const newGraph = sceneData.wallGraph || buildDefaultWallGraph(newRoom);
     const rawItems = sceneData.items || [];
     const syncedItems = syncWallItemsWithGraph(rawItems, newGraph, newRoom);
+    const newUpdateDate = sceneData.updateDate || new Date().toISOString();
+    const currentUserId = sceneData.userId || get().userId || 'guest';
     set({
+      userId: currentUserId,
+      updateDate: newUpdateDate,
       room: newRoom,
       wallGraph: newGraph,
       items: syncedItems,
       selectedItemId: null,
+      isInitialDefault: false,
     });
+    get().triggerAutoSave();
   },
 
   // Lấy dữ liệu toàn cảnh dạng Object để lưu vào Database
@@ -688,6 +603,8 @@ export const useSceneStore = create((set, get) => ({
     const state = get();
     const exportData = {
       version: '2.0',
+      userId: state.userId || 'guest',
+      updateDate: state.updateDate || new Date().toISOString(),
       exportedAt: new Date().toISOString(),
       room: state.room,
       wallGraph: state.wallGraph,
@@ -885,6 +802,127 @@ export const useSceneStore = create((set, get) => ({
   selectSegment: (id) => set({ selectedSegmentId: id, selectedVertexId: null, selectedOpeningId: null }),
   selectOpening: (id) => set({ selectedOpeningId: id, selectedVertexId: null, selectedSegmentId: null }),
   clearWallSelection: () => set({ selectedVertexId: null, selectedSegmentId: null, selectedOpeningId: null }),
+  // ─────────────────────────────────────────────────────────────────────────
+  // AUTOSAVE & LOCALSTORAGE SYNC ACTIONS
+  // ─────────────────────────────────────────────────────────────────────────
+
+  // Đặt userId hiện tại và đồng bộ phiên làm việc
+  setUserId: (newUserId) => {
+    const targetUserId = newUserId || 'guest';
+    get().syncWithLocalStorage(targetUserId);
+  },
+
+  // Đồng bộ giữa Store và LocalStorage dựa trên updateDate và userId
+  syncWithLocalStorage: (targetUserId) => {
+    const currentState = get();
+    const currentUserId = currentState.userId || 'guest';
+    const effectiveUserId = targetUserId || currentUserId;
+
+    // Khi chuyển đổi tài khoản (User A -> User B hoặc User -> Guest hoặc ngược lại)
+    if (currentUserId !== effectiveUserId) {
+      // Nếu tài khoản cũ đang có thay đổi chưa kịp debounce, flush lưu cho tài khoản cũ trước
+      if (currentState.isAutosavePending) {
+        autoSaveManager.flush();
+        writeLocalStorageDraft(currentUserId, {
+          version: '2.0',
+          userId: currentUserId,
+          updateDate: currentState.updateDate || new Date().toISOString(),
+          room: currentState.room,
+          wallGraph: currentState.wallGraph,
+          items: currentState.items,
+        });
+      } else {
+        autoSaveManager.cancel();
+      }
+    }
+
+    const result = syncStoreAndLocalStorage(currentState, effectiveUserId);
+
+    if (result.action === 'loaded_from_local' && result.payload) {
+      const newRoom = { ...DEFAULT_ROOM, ...(result.payload.room || {}) };
+      const newGraph = result.payload.wallGraph || buildDefaultWallGraph(newRoom);
+      const rawItems = result.payload.items || [];
+      const syncedItems = syncWallItemsWithGraph(rawItems, newGraph, newRoom);
+
+      set({
+        userId: effectiveUserId,
+        updateDate: result.payload.updateDate || new Date().toISOString(),
+        room: newRoom,
+        wallGraph: newGraph,
+        items: syncedItems,
+        isInitialDefault: false,
+        isAutosavePending: false,
+        selectedItemId: null,
+        selectedVertexId: null,
+        selectedSegmentId: null,
+        selectedOpeningId: null,
+        history: [],
+        redoStack: [],
+      });
+    } else if (result.action === 'reset_to_default') {
+      const freshState = getInitialSceneState(effectiveUserId);
+      set({
+        ...freshState,
+      });
+    } else {
+      set({
+        userId: effectiveUserId,
+        isAutosavePending: false,
+      });
+    }
+
+    return result;
+  },
+
+  // Kích hoạt hẹn giờ tự động lưu (Debounced - hạn chế ghi thường xuyên)
+  triggerAutoSave: () => {
+    const now = new Date().toISOString();
+    set({ updateDate: now, isAutosavePending: true, isInitialDefault: false });
+    const { userId, room, wallGraph, items } = get();
+
+    autoSaveManager.schedule(
+      userId,
+      {
+        version: '2.0',
+        userId,
+        updateDate: now,
+        room,
+        wallGraph,
+        items,
+      },
+      () => {
+        set({ isAutosavePending: false });
+      }
+    );
+  },
+
+  // Ghi ngay lập tức vào LocalStorage (dùng khi rời trang / beforeunload)
+  flushAutoSave: () => {
+    const { userId, room, wallGraph, items, updateDate } = get();
+    autoSaveManager.flush();
+    writeLocalStorageDraft(userId, {
+      version: '2.0',
+      userId,
+      updateDate: updateDate || new Date().toISOString(),
+      room,
+      wallGraph,
+      items,
+    });
+    set({ isAutosavePending: false });
+  },
+
+  // Xóa bản nháp trong LocalStorage và reset phòng về mặc định sạch sẽ của user
+  clearDraftAndReset: () => {
+    const { userId } = get();
+    removeLocalStorageDraft(userId);
+    autoSaveManager.cancel();
+    const freshState = getInitialSceneState(userId);
+    set({
+      ...freshState,
+    });
+  },
+
+
 
   // Rebuild wallGraph từ room.width/length (gọi sau khi user thay đổi kích thước phòng qua modal)
   rebuildDefaultWallGraph: () => {
@@ -897,3 +935,21 @@ export const useSceneStore = create((set, get) => ({
   },
 }));
 
+// Tự động flush dữ liệu vào LocalStorage khi người dùng đóng tab hoặc reload trang
+if (typeof window !== 'undefined') {
+  window.addEventListener('beforeunload', () => {
+    try {
+      useSceneStore.getState().flushAutoSave();
+    } catch {
+      // ignore
+    }
+  });
+
+  window.addEventListener('pagehide', () => {
+    try {
+      useSceneStore.getState().flushAutoSave();
+    } catch {
+      // ignore
+    }
+  });
+}

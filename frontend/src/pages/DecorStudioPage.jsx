@@ -129,7 +129,8 @@ export default function DecorStudioPage() {
         }
       >
         <RoomDecorStudio
-          key={id || 'new-design'}
+          key={`${user?.id || 'guest'}-${id || 'new-design'}`}
+          userId={user?.id || 'guest'}
           userRole={user?.role?.toLowerCase() || 'user'}
           onSaveSuccess={handleSaveSuccess}
           onLoadDesign={handleLoadDesign}
