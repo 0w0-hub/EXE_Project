@@ -57,7 +57,7 @@ export function CatalogDrawer() {
 
   // Lọc sản phẩm theo danh mục và từ khóa tìm kiếm (loại bỏ đồ code và cửa sổ khỏi kho hiển thị)
   const filteredItems = FURNITURE_CATALOG.filter((item) => {
-    if (item.category === 'doors-windows' || item.category === 'procedural') {
+    if (item.category === 'doors-windows' || item.category === 'procedural' || item.category === 'architecture') {
       return false;
     }
     const matchCategory = selectedCategory === 'all' || item.category === selectedCategory;

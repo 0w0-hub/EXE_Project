@@ -4,6 +4,7 @@
 export const FURNITURE_CATEGORIES = [
   { id: 'all', name: 'Tất cả' },
   { id: 'doors-windows', name: 'Cửa & Cửa Sổ', hidden: true },
+  { id: 'architecture', name: 'Kiến Trúc & Cầu Thang', hidden: true },
   { id: 'wall-decor', name: 'Trang Trí Gắn Tường' },
   { id: 'living-room', name: 'Phòng Khách' },
   { id: 'bedroom', name: 'Phòng Ngủ' },
@@ -131,6 +132,109 @@ export const FURNITURE_CATALOG = [
     modelType: 'storage',
     description: 'Kệ sách nhiều tầng trưng bày sách & đồ trang trí'
   },
+  // --- BỔ SUNG PHÒNG KHÁCH (KENNEY KIT) ---
+  {
+    id: 'sofa-lounge-long',
+    name: 'Sofa Văng 4 Chỗ Dài',
+    category: 'living-room',
+    modelPath: '/furniture/loungeSofaLong.glb',
+    dimensions: { width: 2.6, height: 0.85, depth: 0.95 },
+    defaultColor: '#1e293b',
+    icon: 'Armchair',
+    modelType: 'seating',
+    description: 'Sofa băng dài 4 chỗ ngồi rộng rãi cho phòng khách lớn'
+  },
+  {
+    id: 'sofa-corner-design',
+    name: 'Sofa Góc Nghệ Thuật Lớn',
+    category: 'living-room',
+    modelPath: '/furniture/loungeDesignSofaCorner.glb',
+    dimensions: { width: 2.4, height: 0.82, depth: 2.4 },
+    defaultColor: '#475569',
+    icon: 'Armchair',
+    modelType: 'seating',
+    description: 'Sofa góc thiết kế bo cong phong cách châu Âu đương đại'
+  },
+  {
+    id: 'armchair-design',
+    name: 'Ghế Bành Thư Giãn Thiết Kế',
+    category: 'living-room',
+    modelPath: '/furniture/loungeDesignChair.glb',
+    dimensions: { width: 0.85, height: 0.82, depth: 0.8 },
+    defaultColor: '#0284c7',
+    icon: 'Armchair',
+    modelType: 'seating',
+    description: 'Ghế bành thư giãn kiểu dáng độc đáo tạo điểm nhấn không gian'
+  },
+  {
+    id: 'chair-modern-frame',
+    name: 'Ghế Khung Thép Đệm Nỉ',
+    category: 'living-room',
+    modelPath: '/furniture/chairModernFrameCushion.glb',
+    dimensions: { width: 0.6, height: 0.85, depth: 0.6 },
+    defaultColor: '#d97706',
+    icon: 'Armchair',
+    modelType: 'seating',
+    description: 'Ghế tựa khung kim loại thanh thoát bọc đệm êm'
+  },
+  {
+    id: 'sofa-ottoman',
+    name: 'Đôn Sofa Nỉ Vuông',
+    category: 'living-room',
+    modelPath: '/furniture/loungeSofaOttoman.glb',
+    dimensions: { width: 0.75, height: 0.45, depth: 0.75 },
+    defaultColor: '#334155',
+    icon: 'Armchair',
+    modelType: 'seating',
+    description: 'Ghế đôn sofa nỉ vuông tiện lợi di chuyển và gác chân'
+  },
+  {
+    id: 'table-coffee-square-glass',
+    name: 'Bàn Trà Kính Vuông Hiện Đại',
+    category: 'living-room',
+    modelPath: '/furniture/tableCoffeeGlassSquare.glb',
+    dimensions: { width: 0.9, height: 0.45, depth: 0.9 },
+    defaultColor: '#0284c7',
+    icon: 'Table',
+    modelType: 'table',
+    isSurfaceHost: true,
+    description: 'Bàn trà mặt kính vuông khung gỗ tự nhiên'
+  },
+  {
+    id: 'table-side-drawers',
+    name: 'Bàn Tab Kẹp Bên Kèm Ngăn Kéo',
+    category: 'living-room',
+    modelPath: '/furniture/sideTableDrawers.glb',
+    dimensions: { width: 0.55, height: 0.6, depth: 0.5 },
+    defaultColor: '#78350f',
+    icon: 'Table',
+    modelType: 'table',
+    isSurfaceHost: true,
+    description: 'Bàn kê góc sofa tiện ích có ngăn kéo chứa phụ kiện'
+  },
+  {
+    id: 'bench-cushion',
+    name: 'Băng Ghế Đệm Dài Thư Giãn',
+    category: 'living-room',
+    modelPath: '/furniture/benchCushion.glb',
+    dimensions: { width: 1.2, height: 0.55, depth: 0.45 },
+    defaultColor: '#059669',
+    icon: 'Armchair',
+    modelType: 'seating',
+    description: 'Băng ghế dài bọc đệm đặt cạnh cửa sổ hoặc hành lang'
+  },
+  {
+    id: 'bench-cushion-low',
+    name: 'Băng Ghế Đệm Thấp Kê Chân',
+    category: 'living-room',
+    modelPath: '/furniture/benchCushionLow.glb',
+    dimensions: { width: 1.1, height: 0.42, depth: 0.45 },
+    defaultColor: '#0d9488',
+    icon: 'Armchair',
+    modelType: 'seating',
+    description: 'Băng ghế đệm bệt dáng thấp đa năng'
+  },
+
 
   // --- PHÒNG NGỦ ---
   {
@@ -189,6 +293,20 @@ export const FURNITURE_CATALOG = [
     modelType: 'storage',
     description: 'Tủ quần áo 2 cánh đứng sát tường'
   },
+  // --- BỔ SUNG PHÒNG NGỦ (KENNEY KIT) ---
+  {
+    id: 'nightstand-drawer-table',
+    name: 'Táp Đầu Giường Kèm Ngăn Kéo Mở',
+    category: 'bedroom',
+    modelPath: '/furniture/cabinetBedDrawerTable.glb',
+    dimensions: { width: 0.48, height: 0.52, depth: 0.45 },
+    defaultColor: '#92400e',
+    icon: 'Box',
+    modelType: 'storage',
+    isSurfaceHost: true,
+    description: 'Tab đầu giường thiết kế ngăn hở và ngăn kéo tiện dụng'
+  },
+
 
   // --- BẾP & BÀN ĂN ---
   {
@@ -270,6 +388,189 @@ export const FURNITURE_CATALOG = [
     modelType: 'seating',
     description: 'Ghế chân cao cho bàn đảo quầy bar'
   },
+  // --- BỔ SUNG BẾP & BÀN ĂN (KENNEY KIT) ---
+  {
+    id: 'dining-table-large',
+    name: 'Bàn Ăn Gỗ Chữ Nhật 6 Chỗ',
+    category: 'kitchen',
+    modelPath: '/furniture/tableDining.glb',
+    dimensions: { width: 1.6, height: 0.76, depth: 0.9 },
+    defaultColor: '#78350f',
+    icon: 'Table',
+    modelType: 'table',
+    isSurfaceHost: true,
+    description: 'Bàn ăn gia đình 6 chỗ bằng gỗ tự nhiên vững chãi'
+  },
+  {
+    id: 'dining-table-cloth',
+    name: 'Bàn Ăn Chân Chéo Trải Khăn Tiệc',
+    category: 'kitchen',
+    modelPath: '/furniture/tableCrossCloth.glb',
+    dimensions: { width: 1.8, height: 0.78, depth: 0.95 },
+    defaultColor: '#e2e8f0',
+    icon: 'Table',
+    modelType: 'table',
+    isSurfaceHost: true,
+    description: 'Bàn tiệc chữ nhật chân chéo phủ khăn trắng trang nhã'
+  },
+  {
+    id: 'dining-chair-wood',
+    name: 'Ghế Ăn Gỗ Tự Nhiên',
+    category: 'kitchen',
+    modelPath: '/furniture/chair.glb',
+    dimensions: { width: 0.48, height: 0.88, depth: 0.5 },
+    defaultColor: '#854d0e',
+    icon: 'Armchair',
+    modelType: 'seating',
+    description: 'Ghế ăn gỗ mộc mạc tinh tế đồng bộ bàn ăn'
+  },
+  {
+    id: 'dining-chair-cushion',
+    name: 'Ghế Ăn Bọc Đệm Êm Ái',
+    category: 'kitchen',
+    modelPath: '/furniture/chairCushion.glb',
+    dimensions: { width: 0.5, height: 0.88, depth: 0.52 },
+    defaultColor: '#b45309',
+    icon: 'Armchair',
+    modelType: 'seating',
+    description: 'Ghế ăn tựa lưng bọc đệm êm ái cho bữa ăn gia đình'
+  },
+  {
+    id: 'kitchen-bar-end',
+    name: 'Khối Bo Đầu Quầy Bar',
+    category: 'kitchen',
+    modelPath: '/furniture/kitchenBarEnd.glb',
+    dimensions: { width: 0.4, height: 1.05, depth: 0.7 },
+    defaultColor: '#475569',
+    icon: 'Box',
+    modelType: 'storage',
+    isSurfaceHost: true,
+    description: 'Module hoàn thiện bo cong góc cạnh bàn bar'
+  },
+  {
+    id: 'kitchen-cabinet-drawer',
+    name: 'Tủ Bếp Dưới 3 Ngăn Kéo',
+    category: 'kitchen',
+    modelPath: '/furniture/kitchenCabinetDrawer.glb',
+    dimensions: { width: 0.8, height: 0.86, depth: 0.6 },
+    defaultColor: '#f8fafc',
+    icon: 'Box',
+    modelType: 'storage',
+    isSurfaceHost: true,
+    description: 'Tủ bếp dưới hệ ray trượt 3 ngăn kéo chứa dao thìa dĩa'
+  },
+  {
+    id: 'kitchen-cabinet-corner-inner',
+    name: 'Tủ Bếp Dưới Góc Chữ L',
+    category: 'kitchen',
+    modelPath: '/furniture/kitchenCabinetCornerInner.glb',
+    dimensions: { width: 0.9, height: 0.86, depth: 0.9 },
+    defaultColor: '#f1f5f9',
+    icon: 'Box',
+    modelType: 'storage',
+    isSurfaceHost: true,
+    description: 'Tủ bếp dưới góc vuông tối ưu hóa không gian góc chết'
+  },
+  {
+    id: 'kitchen-cabinet-corner-round',
+    name: 'Tủ Bếp Dưới Góc Bo Tròn',
+    category: 'kitchen',
+    modelPath: '/furniture/kitchenCabinetCornerRound.glb',
+    dimensions: { width: 0.9, height: 0.86, depth: 0.9 },
+    defaultColor: '#f1f5f9',
+    icon: 'Box',
+    modelType: 'storage',
+    isSurfaceHost: true,
+    description: 'Tủ bếp dưới bo tròn mềm mại cho lối đi an toàn'
+  },
+  {
+    id: 'kitchen-cabinet-upper',
+    name: 'Tủ Bếp Trên Treo Tường Đơn',
+    category: 'kitchen',
+    modelPath: '/furniture/kitchenCabinetUpper.glb',
+    dimensions: { width: 0.6, height: 0.7, depth: 0.35 },
+    defaultColor: '#f8fafc',
+    icon: 'Box',
+    modelType: 'storage',
+    mountType: 'wall',
+    defaultElevation: 1.45,
+    description: 'Tủ bếp treo tường 1 cánh chứa bát đĩa'
+  },
+  {
+    id: 'kitchen-cabinet-upper-double',
+    name: 'Tủ Bếp Trên Cánh Đôi Treo Tường',
+    category: 'kitchen',
+    modelPath: '/furniture/kitchenCabinetUpperDouble.glb',
+    dimensions: { width: 1.0, height: 0.7, depth: 0.35 },
+    defaultColor: '#f8fafc',
+    icon: 'Box',
+    modelType: 'storage',
+    mountType: 'wall',
+    defaultElevation: 1.45,
+    description: 'Tủ bếp treo tường 2 cánh mở rộng rãi'
+  },
+  {
+    id: 'kitchen-cabinet-upper-corner',
+    name: 'Tủ Bếp Trên Treo Góc Tường',
+    category: 'kitchen',
+    modelPath: '/furniture/kitchenCabinetUpperCorner.glb',
+    dimensions: { width: 0.6, height: 0.7, depth: 0.6 },
+    defaultColor: '#f8fafc',
+    icon: 'Box',
+    modelType: 'storage',
+    mountType: 'wall',
+    defaultElevation: 1.45,
+    description: 'Tủ bếp treo tường bo góc chữ L'
+  },
+  {
+    id: 'kitchen-cabinet-upper-low',
+    name: 'Tủ Bếp Treo Lửng Ngắn',
+    category: 'kitchen',
+    modelPath: '/furniture/kitchenCabinetUpperLow.glb',
+    dimensions: { width: 0.6, height: 0.45, depth: 0.35 },
+    defaultColor: '#f8fafc',
+    icon: 'Box',
+    modelType: 'storage',
+    mountType: 'wall',
+    defaultElevation: 1.65,
+    description: 'Tủ bếp treo tường chiều cao lửng lắp trên máy hút mùi'
+  },
+  {
+    id: 'fridge-builtin',
+    name: 'Tủ Lạnh Âm Tủ Cao Cấp',
+    category: 'kitchen',
+    modelPath: '/furniture/kitchenFridgeBuiltIn.glb',
+    dimensions: { width: 0.7, height: 1.85, depth: 0.65 },
+    defaultColor: '#94a3b8',
+    icon: 'Box',
+    modelType: 'appliance',
+    description: 'Tủ lạnh lắp âm gọn gàng phẳng mặt với tủ bếp'
+  },
+  {
+    id: 'fridge-side-by-side',
+    name: 'Tủ Lạnh Side-by-Side 2 Cánh Lớn',
+    category: 'kitchen',
+    modelPath: '/furniture/kitchenFridgeLarge.glb',
+    dimensions: { width: 1.1, height: 1.9, depth: 0.75 },
+    defaultColor: '#334155',
+    icon: 'Box',
+    modelType: 'appliance',
+    description: 'Tủ lạnh 2 cánh cỡ lớn dung tích chứa đồ cho đại gia đình'
+  },
+  {
+    id: 'hood-large',
+    name: 'Máy Hút Mùi Bếp Đôi Cỡ Lớn',
+    category: 'kitchen',
+    modelPath: '/furniture/hoodLarge.glb',
+    dimensions: { width: 0.9, height: 0.7, depth: 0.5 },
+    defaultColor: '#475569',
+    icon: 'Box',
+    modelType: 'appliance',
+    mountType: 'wall',
+    defaultElevation: 1.6,
+    description: 'Máy hút mùi công suất lớn treo tường trên bếp nấu'
+  },
+
 
   // --- GÓC LÀM VIỆC ---
   {
@@ -319,6 +620,30 @@ export const FURNITURE_CATALOG = [
     modelType: 'seating',
     description: 'Ghế xoay ngồi học và làm việc thoải mái'
   },
+  // --- BỔ SUNG GÓC LÀM VIỆC (KENNEY KIT) ---
+  {
+    id: 'office-chair-desk',
+    name: 'Ghế Xoay Văn Phòng Công Thái Học',
+    category: 'office',
+    modelPath: '/furniture/chairDesk.glb',
+    dimensions: { width: 0.65, height: 0.95, depth: 0.65 },
+    defaultColor: '#0284c7',
+    icon: 'Armchair',
+    modelType: 'seating',
+    description: 'Ghế xoay bánh xe đệm tựa êm cho góc làm việc tập trung'
+  },
+  {
+    id: 'bookcase-closed-doors',
+    name: 'Tủ Kệ Sách Cánh Lửng Hiện Đại',
+    category: 'office',
+    modelPath: '/furniture/bookcaseClosedDoors.glb',
+    dimensions: { width: 0.9, height: 1.8, depth: 0.4 },
+    defaultColor: '#78350f',
+    icon: 'Box',
+    modelType: 'storage',
+    description: 'Kệ sách phối hợp ngăn mở và tủ có cánh lưu trữ tài liệu'
+  },
+
 
   // --- PHÒNG TẮM & GIẶT ---
   {
@@ -365,6 +690,42 @@ export const FURNITURE_CATALOG = [
     modelType: 'appliance',
     description: 'Máy giặt cửa trước thông minh'
   },
+  // --- BỔ SUNG PHÒNG TẮM & GIẶT (KENNEY KIT) ---
+  {
+    id: 'bathroom-cabinet-drawer',
+    name: 'Tủ Lavabo Phòng Tắm Kèm Ngăn Kéo',
+    category: 'bathroom',
+    modelPath: '/furniture/bathroomCabinetDrawer.glb',
+    dimensions: { width: 0.8, height: 0.85, depth: 0.55 },
+    defaultColor: '#38bdf8',
+    icon: 'Box',
+    modelType: 'storage',
+    isSurfaceHost: true,
+    description: 'Tủ chậu rửa mặt chống ẩm có ngăn kéo chứa khăn và mỹ phẩm'
+  },
+  {
+    id: 'bathroom-sink-square',
+    name: 'Chậu Rửa Lavabo Vuông Bệ Đứng',
+    category: 'bathroom',
+    modelPath: '/furniture/bathroomSinkSquare.glb',
+    dimensions: { width: 0.6, height: 0.85, depth: 0.5 },
+    defaultColor: '#f8fafc',
+    icon: 'Box',
+    modelType: 'storage',
+    description: 'Chậu rửa sứ trắng vuông chân bệ đứng sang trọng'
+  },
+  {
+    id: 'washer-dryer-stacked',
+    name: 'Tháp Máy Giặt Sấy Xếp Tầng',
+    category: 'bathroom',
+    modelPath: '/furniture/washerDryerStacked.glb',
+    dimensions: { width: 0.7, height: 1.85, depth: 0.7 },
+    defaultColor: '#64748b',
+    icon: 'Box',
+    modelType: 'appliance',
+    description: 'Cặp máy giặt và máy sấy xếp chồng tiết kiệm diện tích tối đa'
+  },
+
 
   // --- ĐÈN & TRANG TRÍ ---
   {
@@ -434,6 +795,74 @@ export const FURNITURE_CATALOG = [
     icon: 'Circle',
     modelType: 'rug',
     description: 'Thảm trải sàn sofa hoa văn nhã nhặn'
+  },
+  {
+    id: 'decor-rug-rectangle',
+    name: 'Thảm Trải Sàn Chữ Nhật',
+    category: 'decor',
+    modelPath: '/furniture/decor-rug-2.glb',
+    dimensions: { width: 2.4, height: 0.02, depth: 1.6 },
+    defaultColor: '#d97706',
+    icon: 'Square',
+    modelType: 'rug',
+    description: 'Thảm trải sàn sofa chữ nhật dệt nỉ cao cấp'
+  },
+  {
+    id: 'decor-rug-square',
+    name: 'Thảm Trải Sàn Vuông',
+    category: 'decor',
+    modelPath: '/furniture/decor-rug-3.glb',
+    dimensions: { width: 1.8, height: 0.02, depth: 1.8 },
+    defaultColor: '#b45309',
+    icon: 'Square',
+    modelType: 'rug',
+    description: 'Thảm nỉ hình vuông cân đối cho phòng khách hoặc phòng ngủ'
+  },
+  {
+    id: 'decor-rug-rounded',
+    name: 'Thảm Trải Sàn Bo Góc Oval',
+    category: 'decor',
+    modelPath: '/furniture/rugRounded.glb',
+    dimensions: { width: 2.2, height: 0.02, depth: 1.5 },
+    defaultColor: '#e2e8f0',
+    icon: 'Layers',
+    modelType: 'rug',
+    description: 'Thảm dệt bo tròn góc mềm mại phong cách hiện đại'
+  },
+  {
+    id: 'decor-rug-doormat',
+    name: 'Thảm Lau Chân Cửa Ra Vào',
+    category: 'decor',
+    modelPath: '/furniture/decor-rug-4.glb',
+    dimensions: { width: 0.8, height: 0.02, depth: 0.5 },
+    defaultColor: '#475569',
+    icon: 'Square',
+    modelType: 'rug',
+    description: 'Thảm chùi chân đặt trước cửa ra vào hoặc ban công'
+  },
+  {
+    id: 'tv-antenna-vintage',
+    name: 'Ăng-ten Râu TV Cổ Điển',
+    category: 'decor',
+    modelPath: '/furniture/televisionAntenna.glb',
+    dimensions: { width: 0.35, height: 0.25, depth: 0.2 },
+    defaultColor: '#475569',
+    icon: 'Tv',
+    modelType: 'decor',
+    canPlaceOnSurface: true,
+    description: 'Ăng-ten râu kim loại retro đặt trên tivi hoặc tủ kệ'
+  },
+  {
+    id: 'pillow-long-blue',
+    name: 'Gối Ôm Sofa Dài Màu Xanh',
+    category: 'decor',
+    modelPath: '/furniture/pillowBlueLong.glb',
+    dimensions: { width: 0.65, height: 0.25, depth: 0.3 },
+    defaultColor: '#0284c7',
+    icon: 'Layers',
+    modelType: 'decor',
+    canPlaceOnSurface: true,
+    description: 'Gối ôm trang trí dài bọc nỉ xanh mềm mại'
   },
   {
     id: 'decor-ceiling-fan',
@@ -662,4 +1091,185 @@ export const FURNITURE_CATALOG = [
     isSurfaceHost: true,
     description: 'Kệ gỗ gắn tường vững chãi, cho phép đặt thêm đồ decor lên trên'
   },
+  // --- BỔ SUNG TRANG TRÍ GẮN TƯỜNG (KENNEY KIT) ---
+  {
+    id: 'wall-coat-rack',
+    name: 'Giá Móc Treo Quần Áo Gắn Tường',
+    category: 'wall-decor',
+    modelPath: '/furniture/coatRack.glb',
+    dimensions: { width: 0.7, height: 0.3, depth: 0.15 },
+    defaultColor: '#78350f',
+    icon: 'Maximize2',
+    modelType: 'decor',
+    mountType: 'wall',
+    defaultElevation: 1.6,
+    description: 'Thanh gỗ gắn tường kèm móc treo áo khoác và nón'
+  },
+  // --- KIẾN TRÚC & CẦU THANG (ARCHITECTURE - XỬ LÝ RIÊNG, ẨN KHỎI GIAO DIỆN DECOR) ---
+  {
+    id: 'stairs-straight',
+    name: 'Cầu Thang Gỗ Thẳng',
+    category: 'architecture',
+    modelPath: '/furniture/stairs.glb',
+    dimensions: { width: 1.82, height: 1.34, depth: 0.8 },
+    defaultColor: '#78350f',
+    icon: 'Layers',
+    modelType: 'stairs',
+    description: 'Cầu thang gỗ nguyên khối một vế kết nối tầng'
+  },
+  {
+    id: 'stairs-corner-l',
+    name: 'Cầu Thang Góc Chữ L',
+    category: 'architecture',
+    modelPath: '/furniture/stairsCorner.glb',
+    dimensions: { width: 1.77, height: 1.34, depth: 1.43 },
+    defaultColor: '#78350f',
+    icon: 'Layers',
+    modelType: 'stairs',
+    description: 'Cầu thang chiếu nghỉ góc vuông 90 độ'
+  },
+  {
+    id: 'stairs-open-spine',
+    name: 'Cầu Thang Xương Cá Hở Bậc',
+    category: 'architecture',
+    modelPath: '/furniture/stairsOpen.glb',
+    dimensions: { width: 1.82, height: 1.34, depth: 0.8 },
+    defaultColor: '#475569',
+    icon: 'Layers',
+    modelType: 'stairs',
+    description: 'Cầu thang kiến trúc thông thoáng hở bậc phong cách hiện đại'
+  },
+  {
+    id: 'stairs-open-single-step',
+    name: 'Bậc Thang Rời Đơn Lẻ',
+    category: 'architecture',
+    modelPath: '/furniture/stairsOpenSingle.glb',
+    dimensions: { width: 1.82, height: 1.34, depth: 0.8 },
+    defaultColor: '#64748b',
+    icon: 'Layers',
+    modelType: 'stairs',
+    description: 'Khối bậc thang ghép module rời'
+  },
+  {
+    id: 'wall-module-1m',
+    name: 'Khối Tường Module 1m',
+    category: 'architecture',
+    modelPath: '/furniture/wall.glb',
+    dimensions: { width: 1.0, height: 2.6, depth: 0.15 },
+    defaultColor: '#94a3b8',
+    icon: 'Square',
+    modelType: 'wall-block',
+    description: 'Khối tường dựng sẵn module 1m của bộ kit'
+  },
+  {
+    id: 'wall-corner-square',
+    name: 'Khối Tường Góc Vuông',
+    category: 'architecture',
+    modelPath: '/furniture/wallCorner.glb',
+    dimensions: { width: 0.55, height: 2.6, depth: 0.55 },
+    defaultColor: '#94a3b8',
+    icon: 'Square',
+    modelType: 'wall-block',
+    description: 'Khối tường góc vuông 90 độ'
+  },
+  {
+    id: 'wall-corner-round',
+    name: 'Khối Tường Góc Bo Tròn',
+    category: 'architecture',
+    modelPath: '/furniture/wallCornerRond.glb',
+    dimensions: { width: 0.55, height: 2.6, depth: 0.55 },
+    defaultColor: '#94a3b8',
+    icon: 'Square',
+    modelType: 'wall-block',
+    description: 'Khối tường góc lượn tròn mềm mại'
+  },
+  {
+    id: 'wall-doorway-single',
+    name: 'Khối Tường Khung Cửa Đơn',
+    category: 'architecture',
+    modelPath: '/furniture/wallDoorway.glb',
+    dimensions: { width: 1.0, height: 2.6, depth: 0.18 },
+    defaultColor: '#94a3b8',
+    icon: 'DoorOpen',
+    modelType: 'wall-block',
+    description: 'Khối tường đục sẵn ô cửa đi đơn'
+  },
+  {
+    id: 'wall-doorway-wide',
+    name: 'Khối Tường Khung Cửa Rộng',
+    category: 'architecture',
+    modelPath: '/furniture/wallDoorwayWide.glb',
+    dimensions: { width: 1.0, height: 2.6, depth: 0.18 },
+    defaultColor: '#94a3b8',
+    icon: 'DoorOpen',
+    modelType: 'wall-block',
+    description: 'Khối tường đục sẵn ô cửa thông phòng cỡ lớn'
+  },
+  {
+    id: 'wall-half-partition',
+    name: 'Khối Tường Lửng Vách Ngăn',
+    category: 'architecture',
+    modelPath: '/furniture/wallHalf.glb',
+    dimensions: { width: 0.5, height: 2.6, depth: 0.15 },
+    defaultColor: '#94a3b8',
+    icon: 'Square',
+    modelType: 'wall-block',
+    description: 'Khối tường lửng tạo vách ngăn ước lệ'
+  },
+  {
+    id: 'floor-modular-full',
+    name: 'Tấm Sàn Vuông Module 1x1m',
+    category: 'architecture',
+    modelPath: '/furniture/floorFull.glb',
+    dimensions: { width: 1.0, height: 0.05, depth: 1.0 },
+    defaultColor: '#cbd5e1',
+    icon: 'Layers',
+    modelType: 'floor-block',
+    description: 'Tấm sàn vuông hoàn thiện module 1m'
+  },
+  {
+    id: 'floor-modular-half',
+    name: 'Tấm Sàn Chữ Nhật Nửa Ô 0.5x1m',
+    category: 'architecture',
+    modelPath: '/furniture/floorHalf.glb',
+    dimensions: { width: 0.5, height: 0.05, depth: 1.0 },
+    defaultColor: '#cbd5e1',
+    icon: 'Layers',
+    modelType: 'floor-block',
+    description: 'Tấm sàn chữ nhật nửa ô module'
+  },
+  {
+    id: 'floor-modular-corner',
+    name: 'Tấm Sàn Góc Vuông Module',
+    category: 'architecture',
+    modelPath: '/furniture/floorCorner.glb',
+    dimensions: { width: 0.55, height: 0.05, depth: 0.55 },
+    defaultColor: '#cbd5e1',
+    icon: 'Layers',
+    modelType: 'floor-block',
+    description: 'Tấm sàn góc vuông kết thúc sàn'
+  },
+  {
+    id: 'floor-modular-round',
+    name: 'Tấm Sàn Góc Bo Tròn Module',
+    category: 'architecture',
+    modelPath: '/furniture/floorCornerRound.glb',
+    dimensions: { width: 0.55, height: 0.05, depth: 0.55 },
+    defaultColor: '#cbd5e1',
+    icon: 'Layers',
+    modelType: 'floor-block',
+    description: 'Tấm sàn góc bo tròn an toàn'
+  },
+  {
+    id: 'paneling-wood-wall',
+    name: 'Tấm Ốp Tường Lam Sóng Gỗ',
+    category: 'architecture',
+    modelPath: '/furniture/paneling.glb',
+    dimensions: { width: 0.5, height: 1.2, depth: 0.06 },
+    defaultColor: '#78350f',
+    icon: 'Maximize2',
+    modelType: 'wall-block',
+    description: 'Tấm ốp trang trí tường lam sóng phong cách Japandi'
+  },
+
 ];
