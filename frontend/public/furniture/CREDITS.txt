@@ -93,3 +93,67 @@ và loại đồ user có thể tự thêm ngoài 4 category AI cố định (TA
 - decor-mouse.glb    <- computerMouse.glb (TASK-072)
 - decor-box.glb   <- cardboardBoxClosed.glb (TASK-074)
 - decor-box-2.glb <- cardboardBoxOpen.glb (TASK-074)
+
+# Bổ sung toàn bộ các model còn lại từ bộ Kenney Furniture Kit (140/140 models):
+# Nhóm Ghế & Băng ghế:
+- benchCushion.glb
+- benchCushionLow.glb
+- chair.glb
+- chairCushion.glb
+- chairDesk.glb
+- chairModernFrameCushion.glb
+- loungeDesignChair.glb
+- loungeDesignSofaCorner.glb
+- loungeSofaLong.glb
+- loungeSofaOttoman.glb
+
+# Nhóm Bàn & Táp:
+- tableDining.glb (gốc: table.glb của Kenney kit, đổi tên để tránh trùng với table.glb hiện có vốn là tableCoffee.glb)
+- tableCoffeeGlassSquare.glb
+- tableCrossCloth.glb
+- sideTableDrawers.glb
+- cabinetBedDrawerTable.glb
+
+# Nhóm Bếp & Thiết Bị:
+- kitchenBarEnd.glb
+- kitchenCabinetCornerInner.glb
+- kitchenCabinetCornerRound.glb
+- kitchenCabinetDrawer.glb
+- kitchenCabinetUpper.glb
+- kitchenCabinetUpperCorner.glb
+- kitchenCabinetUpperDouble.glb
+- kitchenCabinetUpperLow.glb
+- kitchenFridgeBuiltIn.glb
+- kitchenFridgeLarge.glb
+- hoodLarge.glb
+
+# Nhóm Phòng Tắm & Giặt:
+- bathroomCabinetDrawer.glb
+- bathroomSinkSquare.glb
+- washerDryerStacked.glb
+
+# Nhóm Kệ & Lưu Trữ:
+- bookcaseClosedDoors.glb
+
+# Nhóm Trang Trí & Phụ Kiện:
+- coatRack.glb
+- televisionAntenna.glb
+- pillowBlueLong.glb
+- rugRounded.glb
+
+# Nhóm Cầu Thang & Kiến Trúc:
+- stairs.glb
+- stairsCorner.glb
+- stairsOpen.glb
+- stairsOpenSingle.glb
+- wall.glb
+- wallCorner.glb
+- wallCornerRond.glb
+- wallDoorway.glb
+- wallDoorwayWide.glb
+- wallHalf.glb
+- floorFull.glb
+- floorHalf.glb
+- floorCorner.glb
+- floorCornerRound.glb
+- paneling.glb
