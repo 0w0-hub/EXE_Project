@@ -32,16 +32,6 @@ export default function Login() {
           <h2>Đăng nhập</h2>
           {mockAuthEnabled && <p className="auth-mock-notice">Chế độ xem UI: email và mật khẩu bất kỳ đều được chấp nhận.</p>}
 
-          <div className="sso-row">
-            <button type="button" className="sso-btn" disabled title="Sắp ra mắt">
-              Google
-            </button>
-            <button type="button" className="sso-btn" disabled title="Sắp ra mắt">
-              Apple
-            </button>
-          </div>
-          <p className="auth-divider">Hoặc tiếp tục với email</p>
-
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label>Email</label>
