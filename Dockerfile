@@ -47,7 +47,8 @@ RUN mkdir -p /app/uploads /app/data && chmod -R 777 /app/uploads /app/data
 # Copy Nginx template and entrypoint script
 COPY docker/nginx.conf.template /etc/nginx/templates/default.conf.template
 COPY docker/entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
+# Fix Windows CRLF line endings that break bash shebangs on Linux
+RUN sed -i 's/\r$//' /app/entrypoint.sh && chmod +x /app/entrypoint.sh
 
 # Environment variables
 ENV PORT=8080

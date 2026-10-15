@@ -1,0 +1,9 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Shell scripts MUST use LF (Unix line endings) — CRLF breaks shebangs on Linux
+*.sh text eol=lf
+
+# Docker-related files
+Dockerfile text eol=lf
+docker/entrypoint.sh text eol=lf
