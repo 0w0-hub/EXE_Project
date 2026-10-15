@@ -15,5 +15,5 @@ WHERE code = 'FREE';
 
 INSERT INTO plans (id, code, name, generation_limit, created_at, monthly_price, yearly_price)
 SELECT '11111111-1111-1111-1111-111111111103', 'PLUS', 'Plus', 30,
-       unixepoch() * 1000, 49000, 29000
+       CURRENT_TIMESTAMP, 49000, 29000
 WHERE NOT EXISTS (SELECT 1 FROM plans WHERE code = 'PLUS');

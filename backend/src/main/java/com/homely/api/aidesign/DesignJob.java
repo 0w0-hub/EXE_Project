@@ -65,7 +65,6 @@ public class DesignJob {
     private String note;
 
     // 3D Decor Studio Scene JSON Data (room, wallGraph, items)
-    @Lob
     @Column(name = "scene_data", columnDefinition = "TEXT")
     private String sceneData;
 

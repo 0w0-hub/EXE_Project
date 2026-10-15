@@ -1,4 +1,4 @@
--- Homely initial schema (SQLite compatible)
+-- Homely initial schema (PostgreSQL compatible)
 
 CREATE TABLE users (
     id VARCHAR(36) NOT NULL PRIMARY KEY,

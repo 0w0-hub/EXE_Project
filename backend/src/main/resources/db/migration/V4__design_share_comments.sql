@@ -1,10 +1,10 @@
--- TASK-078: chia sẻ liên kết xem công khai + bình luận (SQLite compatible)
+-- TASK-078: chia sẻ liên kết xem công khai + bình luận (PostgreSQL compatible)
 
 CREATE TABLE design_share (
     id VARCHAR(36) NOT NULL PRIMARY KEY,
     job_id VARCHAR(36) NOT NULL,
     share_token VARCHAR(36) NOT NULL,
-    enabled INTEGER NOT NULL DEFAULT 1,
+    enabled BOOLEAN NOT NULL DEFAULT TRUE,
     created_at TIMESTAMP NOT NULL,
     CONSTRAINT uq_design_share_job UNIQUE (job_id),
     CONSTRAINT uq_design_share_token UNIQUE (share_token),

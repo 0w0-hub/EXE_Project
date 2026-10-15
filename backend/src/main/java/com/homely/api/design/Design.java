@@ -25,7 +25,6 @@ public class Design {
     @Column(name = "name", length = 255)
     private String name;
 
-    @Lob
     @Column(name = "data", nullable = false, columnDefinition = "TEXT")
     private String data;
 

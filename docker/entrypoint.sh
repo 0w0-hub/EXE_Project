@@ -6,12 +6,12 @@ export PORT=${PORT:-8080}
 export BACKEND_INTERNAL_PORT=8081
 
 echo "=================================================="
-echo " Starting Homely Service on Render (SQLite)"
+echo " Starting Homely Service on Render (PostgreSQL)"
 echo " Public Port (Nginx): ${PORT}"
 echo " Internal Backend Port: ${BACKEND_INTERNAL_PORT}"
 echo "=================================================="
 
-# Ensure directories exist with proper write permissions for SQLite and uploads
+# Ensure directories exist with proper write permissions for uploads and temp files
 mkdir -p /run/nginx /var/log/nginx /etc/nginx/http.d /app/data /app/uploads
 chmod -R 777 /app/data /app/uploads
 

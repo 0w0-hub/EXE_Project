@@ -6,11 +6,12 @@ spring:
     name: homely-backend
 
   datasource:
-    url: ${DB_URL:jdbc:sqlite:./data/homely.db?date_class=integer&busy_timeout=30000}
-    driver-class-name: org.sqlite.JDBC
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/homely}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
 
   jpa:
-    database-platform: org.hibernate.community.dialect.SQLiteDialect
     hibernate:
       ddl-auto: none
     open-in-view: false
