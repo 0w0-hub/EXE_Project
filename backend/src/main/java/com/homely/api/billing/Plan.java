@@ -1,11 +1,14 @@
 package com.homely.api.billing;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -36,4 +39,8 @@ public class Plan {
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt = Instant.now();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "plan", fetch = FetchType.LAZY)
+    private List<Subscription> subscriptions = new ArrayList<>();
 }

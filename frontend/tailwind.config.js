@@ -2,6 +2,7 @@
 export default {
   content: [
     "./src/features/3d-decor/**/*.{js,jsx}",
+    "./src/features/model-manager/**/*.{js,jsx}",
     "./src/pages/DesignResult.jsx",
   ],
   corePlugins: {

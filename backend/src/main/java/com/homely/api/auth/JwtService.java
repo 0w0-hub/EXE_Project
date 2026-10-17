@@ -15,7 +15,7 @@ import java.util.UUID;
  * Sinh & validate JWT access/refresh token — xem rules/security/authentication.md.
  */
 @Service
-public class JwtService {
+public class  JwtService {
 
     private final SecretKey key;
     private final long accessTokenExpirationMs;

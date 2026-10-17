@@ -54,6 +54,9 @@ export default function AdminDashboard() {
         <NavLink to="/admin/explorer" className="secondary" style={{ padding: '8px 16px', borderRadius: 'var(--radius-pill)' }}>
            Tra cứu dữ liệu
         </NavLink>
+        <NavLink to="/admin/models" className="secondary" style={{ padding: '8px 16px', borderRadius: 'var(--radius-pill)', background: 'var(--color-primary-tint, rgba(245,158,11,0.15))', borderColor: 'var(--color-primary, #f59e0b)' }}>
+           Kho mô hình 3D
+        </NavLink>
         {/* TASK-111: coordinator nối dây — cùng lý do TASK-104. */}
         <NavLink to="/admin/integrity" className="secondary" style={{ padding: '8px 16px', borderRadius: 'var(--radius-pill)' }}>
            Kiểm tra dữ liệu

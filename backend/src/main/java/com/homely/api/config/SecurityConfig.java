@@ -68,6 +68,7 @@ public class SecurityConfig {
                         ).permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/plans").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/templates/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/models/**").permitAll()
                         // TASK-078: trang chia sẻ liên kết công khai (view-only) + bình luận — không cần đăng nhập.
                         .requestMatchers("/api/v1/public/**").permitAll()
                         // Defense-in-depth: dù đã có @PreAuthorize trên từng method admin,

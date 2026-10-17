@@ -38,15 +38,64 @@ export const useEditorStore = create((set) => ({
   currentDesignId: null,
   currentDesignName: 'Thiết kế phòng mới',
 
+  // Bộ lọc danh mục mô hình (Style & Tier)
+  catalogStyleFilter: 'all', // 'all' | 'stylized' | 'realistic'
+  catalogTierFilter: 'all',  // 'all' | 'free' | 'premium'
+  setCatalogStyleFilter: (style) => set({ catalogStyleFilter: style }),
+  setCatalogTierFilter: (tier) => set({ catalogTierFilter: tier }),
+
+  // Modal thông báo mô hình cao cấp PRO
+  isPremiumModalOpen: false,
+  pendingPremiumItem: null,
+  openPremiumModal: (item) => set({ isPremiumModalOpen: true, pendingPremiumItem: item }),
+  closePremiumModal: () => set({ isPremiumModalOpen: false, pendingPremiumItem: null }),
+
+  // Gói tài khoản người dùng: 'FREE' | 'PLUS' | 'STUDIO'
+  // BẢO MẬT: Trên Production (import.meta.env.PROD), tuyệt đối KHÔNG đọc từ URL params hay localStorage
+  // để tránh lỗ hổng bypass. Chỉ cho phép mock ở chế độ Development (import.meta.env.DEV).
+  userPlan: (() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const isDev = import.meta.env.DEV;
+        if (isDev) {
+          const params = new URLSearchParams(window.location.search);
+          const planParam = params.get('plan');
+          if (planParam && ['free', 'plus', 'studio'].includes(planParam.toLowerCase())) {
+            return planParam.toUpperCase();
+          }
+          const storedPlan = localStorage.getItem('homely_plan');
+          if (storedPlan) return storedPlan.toUpperCase();
+        }
+      } catch {
+        // ignore
+      }
+    }
+    return 'FREE';
+  })(),
+  setUserPlan: (plan) => {
+    const safePlan = (plan || 'FREE').toUpperCase();
+    if (typeof window !== 'undefined' && import.meta.env.DEV) {
+      try {
+        localStorage.setItem('homely_plan', safePlan);
+      } catch {
+        // ignore
+      }
+    }
+    set({ userPlan: safePlan });
+  },
+
   // Phân quyền người dùng: 'user' (mặc định) hoặc 'admin' (quản trị viên)
-  // Hỗ trợ cấu hình qua URL (?role=admin hoặc ?admin=true) hoặc localStorage('homely_role')
+  // BẢO MẬT: Trên Production, bắt buộc đồng bộ từ AuthContext/JWT, không đọc từ URL/localStorage
   userRole: (() => {
     if (typeof window !== 'undefined') {
       try {
-        const params = new URLSearchParams(window.location.search);
-        if (params.get('role') === 'admin' || params.get('admin') === 'true') return 'admin';
-        const stored = localStorage.getItem('homely_role');
-        if (stored) return stored;
+        const isDev = import.meta.env.DEV;
+        if (isDev) {
+          const params = new URLSearchParams(window.location.search);
+          if (params.get('role') === 'admin' || params.get('admin') === 'true') return 'admin';
+          const stored = localStorage.getItem('homely_role');
+          if (stored) return stored;
+        }
       } catch {
         // ignore
       }
@@ -54,7 +103,7 @@ export const useEditorStore = create((set) => ({
     return 'user';
   })(),
   setUserRole: (role) => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && import.meta.env.DEV) {
       try {
         localStorage.setItem('homely_role', role);
       } catch {

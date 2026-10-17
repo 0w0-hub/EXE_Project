@@ -11,6 +11,8 @@ import com.homely.api.room.Room;
 import com.homely.api.room.RoomRepository;
 import com.homely.api.user.User;
 import com.homely.api.user.UserRepository;
+import com.homely.api.model.FurnitureModelRepository;
+import com.homely.api.model.ModelCollectionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -32,6 +34,8 @@ public class DataInitializer implements CommandLineRunner {
     private final DesignJobRepository jobRepository;
     private final RoomRepository roomRepository;
     private final DesignStudioService designStudioService;
+    private final FurnitureModelRepository furnitureModelRepository;
+    private final ModelCollectionRepository modelCollectionRepository;
 
     public DataInitializer(UserRepository userRepository,
                            PasswordEncoder passwordEncoder,
@@ -39,7 +43,9 @@ public class DataInitializer implements CommandLineRunner {
                            SubscriptionRepository subscriptionRepository,
                            DesignJobRepository jobRepository,
                            RoomRepository roomRepository,
-                           DesignStudioService designStudioService) {
+                           DesignStudioService designStudioService,
+                           FurnitureModelRepository furnitureModelRepository,
+                           ModelCollectionRepository modelCollectionRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.planRepository = planRepository;
@@ -47,6 +53,8 @@ public class DataInitializer implements CommandLineRunner {
         this.jobRepository = jobRepository;
         this.roomRepository = roomRepository;
         this.designStudioService = designStudioService;
+        this.furnitureModelRepository = furnitureModelRepository;
+        this.modelCollectionRepository = modelCollectionRepository;
     }
 
     @Override
@@ -68,7 +76,7 @@ public class DataInitializer implements CommandLineRunner {
             if (proPlan != null && subscriptionRepository.findByUserId(admin.getId()).isEmpty()) {
                 Subscription sub = new Subscription();
                 sub.setUserId(admin.getId());
-                sub.setPlanId(proPlan.getId());
+                sub.setPlan(proPlan);
                 sub.setStatus("ACTIVE");
                 subscriptionRepository.save(sub);
             }
@@ -91,5 +99,12 @@ public class DataInitializer implements CommandLineRunner {
             }
             log.info("Successfully converted {} legacy room design jobs to 3D Decor Studio scene JSON format", legacyJobs.size());
         }
+
+        // 3. Ghi nhận tình trạng kho mô hình 3D Decor Studio trong CSDL
+        long totalModels = furnitureModelRepository.count();
+        long realisticModels = furnitureModelRepository.findByCollectionIdAndStatusOrderBySortOrderAsc("col-modern-realistic", "ACTIVE").size();
+        long stylizedModels = furnitureModelRepository.findByCollectionIdAndStatusOrderBySortOrderAsc("col-stylized-kenney", "ACTIVE").size();
+        log.info("Homely 3D Furniture Models Status: {} total models in DB (Realistic PBR: {}, Stylized Kenney: {})",
+                totalModels, realisticModels, stylizedModels);
     }
 }

@@ -5,6 +5,7 @@ import { TopBar } from './features/editor-ui/TopBar';
 import { CatalogDrawer } from './features/editor-ui/CatalogDrawer';
 import { InspectorPanel } from './features/editor-ui/InspectorPanel';
 import { RoomSettingsModal } from './features/editor-ui/RoomSettingsModal';
+import { PremiumModelModal } from './features/editor-ui/PremiumModelModal';
 import { SaveDesignModal } from './features/editor-ui/SaveDesignModal';
 import { SavedDesignsModal } from './features/editor-ui/SavedDesignsModal';
 import { useSceneStore } from './stores/useSceneStore';
@@ -112,6 +113,9 @@ export default function App({ onSaveSuccess, onLoadDesign }) {
 
       {/* 5. Hộp thoại cài đặt kích thước phòng */}
       <RoomSettingsModal />
+
+      {/* 5.1. Hộp thoại thông báo mô hình cao cấp PRO */}
+      <PremiumModelModal />
 
       {/* 5b. Hộp thoại lưu thiết kế vào Database */}
       <SaveDesignModal onSaveSuccess={onSaveSuccess} />

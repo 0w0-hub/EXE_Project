@@ -43,7 +43,7 @@ public class BillingService {
                 .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "PLAN_NOT_FOUND", "Gói FREE chưa được seed"));
         Subscription subscription = new Subscription();
         subscription.setUserId(userId);
-        subscription.setPlanId(freePlan.getId());
+        subscription.setPlan(freePlan);
         subscriptionRepository.save(subscription);
     }
 
@@ -56,21 +56,16 @@ public class BillingService {
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "SUBSCRIPTION_NOT_FOUND", "Không tìm thấy gói của user"));
     }
 
-    private Plan getPlan(UUID planId) {
-        return planRepository.findById(planId)
-                .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "PLAN_NOT_FOUND", "Plan không tồn tại"));
-    }
-
     public SubscriptionResponse getSubscriptionResponse(UUID userId) {
         Subscription sub = getSubscription(userId);
-        Plan plan = getPlan(sub.getPlanId());
+        Plan plan = sub.getPlan();
         return new SubscriptionResponse(sub.getId(), plan.getCode(), plan.getName(), sub.getStatus(), sub.getCreatedAt());
     }
 
     /** used: số design job của user trong tháng hiện tại, do module aidesign tính và truyền vào. */
     public void checkUsageLimit(UUID ownerId, long used) {
         Subscription sub = getSubscription(ownerId);
-        Plan plan = getPlan(sub.getPlanId());
+        Plan plan = sub.getPlan();
         Integer limit = plan.getGenerationLimit();
         if (limit != null && used >= limit) {
             throw new ApiException(HttpStatus.FORBIDDEN, "USAGE_LIMIT_EXCEEDED",
@@ -80,7 +75,7 @@ public class BillingService {
 
     public UsageResponse buildUsageResponse(UUID ownerId, long used) {
         Subscription sub = getSubscription(ownerId);
-        Plan plan = getPlan(sub.getPlanId());
+        Plan plan = sub.getPlan();
         Integer limit = plan.getGenerationLimit();
         Integer remaining = limit != null ? Math.max(0, limit - (int) used) : null;
         LocalDate now = LocalDate.now(ZoneOffset.UTC);

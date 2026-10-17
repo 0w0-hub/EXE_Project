@@ -20,6 +20,7 @@ import AdminDesigns from './pages/admin/AdminDesigns'
 import AdminModeration from './pages/admin/AdminModeration'
 import AdminDataExplorer from './pages/admin/AdminDataExplorer'
 import AdminDataIntegrity from './pages/admin/AdminDataIntegrity'
+import AdminModelManager from './pages/admin/AdminModelManager'
 import SharedDesign from './pages/SharedDesign'
 import ChangePassword from './pages/ChangePassword'
 import ExportData from './pages/ExportData'
@@ -64,6 +65,7 @@ function RouteScrollReset() {
 export default function App() {
   const location = useLocation()
   const isStudioRoute = location.pathname.startsWith('/designs') && !location.pathname.endsWith('/summary')
+  const isFullBleedRoute = isStudioRoute || location.pathname.startsWith('/admin/models')
   const isSoftRedPage = ['/templates', '/projects', '/plans'].includes(location.pathname)
     || location.pathname.startsWith('/subscribe/')
 
@@ -71,7 +73,7 @@ export default function App() {
     <div className={isSoftRedPage ? 'page-soft-red-shell' : undefined}>
       <RouteScrollReset />
       <NavBar />
-      <main className={`${isStudioRoute ? 'studio-main-container' : 'container'}${isSoftRedPage ? ' page-soft-red' : ''}`}>
+      <main className={`${isFullBleedRoute ? 'studio-main-container' : 'container'}${isSoftRedPage ? ' page-soft-red' : ''}`}>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -229,6 +231,14 @@ export default function App() {
             element={
               <AdminRoute>
                 <AdminDesigns />
+              </AdminRoute>
+            }
+          />
+          <Route
+            path="/admin/models"
+            element={
+              <AdminRoute>
+                <AdminModelManager />
               </AdminRoute>
             }
           />

@@ -6,7 +6,9 @@ import com.homely.api.aidesign.DesignJob;
 import com.homely.api.aidesign.DesignJobRepository;
 import com.homely.api.aidesign.DesignResult;
 import com.homely.api.aidesign.DesignResultRepository;
+import com.homely.api.billing.SubscriptionRepository;
 import com.homely.api.common.ApiException;
+import com.homely.api.common.CurrentUser;
 import com.homely.api.design.dto.DesignResponse;
 import com.homely.api.design.dto.DesignSummaryResponse;
 import com.homely.api.design.dto.SaveDesignRequest;
@@ -33,15 +35,18 @@ public class DesignStudioService {
     private final DesignJobRepository jobRepository;
     private final RoomRepository roomRepository;
     private final DesignResultRepository resultRepository;
+    private final SubscriptionRepository subscriptionRepository;
     private final ObjectMapper objectMapper;
 
     public DesignStudioService(DesignJobRepository jobRepository,
                                RoomRepository roomRepository,
                                DesignResultRepository resultRepository,
+                               SubscriptionRepository subscriptionRepository,
                                ObjectMapper objectMapper) {
         this.jobRepository = jobRepository;
         this.roomRepository = roomRepository;
         this.resultRepository = resultRepository;
+        this.subscriptionRepository = subscriptionRepository;
         this.objectMapper = objectMapper;
     }
 
@@ -52,6 +57,8 @@ public class DesignStudioService {
      */
     @Transactional
     public DesignResponse saveOrUpdate(UUID userId, SaveDesignRequest request) {
+        validateModelAccess(userId, request.data());
+
         String designName = (request.name() != null && !request.name().trim().isEmpty())
                 ? request.name().trim()
                 : "Phòng 3D " + LocalDate.now();
@@ -203,6 +210,23 @@ public class DesignStudioService {
             log.warn("Could not parse room dimensions from json: {}", e.getMessage());
         }
         return new double[]{4.0, 5.0};
+    }
+
+    private void validateModelAccess(UUID userId, String sceneDataJson) {
+        if (CurrentUser.isAdmin()) {
+            return; // Admin có toàn quyền
+        }
+        if (sceneDataJson == null || (!sceneDataJson.contains("/furniture/realistic/") && !sceneDataJson.contains("\"tier\":\"premium\""))) {
+            return; // Bản vẽ chỉ chứa đồ miễn phí / stylized
+        }
+        String planCode = subscriptionRepository.findByUserId(userId)
+                .map(sub -> (sub.getPlan() != null && sub.getPlan().getCode() != null) ? sub.getPlan().getCode() : "FREE")
+                .orElse("FREE");
+
+        if (!"PLUS".equalsIgnoreCase(planCode) && !"STUDIO".equalsIgnoreCase(planCode)) {
+            throw new ApiException(HttpStatus.FORBIDDEN, "PLAN_UPGRADE_REQUIRED",
+                    "Bản thiết kế chứa mô hình 3D cao cấp (PRO). Vui lòng nâng cấp lên gói PLUS hoặc STUDIO để lưu thiết kế.");
+        }
     }
 
     private DesignResponse toResponse(DesignJob job) {

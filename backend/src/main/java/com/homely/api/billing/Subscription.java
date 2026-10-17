@@ -22,8 +22,13 @@ public class Subscription {
     @Column(name = "user_id", nullable = false)
     private UUID userId;
 
-    @Column(name = "plan_id", nullable = false)
-    private UUID planId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "plan_id", nullable = false)
+    private Plan plan;
+
+    public UUID getPlanId() {
+        return plan != null ? plan.getId() : null;
+    }
 
     @Column(nullable = false, length = 20)
     private String status = "ACTIVE";
