@@ -1,6 +1,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
+import { Bell } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { notificationApi } from '../services/api'
 import useEscapeKey from '../hooks/useEscapeKey'
@@ -184,7 +185,7 @@ function NotificationBell({ navigate }) {
         aria-haspopup="true"
         aria-expanded={open}
       >
-        <span className="notification-bell__icon" aria-hidden="true">🔔</span>
+        <Bell className="notification-bell__icon" aria-hidden="true" />
         {unreadCount > 0 && (
           <span className="notification-bell__badge">{unreadCount > 9 ? '9+' : unreadCount}</span>
         )}
