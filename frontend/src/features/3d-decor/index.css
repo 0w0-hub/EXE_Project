@@ -156,6 +156,10 @@
 .decor-studio-root [class~="bg-blue-700"] [class*="text-"],
 .decor-studio-root [class*="bg-red-"] [class*="text-"],
 .decor-studio-root [class*="bg-rose-"] [class*="text-"],
+.decor-studio-root aside [class*="bg-rose-"] {
+  color: #ffffff !important;
+}
+
 .decor-studio-root button[class~="bg-blue-600"],
 .decor-studio-root button[class~="bg-blue-700"],
 .decor-studio-root button[class*="bg-red-"],
@@ -191,6 +195,20 @@
   background-color: #d32f2f !important;
 }
 
+/* Keep text white in the red property tiles in the object inspector. */
+.decor-studio-root aside [class*="bg-slate-700"],
+.decor-studio-root aside [class*="bg-slate-800"],
+.decor-studio-root aside [class*="bg-slate-700"] [class*="text-"],
+.decor-studio-root aside [class*="bg-slate-800"] [class*="text-"],
+.decor-studio-root aside input[type="number"] {
+  color: #ffffff !important;
+}
+
+.decor-studio-root .object-inspector .inspector-red-tile,
+.decor-studio-root .object-inspector .inspector-red-tile * {
+  color: #ffffff !important;
+}
+
 .decor-studio-root svg {
   color: #ffffff !important;
 }
@@ -222,4 +240,16 @@
 
 .decor-studio-root .catalog-product-card .catalog-product-add-button svg {
   color: #111111 !important;
+}
+
+/* Collision notice heading and item names use dark text on the pale alert surface. */
+.decor-studio-root .object-inspector .collision-warning-heading,
+.decor-studio-root .object-inspector .collision-warning-heading span,
+.decor-studio-root .object-inspector .collision-warning-description {
+  color: #111111 !important;
+}
+
+.decor-studio-root .object-inspector button.collision-item-button,
+.decor-studio-root .object-inspector button.collision-item-button:hover {
+  color: #ffffff !important;
 }

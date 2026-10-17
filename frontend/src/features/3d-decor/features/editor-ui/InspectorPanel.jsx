@@ -620,7 +620,7 @@ export function InspectorPanel() {
   };
 
   return (
-    <div className="absolute top-20 right-4 w-80 z-20 bg-slate-900/95 backdrop-blur-xl border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in slide-in-from-right duration-200">
+    <div className="object-inspector absolute top-20 right-4 w-80 z-20 bg-slate-900/95 backdrop-blur-xl border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in slide-in-from-right duration-200">
       {/* Header */}
       <div className="p-3.5 border-b border-slate-800 flex items-center justify-between">
         <div>
@@ -642,7 +642,7 @@ export function InspectorPanel() {
         {/* Khối cảnh báo va chạm hiển thị rõ ràng thông tin các vật thể va chạm */}
         {hasCollision && (
           <div className="p-3 bg-rose-500/15 border border-rose-500/40 rounded-xl text-xs space-y-2">
-            <div className="flex items-center gap-2 text-rose-300 font-semibold">
+            <div className="collision-warning-heading flex items-center gap-2 text-rose-300 font-semibold">
               <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0" />
               <span>Đang va chạm với ({collidingItems.length} món):</span>
             </div>
@@ -653,7 +653,7 @@ export function InspectorPanel() {
                 <button
                   key={cItem.instanceId}
                   onClick={() => selectItem(cItem.instanceId)}
-                  className="px-2 py-0.5 bg-rose-900/60 hover:bg-rose-800 text-rose-200 border border-rose-700/60 rounded text-[11px] font-medium transition-colors"
+                  className="collision-item-button px-2 py-0.5 bg-rose-900/60 hover:bg-rose-800 text-rose-200 border border-rose-700/60 rounded text-[11px] font-medium transition-colors"
                   title="Nhấp để chuyển sang chọn món này"
                 >
                   {cItem.name} ↗
@@ -661,7 +661,7 @@ export function InspectorPanel() {
               ))}
             </div>
 
-            <p className="text-[11px] text-rose-300/80 pl-6">
+            <p className="collision-warning-description text-[11px] text-rose-300/80 pl-6">
               Các món bị va chạm đang hiển thị hộp bao viền đỏ trên màn hình 3D.
             </p>
 
@@ -732,15 +732,15 @@ export function InspectorPanel() {
             <span>Kích thước thật (Dài × Sâu × Cao)</span>
           </div>
           <div className="grid grid-cols-3 gap-2">
-            <div className="bg-slate-800/80 border border-slate-700 rounded-lg p-1.5 text-center">
+            <div className="inspector-red-tile bg-slate-800/80 border border-slate-700 rounded-lg p-1.5 text-center">
               <span className="text-[10px] text-slate-400 block">Dài (X)</span>
               <span className="text-xs font-semibold text-white">{dimensions.width}m</span>
             </div>
-            <div className="bg-slate-800/80 border border-slate-700 rounded-lg p-1.5 text-center">
+            <div className="inspector-red-tile bg-slate-800/80 border border-slate-700 rounded-lg p-1.5 text-center">
               <span className="text-[10px] text-slate-400 block">Sâu (Z)</span>
               <span className="text-xs font-semibold text-white">{dimensions.depth}m</span>
             </div>
-            <div className="bg-slate-800/80 border border-slate-700 rounded-lg p-1.5 text-center">
+            <div className="inspector-red-tile bg-slate-800/80 border border-slate-700 rounded-lg p-1.5 text-center">
               <span className="text-[10px] text-slate-400 block">Cao (Y)</span>
               <span className="text-xs font-semibold text-white">{dimensions.height}m</span>
             </div>
@@ -755,11 +755,11 @@ export function InspectorPanel() {
               <span>Khoảng cách tới tường</span>
             </div>
             <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="bg-slate-800/60 border border-slate-700/60 px-2.5 py-1.5 rounded-lg flex justify-between">
+              <div className="inspector-red-tile bg-slate-800/60 border border-slate-700/60 px-2.5 py-1.5 rounded-lg flex justify-between">
                 <span className="text-slate-400 text-[11px]">Tường sau:</span>
                 <span className="font-semibold text-blue-300 font-mono">{wallDist.backWall}m</span>
               </div>
-              <div className="bg-slate-800/60 border border-slate-700/60 px-2.5 py-1.5 rounded-lg flex justify-between">
+              <div className="inspector-red-tile bg-slate-800/60 border border-slate-700/60 px-2.5 py-1.5 rounded-lg flex justify-between">
                 <span className="text-slate-400 text-[11px]">Tường trái:</span>
                 <span className="font-semibold text-blue-300 font-mono">{wallDist.leftWall}m</span>
               </div>
@@ -909,7 +909,7 @@ export function InspectorPanel() {
                     step="0.1"
                     value={position[0].toFixed(2)}
                     onChange={(e) => handlePositionChange(0, e.target.value)}
-                    className="w-full bg-slate-800 border border-slate-700 rounded-lg px-2 py-1.5 text-xs text-white focus:outline-none focus:border-blue-500 font-mono text-center"
+                    className="inspector-red-tile w-full bg-slate-800 border border-slate-700 rounded-lg px-2 py-1.5 text-xs text-white focus:outline-none focus:border-blue-500 font-mono text-center"
                   />
                 </div>
                 <div>
@@ -919,7 +919,7 @@ export function InspectorPanel() {
                     step="0.05"
                     value={position[1].toFixed(2)}
                     onChange={(e) => handlePositionChange(1, e.target.value)}
-                    className={`w-full bg-slate-800 border rounded-lg px-2 py-1.5 text-xs font-mono text-center focus:outline-none ${
+                    className={`inspector-red-tile w-full bg-slate-800 border rounded-lg px-2 py-1.5 text-xs font-mono text-center focus:outline-none ${
                       position[1] > 0
                         ? 'border-cyan-500/60 text-cyan-300 font-bold'
                         : 'border-slate-700 text-slate-300'
@@ -933,7 +933,7 @@ export function InspectorPanel() {
                     step="0.1"
                     value={position[2].toFixed(2)}
                     onChange={(e) => handlePositionChange(2, e.target.value)}
-                    className="w-full bg-slate-800 border border-slate-700 rounded-lg px-2 py-1.5 text-xs text-white focus:outline-none focus:border-blue-500 font-mono text-center"
+                    className="inspector-red-tile w-full bg-slate-800 border border-slate-700 rounded-lg px-2 py-1.5 text-xs text-white focus:outline-none focus:border-blue-500 font-mono text-center"
                   />
                 </div>
               </div>
