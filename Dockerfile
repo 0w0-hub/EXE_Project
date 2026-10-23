@@ -1,7 +1,7 @@
 # ============================================================
-# Homely — Unified Full-Stack Dockerfile for Render
-# Runs React (Vite) via Nginx and Spring Boot (Java 21 + SQLite)
-# All-in-One: 1 single free Web Service container on Render.
+# Homely — Unified Full-Stack Dockerfile for Fly.io / Render
+# Runs React (Vite) via Nginx and Spring Boot (Java 21 + PostgreSQL)
+# All-in-One: 1 single Web Service container.
 # ============================================================
 
 # ---- Stage 1: Build Frontend ----
@@ -24,8 +24,9 @@ COPY backend/pom.xml .
 RUN mvn -B -q dependency:go-offline
 
 COPY backend/src ./src
-COPY backend/data ./data
-RUN mvn -B -q clean package -DskipTests
+# Chạy hoàn thành test suite trước; nếu test fail thì dừng build ngay tại đây
+RUN mvn -B test
+RUN mvn -B -q package -DskipTests
 
 # ---- Stage 3: Runtime Container ----
 FROM eclipse-temurin:21-jre-alpine
@@ -37,12 +38,11 @@ WORKDIR /app
 # Copy built frontend assets to Nginx html directory
 COPY --from=frontend-builder /app/frontend/dist /usr/share/nginx/html
 
-# Copy built backend jar & initial database
+# Copy built backend jar
 COPY --from=backend-builder /app/backend/target/homely-backend.jar /app/app.jar
-COPY --from=backend-builder /app/backend/data /app/data
 
-# Ensure data and uploads directories have full write permissions
-RUN mkdir -p /app/uploads /app/data && chmod -R 777 /app/uploads /app/data
+# Ensure uploads directory has full write permissions
+RUN mkdir -p /app/uploads && chmod -R 777 /app/uploads
 
 # Copy Nginx template and entrypoint script
 COPY docker/nginx.conf.template /etc/nginx/templates/default.conf.template

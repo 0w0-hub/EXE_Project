@@ -10,6 +10,13 @@ rules/
 logs/
 infrastructure/ci-cd/
 
+# Database files & directories
+*.db
+*.sqlite
+*.sqlite3
+data/
+backend/data/
+
 # Backend ignores
 backend/target/
 backend/.mvn/

@@ -1,19 +1,19 @@
 #!/bin/bash
 set -e
 
-# Default PORT provided by Render, fallback to 8080
+# Default PORT provided by Render / Fly.io, fallback to 8080
 export PORT=${PORT:-8080}
 export BACKEND_INTERNAL_PORT=8081
 
 echo "=================================================="
-echo " Starting Homely Service on Render (PostgreSQL)"
+echo " Starting Homely Service (PostgreSQL)"
 echo " Public Port (Nginx): ${PORT}"
 echo " Internal Backend Port: ${BACKEND_INTERNAL_PORT}"
 echo "=================================================="
 
 # Ensure directories exist with proper write permissions for uploads and temp files
-mkdir -p /run/nginx /var/log/nginx /etc/nginx/http.d /app/data /app/uploads
-chmod -R 777 /app/data /app/uploads
+mkdir -p /run/nginx /var/log/nginx /etc/nginx/http.d /app/uploads
+chmod -R 777 /app/uploads
 
 # Generate Nginx configuration from template
 envsubst '${PORT} ${BACKEND_INTERNAL_PORT}' < /etc/nginx/templates/default.conf.template > /etc/nginx/http.d/default.conf
