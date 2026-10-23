@@ -1,0 +1,26 @@
+services:
+  # ============================================================
+  # Homely All-in-One Full-Stack Web Service on Render
+  # React (Nginx) + Spring Boot (Java 21) + PostgreSQL Database
+  # ============================================================
+  - type: web
+    name: homely-app
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    region: singapore # or oregon / frankfurt
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true # Render automatically generates a secure 64-char key
+      - key: AI_PROVIDER
+        value: mock
+      - key: REPLICATE_API_KEY
+        sync: false
+      - key: DB_URL
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: JAVA_OPTS
+        value: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"

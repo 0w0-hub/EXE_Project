@@ -1,0 +1,255 @@
+@tailwind components;
+@tailwind utilities;
+
+.decor-studio-root {
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, sans-serif;
+  color: #111111;
+}
+
+.decor-studio-root * {
+  box-sizing: border-box;
+}
+
+/* Small controls stay separated even when their Tailwind parent has no gap. */
+.decor-studio-root button {
+  margin: 2px;
+}
+
+/* Saved designs search icon */
+.decor-studio-root .saved-designs-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  display: block;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* Catalog search icon */
+.decor-studio-root .catalog-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  display: block;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* Catalog search input */
+.decor-studio-root .catalog-search-input {
+  color: #352326 !important;
+  background-color: #f1e7e8 !important;
+  padding-left: 36px !important;
+  min-height: 36px;
+}
+
+.decor-studio-root .catalog-search-input::placeholder {
+  color: #655358 !important;
+  opacity: 1;
+}
+
+/* Slate controls */
+.decor-studio-root input[class*="bg-slate-"],
+.decor-studio-root button[class*="bg-slate-"] {
+  background-color: #d32f2f !important;
+  color: #ffffff !important;
+}
+
+.decor-studio-root span[class*="bg-slate-700"],
+.decor-studio-root span[class*="bg-slate-800"] {
+  background-color: #d32f2f !important;
+  color: #ffffff !important;
+}
+
+/* Keep studio icons white on the red controls and tiles. */
+.decor-studio-root button svg {
+  color: #ffffff !important;
+}
+
+/* Hover labels and icons should dim to gray, including children of hovered buttons. */
+.decor-studio-root button:hover,
+.decor-studio-root button:hover [class*="text-"],
+.decor-studio-root button:hover svg {
+  color: #9ca3af !important;
+}
+
+.decor-studio-root button:hover[class*="hover:bg-slate-"] {
+  background-color: #b42332 !important;
+}
+
+/* Homely studio skin: soft red surfaces and stronger red outlines. */
+.decor-studio-root [class*="bg-slate-950"] {
+  background-color: #ffeded !important;
+}
+
+.decor-studio-root [class*="bg-slate-900"],
+.decor-studio-root [class*="bg-slate-800"] {
+  background-color: #ffe3e5 !important;
+}
+
+.decor-studio-root [class*="border-slate-"] {
+  border-color: #b42332 !important;
+}
+
+.decor-studio-root [class*="bg-blue-"] {
+  background-color: #ffdcdf !important;
+}
+
+.decor-studio-root [class~="bg-blue-600"],
+.decor-studio-root [class~="bg-blue-700"] {
+  background-color: #d32f2f !important;
+}
+
+.decor-studio-root [class*="border-blue-"] {
+  border-color: #b42332 !important;
+}
+
+.decor-studio-root [class*="text-blue-"] {
+  color: #b42332 !important;
+}
+
+.decor-studio-root [class*="text-slate-100"],
+.decor-studio-root [class*="text-slate-200"],
+.decor-studio-root [class*="text-slate-300"],
+.decor-studio-root [class*="text-slate-400"] {
+  color: #554246 !important;
+}
+
+.decor-studio-root h1.text-white,
+.decor-studio-root h2.text-white,
+.decor-studio-root h3.text-white,
+.decor-studio-root h4.text-white {
+  color: #352326 !important;
+}
+
+.decor-studio-root [class*="shadow-blue-"] {
+  --tw-shadow-color: rgb(211 47 47 / 25%) !important;
+}
+
+.decor-studio-root button:hover[class*="hover:bg-slate-"] {
+  background-color: #ffe2e4 !important;
+}
+
+.decor-studio-root button:hover[class*="hover:bg-blue-"] {
+  background-color: #b42332 !important;
+}
+
+/* Daylight editor controls use dark text for contrast. */
+.decor-studio-root [class*="text-"] {
+  color: #111111 !important;
+}
+
+.decor-studio-root input,
+.decor-studio-root select,
+.decor-studio-root textarea {
+  color: #111111 !important;
+}
+
+/* Keep white labels on active colored controls. */
+.decor-studio-root [class~="bg-blue-600"] [class*="text-"],
+.decor-studio-root [class~="bg-blue-700"] [class*="text-"],
+.decor-studio-root [class*="bg-red-"] [class*="text-"],
+.decor-studio-root [class*="bg-rose-"] [class*="text-"],
+.decor-studio-root aside [class*="bg-rose-"] {
+  color: #ffffff !important;
+}
+
+.decor-studio-root button[class~="bg-blue-600"],
+.decor-studio-root button[class~="bg-blue-700"],
+.decor-studio-root button[class*="bg-red-"],
+.decor-studio-root button[class*="bg-rose-"] {
+  color: #ffffff !important;
+}
+
+/* Preserve catalog search colors. */
+.decor-studio-root input.catalog-search-input {
+  color: #352326 !important;
+  background-color: #f1e7e8 !important;
+}
+
+.decor-studio-root input.catalog-search-input::placeholder {
+  color: #655358 !important;
+  opacity: 1;
+}
+
+/* New design button */
+.decor-studio-root button.saved-designs-new-button {
+  background-color: #c43a48 !important;
+  border-color: #b42332 !important;
+  color: #ffffff !important;
+}
+
+.decor-studio-root button.saved-designs-new-button:hover[class*="hover:bg-blue-"] {
+  background-color: #a82030 !important;
+}
+
+/* Final studio overrides: slate tiles were still getting the earlier pale-surface rule. */
+.decor-studio-root [class*="bg-slate-700"],
+.decor-studio-root [class*="bg-slate-800"] {
+  background-color: #d32f2f !important;
+}
+
+/* Keep text white in the red property tiles in the object inspector. */
+.decor-studio-root aside [class*="bg-slate-700"],
+.decor-studio-root aside [class*="bg-slate-800"],
+.decor-studio-root aside [class*="bg-slate-700"] [class*="text-"],
+.decor-studio-root aside [class*="bg-slate-800"] [class*="text-"],
+.decor-studio-root aside input[type="number"] {
+  color: #ffffff !important;
+}
+
+.decor-studio-root .object-inspector .inspector-red-tile,
+.decor-studio-root .object-inspector .inspector-red-tile * {
+  color: #ffffff !important;
+}
+
+.decor-studio-root svg {
+  color: #ffffff !important;
+}
+
+/* TopBar controls: beat the generic [class*="text-"] dark-text rule above. */
+.decor-studio-root header button[title] svg,
+.decor-studio-root header button[title] span {
+  color: #ffffff !important;
+}
+
+.decor-studio-root header button[title]:hover,
+.decor-studio-root header button[title]:hover svg,
+.decor-studio-root header button[title]:hover span {
+  color: #9ca3af !important;
+}
+
+.decor-studio-root header button[title]:hover[class*="hover:bg-slate-"] {
+  background-color: #b42332 !important;
+}
+
+/* Catalog product tiles: white product names, while the thumbnail icon stays dark. */
+.decor-studio-root .catalog-product-card .catalog-product-name {
+  color: #ffffff !important;
+}
+
+.decor-studio-root .catalog-product-card .catalog-product-dimensions {
+  color: #ffffff !important;
+}
+
+.decor-studio-root .catalog-product-card .catalog-product-add-button svg {
+  color: #111111 !important;
+}
+
+/* Collision notice heading and item names use dark text on the pale alert surface. */
+.decor-studio-root .object-inspector .collision-warning-heading,
+.decor-studio-root .object-inspector .collision-warning-heading span,
+.decor-studio-root .object-inspector .collision-warning-description {
+  color: #111111 !important;
+}
+
+.decor-studio-root .object-inspector button.collision-item-button,
+.decor-studio-root .object-inspector button.collision-item-button:hover {
+  color: #ffffff !important;
+}
