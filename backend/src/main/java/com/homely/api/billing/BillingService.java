@@ -14,14 +14,6 @@ import java.time.ZoneOffset;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Quản lý plan/subscription + kiểm tra giới hạn sử dụng — xem docs/services/billing-service.md.
- *
- * Quan trọng: BillingService KHÔNG bao giờ đọc bảng design_jobs (thuộc module aidesign) —
- * số lượt đã dùng ("used") luôn được module gọi (aidesign) tính trước rồi truyền vào, để
- * tránh circular dependency (aidesign -> billing -> aidesign) và tôn trọng ranh giới module
- * — xem rules/architecture/service-boundaries.md.
- */
 @Service
 public class BillingService {
 
@@ -40,7 +32,8 @@ public class BillingService {
     @Transactional
     public void assignFreePlanToNewUser(UUID userId) {
         Plan freePlan = planRepository.findByCode("FREE")
-                .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "PLAN_NOT_FOUND", "Gói FREE chưa được seed"));
+                .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "PLAN_NOT_FOUND",
+                        "Gói FREE chưa được seed"));
         Subscription subscription = new Subscription();
         subscription.setUserId(userId);
         subscription.setPlan(freePlan);
@@ -53,16 +46,21 @@ public class BillingService {
 
     private Subscription getSubscription(UUID userId) {
         return subscriptionRepository.findByUserId(userId)
-                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "SUBSCRIPTION_NOT_FOUND", "Không tìm thấy gói của user"));
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "SUBSCRIPTION_NOT_FOUND",
+                        "Không tìm thấy gói của user"));
     }
 
     public SubscriptionResponse getSubscriptionResponse(UUID userId) {
         Subscription sub = getSubscription(userId);
         Plan plan = sub.getPlan();
-        return new SubscriptionResponse(sub.getId(), plan.getCode(), plan.getName(), sub.getStatus(), sub.getCreatedAt());
+        return new SubscriptionResponse(sub.getId(), plan.getCode(), plan.getName(), sub.getStatus(),
+                sub.getCreatedAt());
     }
 
-    /** used: số design job của user trong tháng hiện tại, do module aidesign tính và truyền vào. */
+    /**
+     * used: số design job của user trong tháng hiện tại, do module aidesign tính và
+     * truyền vào.
+     */
     public void checkUsageLimit(UUID ownerId, long used) {
         Subscription sub = getSubscription(ownerId);
         Plan plan = sub.getPlan();

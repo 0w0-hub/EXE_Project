@@ -71,6 +71,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/v1/models/**").permitAll()
                         // TASK-078: trang chia sẻ liên kết công khai (view-only) + bình luận — không cần đăng nhập.
                         .requestMatchers("/api/v1/public/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/payments/webhook").permitAll()
                         // Defense-in-depth: dù đã có @PreAuthorize trên từng method admin,
                         // matcher này đảm bảo endpoint admin mới thêm sau mà quên @PreAuthorize
                         // vẫn fail-closed (403) thay vì vô tình mở cho mọi user đã đăng nhập.
