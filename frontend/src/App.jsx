@@ -29,6 +29,7 @@ import Achievements from './pages/Achievements'
 import NotFound from './pages/NotFound'
 import Plans from './pages/Plans'
 import Subscribe from './pages/Subscribe'
+import SubscribeResult from './pages/SubscribeResult'
 import ForgotPassword from './pages/ForgotPassword'
 
 function ProtectedRoute({ children }) {
@@ -159,6 +160,8 @@ export default function App() {
             }
           />
           <Route path="/plans" element={<ProtectedRoute><Plans /></ProtectedRoute>} />
+          <Route path="/subscribe/success" element={<ProtectedRoute><SubscribeResult type="success" /></ProtectedRoute>} />
+          <Route path="/subscribe/cancel" element={<ProtectedRoute><SubscribeResult type="cancel" /></ProtectedRoute>} />
           <Route path="/subscribe/:planId" element={<ProtectedRoute><Subscribe /></ProtectedRoute>} />
           {/* TASK-107: thùng rác — yêu cầu đăng nhập, giống các route user thường khác (đã có link
               trong NavBar.jsx dropdown "Tài khoản", xem AccountMenu). */}
