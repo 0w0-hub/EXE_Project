@@ -53,6 +53,12 @@ homely:
       model: ${GEMINI_CHAT_MODEL:gemini-3.8-flash}
     replicate:
       api-key: ${REPLICATE_API_KEY:}
+  payos:
+    client-id: ${PAYOS_CLIENT_ID:}
+    api-key: ${PAYOS_API_KEY:}
+    checksum-key: ${PAYOS_CHECKSUM_KEY:}
+    return-url: ${PAYOS_RETURN_URL:http://localhost:80/subscribe/success}
+    cancel-url: ${PAYOS_CANCEL_URL:http://localhost:80/subscribe/cancel}
 
 management:
   endpoints:

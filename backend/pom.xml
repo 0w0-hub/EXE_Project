@@ -51,6 +51,13 @@
       <scope>runtime</scope>
     </dependency>
 
+    <!-- PayOS Java SDK -->
+    <dependency>
+      <groupId>vn.payos</groupId>
+      <artifactId>payos-java</artifactId>
+      <version>2.0.1</version>
+    </dependency>
+
     <!-- Flyway migrations and PostgreSQL support (required for Flyway 10+ in Spring Boot 3.3.x) -->
     <dependency>
       <groupId>org.flywaydb</groupId>

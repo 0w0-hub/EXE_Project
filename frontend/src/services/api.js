@@ -182,6 +182,10 @@ export const subscriptionApi = {
 export const usageApi = {
   me: () => api.get('/usage/me'),
 }
+export const paymentApi = {
+  createLink: (planCode, billing) => api.post('/payments/create-link', { planCode, billing }),
+  orderStatus: (orderId) => api.get(`/payments/orders/${orderId}/status`),
+}
 export const shareApi = {
   enable: (jobId) => api.post(`/designs/jobs/${jobId}/share`),
   disable: (jobId) => api.delete(`/designs/jobs/${jobId}/share`),

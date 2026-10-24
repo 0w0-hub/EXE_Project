@@ -1,0 +1,9 @@
+# Model Integration
+
+- Mọi lời gọi AI provider (phân tích ảnh, sinh ảnh 3D) đi qua interface `AiDesignProvider` trong module `ai-design`, không gọi SDK/HTTP provider trực tiếp từ nơi khác.
+- Provider chọn qua `homely.ai.provider` (env `AI_PROVIDER`): `mock` (default, không tốn phí) | `replicate` (thật). Quyết định provider cụ thể: [ADR-0003](../../docs/decisions/ADR-0003-ai-integration-approach.md) — ACCEPTED, chọn Replicate.
+- **Provider thật phải fail fast lúc khởi động app** nếu thiếu config bắt buộc (ví dụ API key) — không âm thầm rơi về hành vi khác lúc runtime. Xem `ReplicateAiDesignProvider` constructor.
+- Model version của provider bên thứ 3 (Replicate) là ID public, không phải secret — được hardcode như constant trong provider class (`LLAVA_VISION_VERSION`, `SDXL_IMAGE_VERSION`), có comment rõ đây là version đã verify hoạt động. Nếu Replicate deprecate version, cập nhật constant + ghi lại trong session log.
+- Nếu **không có version hash đã verify** cho 1 model mới (không lấy được từ dự án tham khảo/không test được), dùng `ReplicateClient.runAndWaitByModel(owner, name, input)` (gọi theo tên model, Replicate tự dùng version mới nhất) thay vì đoán/hardcode 1 hash không chắc chắn — xem [ADR-0005](../../docs/decisions/ADR-0005-2d-3d-upgrade.md). Phải comment rõ trong code là "CHƯA VERIFY" + field input/output là best-effort, và cập nhật lại khi verify được với key thật.
+- Text sinh ra bởi LLM (nếu có) không được dùng để tính số liệu quan trọng (chi phí, tổng ngân sách) — số liệu phải là thuật toán xác định, LLM chỉ dùng cho mô tả/giải thích. Xem ADR-0003 mục Decision.
+- Mọi lời gọi HTTP ra ngoài phải có timeout rõ ràng + số lần poll/retry có giới hạn (không vô hạn) — xem `rules/architecture/resilience.md` và cách `ReplicateClient` implement (`MAX_POLL_ATTEMPTS`, `REQUEST_TIMEOUT`).

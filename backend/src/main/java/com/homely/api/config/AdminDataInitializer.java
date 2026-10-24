@@ -6,17 +6,20 @@ import com.homely.api.user.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
+@ConditionalOnProperty(name = "homely.admin.bootstrap-enabled", havingValue = "true")
 public class AdminDataInitializer implements CommandLineRunner {
 
     private static final Logger log = LoggerFactory.getLogger(AdminDataInitializer.class);
 
-    private static final String ADMIN_EMAIL = "admin@gmail.com";
-    private static final String ADMIN_PASSWORD = "123456";
+    private final String adminEmail;
+    private final String adminPassword;
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -24,7 +27,14 @@ public class AdminDataInitializer implements CommandLineRunner {
 
     public AdminDataInitializer(UserRepository userRepository,
                                  PasswordEncoder passwordEncoder,
-                                 BillingService billingService) {
+                                 BillingService billingService,
+                                 @Value("${HOMELY_ADMIN_EMAIL:}") String adminEmail,
+                                 @Value("${HOMELY_ADMIN_PASSWORD:}") String adminPassword) {
+        if (adminEmail.isBlank() || adminPassword.length() < 12) {
+            throw new IllegalArgumentException("Admin bootstrap requires HOMELY_ADMIN_EMAIL and HOMELY_ADMIN_PASSWORD (at least 12 characters)");
+        }
+        this.adminEmail = adminEmail;
+        this.adminPassword = adminPassword;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.billingService = billingService;
@@ -33,16 +43,16 @@ public class AdminDataInitializer implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) {
-        if (userRepository.existsByEmail(ADMIN_EMAIL)) {
+        if (userRepository.existsByEmail(adminEmail)) {
             return;
         }
         User admin = new User();
-        admin.setEmail(ADMIN_EMAIL);
+        admin.setEmail(adminEmail);
         admin.setFullName("Admin");
-        admin.setPasswordHash(passwordEncoder.encode(ADMIN_PASSWORD));
+        admin.setPasswordHash(passwordEncoder.encode(adminPassword));
         admin.setRole("ADMIN");
         admin = userRepository.save(admin);
         billingService.assignFreePlanToNewUser(admin.getId());
-        log.info("Admin user created: {}", ADMIN_EMAIL);
+        log.info("Admin user created: {}", adminEmail);
     }
 }
